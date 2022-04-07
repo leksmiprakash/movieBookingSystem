@@ -9,9 +9,6 @@ component{
     This.applicationtimeout=createtimespan(5,0,0,0);
     This.ormenabled = "true";
     This.ormsettings = {datasource="movieBooking", logsql="true"};
-
-
-
    
    
 
