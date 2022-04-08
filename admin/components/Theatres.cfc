@@ -1,3 +1,3 @@
-<cfcomponent persistent="true" entityname="Theatres" table="treg" readonly="true">
+<cfcomponent persistent="true" entityname="Theatres" table="theatres" readonly="true">
      
 </cfcomponent>

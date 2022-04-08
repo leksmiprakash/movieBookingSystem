@@ -1,8 +1,8 @@
 <cfcomponent displayname="userdata" hint="Data from user side">
 
     <cffunction name="displayalldata" access="public" returnType="any" output="false">
-          <cfset variables.gettheatre = EntityLoad('Theatres','tid desc')>
-          <cfreturn variables.gettheatre >    
+          <cfset variables.getTheatres = EntityLoad('Theatres',{},'t_id desc')>
+          <cfreturn variables.getTheatres >    
      </cffunction>
 
     <cffunction  name="theatreData" access="remote">
@@ -19,8 +19,30 @@
         <cfif form.tPhone eq "">
             <cfset ArrayAppend(session.messageArray, "Please enter the gender") />
         </cfif>
-        
         <cfif ArrayIsEmpty(session.messageArray)>
+            <cfif form.updateId gt 0>
+                <cfif form.tPhoto != "">
+                    <cffile action="upload"
+                        fileField="tPhoto"
+                        destination="F:\ColdFusion2021\cfusion\wwwroot\addressBook\images\"
+                        nameconflict="makeunique"
+                        result="img">
+                    <cfset variables.img = img.serverFile>
+                <cfelse>
+                    <cfset variables.img = form.old_file>
+                </cfif>
+                <cfquery name="updateQuery">
+                    UPDATE theatres 
+                    SET t_name = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tName#">, 
+                        t_address = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tAddress#">,
+                        t_email = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tEmail#">,
+                        t_phone = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tPhone#">,
+                        t_photo = <cfqueryparam CFSQLType="cf_sql_varchar" value="#variables.img#">,
+                    WHERE t_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#form.updateId#"> 
+                </cfquery>
+                <cflocation url="../dashboard.cfm" addtoken="no">
+                <cfset ArrayAppend(session.messageArray, "Updated successfully") />
+            <cfelse>
                 <cfif form.tPhoto != "">
                     <cffile action="upload"
                         fileField="tPhoto"
@@ -32,7 +54,7 @@
                     <cfset img = "no-image.png">
                 </cfif>
                 <cfquery result="result">
-                    INSERT INTO treg (name, address, email, phone, photo)
+                    INSERT INTO theatres (t_name, t_address, t_email, t_phone, t_photo)
                     VALUES (
                         <cfqueryparam value="#form.tName#" cfsqltype="cf_sql_varchar">,
                         <cfqueryparam value="#form.tAddress#" cfsqltype="cf_sql_varchar">,
@@ -43,21 +65,22 @@
                 </cfquery>
                 <cflocation url="../addTheatre.cfm" addtoken="no">
                 <cfset ArrayAppend(session.messageArray, "Inserted successfully") />
+            </cfif>
         </cfif>
         <cfreturn session.messageArray>
     </cffunction>
     <cffunction name="deleteQuery" output="false" access="public">
         <cfquery name="DeleteData"> 
-                DELETE FROM contactNumbers 
-                WHERE id = #URL.id# 
+                DELETE FROM theatres 
+                WHERE t_id = #URL.id# 
         </cfquery> 
         <cfreturn>
     </cffunction>
     <cffunction name="displaydata" access="remote" returnType="any" returnFormat="JSON" output="false">
           <cfargument name="editid" required="true">
-          <cfquery name = "getcontactbyid"    >
-               select *  from contactNumbers where id=<cfqueryparam value="#form.editid#"  cfsqltype="cf_sql_integer">      
+          <cfquery name = "getTheatreById"    >
+               select *  from theatres where t_id=<cfqueryparam value="#arguments.editid#"  cfsqltype="cf_sql_integer">      
           </cfquery>
-          <cfreturn getcontactbyid> 
+          <cfreturn getTheatreById> 
      </cffunction>
 </cfcomponent>

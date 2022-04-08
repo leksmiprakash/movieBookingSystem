@@ -16,7 +16,8 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                
+                    <cfset TheatresObj=CreateObject("component","components.theatresDetails")/>
+                    <cfset alldata=TheatresObj.displayalldata()/>
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
@@ -25,6 +26,7 @@
                                 <th>Theatre Email</th>
                                 <th>Theatre Phone</th>
                                 <th>Theatre Photo</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -34,45 +36,23 @@
                                 <th>Theatre Email</th>
                                 <th>Theatre Phone</th>
                                 <th>Theatre Photo</th>
+                                <th>Action</th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            <tr>
-                                <td>Herrod Chandler</td>
-                                <td>Sales Assistant</td>
-                                <td>San Francisco</td>
-                                <td>59</td>
-                                <td>2012/08/06</td>
-                            </tr>
-                            <tr>
-                                <td>Colleen Hurst</td>
-                                <td>Javascript Developer</td>
-                                <td>San Francisco</td>
-                                <td>39</td>
-                                <td>2009/09/15</td>
-                            </tr>
-                           
-                            <tr>
-                                <td>Haley Kennedy</td>
-                                <td>Senior Marketing Designer</td>
-                                <td>London</td>
-                                <td>43</td>
-                                <td>2012/12/18</td>
-                            </tr>
-                            <tr>
-                                <td>Tatyana Fitzpatrick</td>
-                                <td>Regional Director</td>
-                                <td>London</td>
-                                <td>19</td>
-                                <td>2010/03/17</td>
-                            </tr>
-                            <tr>
-                                <td>Michael Silva</td>
-                                <td>Marketing Designer</td>
-                                <td>London</td>
-                                <td>66</td>
-                                <td>2012/11/27</td>
-                            </tr>
+                            <cfloop array="#alldata#" item="alldatas">
+                                <tr>
+                                
+                                    <td>#alldatas.getT_name()#</td>
+                                    <td>#alldatas.getT_address()#</td>
+                                    <td>#alldatas.getT_email()#</td>
+                                    <td>#alldatas.getT_phone()#</td>
+                                    <td><img src="../theatre/#alldatas.getT_photo()#" width="80px" height="80px"></td>
+                                    <td> <a class="btn btn btn-outline-primary btn-sm button-18 editbtn" data-conid="#alldatas.getT_id()#" id="editbtn"  data-toggle="modal" data-target="##theatreModal">
+                                            Edit
+                                        </a></td>
+                                </tr>
+                            </cfloop>
                         </tbody>
                     </table>
                 </div>
@@ -112,11 +92,13 @@
                         <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
                             <label for="inputEmail">Theatre Photo</label>
                             <input class="form-control" id="tPhoto" name="tPhoto" type="file" />
+                            <input type="hidden" name="old_file" id="old_file" value="" />
+                            <input class="form-control" id="updateId" name="updateId" type="hidden" />
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <input type="submit" class="btn btn-primary" value="Add Theatre">
+                        <input type="submit" class="btn btn-primary" name ="saveTheatre" value="Save Theatre">
                     </div>
                 </form>
             </div>
@@ -124,5 +106,38 @@
     </div>
 </div>
 <!-- End of Main Content -->
-<cfinclude  template = "include/footer.cfm"  runOnce = "true"></cfinclude>  
-</cfoutput>              
+
+</cfoutput>
+<cfinclude  template = "include/footer.cfm"  runOnce = "true"></cfinclude>                
+<script>
+$(document).on('click', '.editbtn', function() {
+    var theatreId = $(this).data('conid');
+     $.ajax({
+        type: "post",
+        url: 'components/theatresDetails.cfc?method=displaydata',
+        data: {
+            editid: theatreId
+        },
+        
+        success: function(response) {
+            p = JSON.parse(response);
+            console.log(p);
+            $("#updateId").val(p.DATA[0][0]);
+            $("#tName").val(p.DATA[0][1]);
+            $("#tAddress").val(p.DATA[0][2]);
+            $("#tEmail").val(p.DATA[0][3]);
+            $("#tPhone").val(p.DATA[0][4]);
+            $("#old_file").val(p.DATA[0][5]);
+        }
+    });
+});
+function changeImage(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#imageDisplay').attr('src', e.target.result).width(250).height(250);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
