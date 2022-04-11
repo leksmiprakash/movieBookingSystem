@@ -1,4 +1,4 @@
-<cfoutput> 
+
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
@@ -51,4 +51,3 @@
         <script src="../js/demo/datatables-demo.js"></script>
     </body>
 </html>
-</cfoutput>

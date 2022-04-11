@@ -24,7 +24,7 @@
                 <cfif form.tPhoto != "">
                     <cffile action="upload"
                         fileField="tPhoto"
-                        destination="F:\ColdFusion2021\cfusion\wwwroot\addressBook\images\"
+                        destination="F:\ColdFusion2021\cfusion\wwwroot\movieBookingSystem\theatre"
                         nameconflict="makeunique"
                         result="img">
                     <cfset variables.img = img.serverFile>
@@ -37,7 +37,7 @@
                         t_address = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tAddress#">,
                         t_email = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tEmail#">,
                         t_phone = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tPhone#">,
-                        t_photo = <cfqueryparam CFSQLType="cf_sql_varchar" value="#variables.img#">,
+                        t_photo = <cfqueryparam CFSQLType="cf_sql_varchar" value="#variables.img#">
                     WHERE t_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#form.updateId#"> 
                 </cfquery>
                 <cflocation url="../dashboard.cfm" addtoken="no">
