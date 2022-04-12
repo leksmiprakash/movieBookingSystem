@@ -83,4 +83,63 @@
           </cfquery>
           <cfreturn getTheatreById> 
      </cffunction>
+
+<!-------------------Screen--------------------------->
+
+    <cffunction name="displayallScreendata" access="public" returnType="any" output="false">
+        <cfset variables.getScreens = EntityLoad('Screens',{},'screen_id desc')>
+        <cfreturn variables.getScreens >    
+    </cffunction>
+
+    <cffunction name="displayScreendata" access="remote" returnType="any" returnFormat="JSON" output="false">
+        <cfargument name="editid" required="true">
+        <cfquery name = "getScreenById"    >
+            select *  from screens where screen_id=<cfqueryparam value="#arguments.editid#"  cfsqltype="cf_sql_integer">      
+        </cfquery>
+        <cfreturn getScreenById> 
+    </cffunction>
+
+    <cffunction  name="screenData" access="remote">
+        <cfset session.messageArray = ArrayNew(1) /> 
+        <cfif form.tName eq "">
+            <cfset ArrayAppend(session.messageArray, "Please enter the Theatre Name") />
+        </cfif>
+        <cfif form.sName eq "">
+            <cfset ArrayAppend(session.messageArray, "Please enter the Screen name") />
+        </cfif>
+        <cfif form.seats eq "">
+            <cfset ArrayAppend(session.messageArray, "Please enter the total Seats") />
+        </cfif>
+        <cfif form.charge eq "">
+            <cfset ArrayAppend(session.messageArray, "Please enter the Cost") />
+        </cfif>
+        <cfif ArrayIsEmpty(session.messageArray)>
+            <cfif form.updateId gt 0>
+                <cfquery name="updateQuery">
+                    UPDATE screens 
+                    SET theatre_id = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tName#">, 
+                        screen_name = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.sName#">,
+                        seats = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.seats#">,
+                        charge = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.charge#">
+                    WHERE screen_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#form.updateId#"> 
+                </cfquery>
+                <cflocation url="../dashboard.cfm" addtoken="no">
+                <cfset ArrayAppend(session.messageArray, "Updated successfully") />
+            <cfelse>
+                <cfquery result="result">
+                    INSERT INTO screens (theatre_id, screen_name, seats, charge)
+                    VALUES (
+                        <cfqueryparam value="#form.tName#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#form.sName#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#form.seats#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#form.charge#" cfsqltype="cf_sql_varchar">
+                    )
+                </cfquery>
+                <cflocation url="../addScreen.cfm" addtoken="no">
+                <cfset ArrayAppend(session.messageArray, "Inserted successfully") />
+            </cfif>
+        </cfif>
+        <cfreturn session.messageArray>
+    </cffunction>
+
 </cfcomponent>
