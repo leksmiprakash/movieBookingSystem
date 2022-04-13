@@ -5,7 +5,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Theatre</h1>
-            <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" href="##" data-toggle="modal" data-target="##theatreModal">
+            <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" href="##" data-toggle="modal" data-target="##showTimeModal">
                 <i class="fas fa-plus fa-sm text-white-50"></i> Add Theatre </a>
         </div>
         
@@ -16,26 +16,24 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <cfset TheatresObj=CreateObject("component","components.theatresDetails")/>
-                    <cfset alldata=TheatresObj.displayalldata()/>
+                    <cfset ShowTimesObj=CreateObject("component","components.theatresDetails")/>
+                    <cfset alldata=ShowTimesObj.displayallShowTimedata()/>
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>Theatre Name</th>
-                                <th>Theatre Address</th>
-                                <th>Theatre Email</th>
-                                <th>Theatre Phone</th>
-                                <th>Theatre Photo</th>
+                                <th>Screen Name</th>
+                                <th>Show</th>
+                                <th>Show Starting Time</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th>Theatre Name</th>
-                                <th>Theatre Address</th>
-                                <th>Theatre Email</th>
-                                <th>Theatre Phone</th>
-                                <th>Theatre Photo</th>
+                                <th>Screen Name</th>
+                                <th>Show</th>
+                                <th>Show Starting Time</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -43,14 +41,15 @@
                             <cfloop array="#alldata#" item="alldatas">
                                 <tr>
                                 
-                                    <td>#alldatas.getT_name()#</td>
-                                    <td>#alldatas.getT_address()#</td>
-                                    <td>#alldatas.getT_email()#</td>
-                                    <td>#alldatas.getT_phone()#</td>
-                                    <td><img src="../theatre/#alldatas.getT_photo()#" width="80px" height="80px"></td>
-                                    <td> <a class="btn btn btn-outline-primary btn-sm button-18 editbtn" data-conid="#alldatas.getT_id()#" id="editbtn"  data-toggle="modal" data-target="##theatreModal">
+                                    <td>#alldatas.getTheatre_id()#</td>
+                                    <td>#alldatas.getScreen_id()#</td>
+                                    <td>#alldatas.getshowName()#</td>
+                                    <td>#alldatas.getStart_time()#</td>
+                                    
+                                    <td> <a class="btn btn btn-outline-primary btn-sm button-18 editbtn" data-conid="#alldatas.getSt_id()#" id="editbtn"  data-toggle="modal" data-target="##showTimeModal">
                                             Edit
-                                        </a></td>
+                                        </a>
+                                    </td>
                                 </tr>
                             </cfloop>
                         </tbody>
@@ -60,8 +59,8 @@
         </div>
     </div>
     <!-- /.container-fluid -->
-    <!-- theatreModal Modal-->
-    <div class="modal fade" id="theatreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- showTimeModal Modal-->
+    <div class="modal fade" id="showTimeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -75,24 +74,40 @@
                     <div class="modal-body">
                         <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
                             <label for="inputEmail">Theatre Name</label>
-                            <input class="form-control input-sm" id="tName" name="tName" type="text" />
+                            <cfset TheatresObj=CreateObject("component","components.theatresDetails")/>
+                            <cfset theatres=TheatresObj.displayalldata()/>
+                            <select name="tId" class="form-control" id="tId" >
+                                <option value="">Select</option>
+                                <cfloop array="#theatres#" item="theatre">
+                                    <option value="#theatre.getT_id()#">#theatre.getT_name()#</option>
+                                </cfloop>
+                            </select>
                         </div>
                         <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
-                            <label for="inputEmail">Theatre Address</label>
-                            <input class="form-control" id="tAddress" name="tAddress" type="text" />
+                            <label for="inputEmail">Screen Name</label>
+                            <cfset ScreensObj=CreateObject("component","components.theatresDetails")/>
+                            <cfset screens=ScreensObj.displayallScreendata()/>
+                            <select name="screenId" class="form-control" id="screenId" >
+                                <option value="">Select</option>
+                                <cfloop array="#screens#" item="screen">
+                                    <option value="#screen.getScreen_id()#">#screen.getScreen_name()#</option>
+                                </cfloop>
+                            </select>
                         </div>
                         <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
-                            <label for="inputEmail">Theatre Email</label>
-                            <input class="form-control" id="tEmail" name="tEmail" type="text" />
+                            <label for="inputEmail">Screen Name</label>
+                            <cfset ShowNamesObj=CreateObject("component","components.theatresDetails")/>
+                            <cfset showNames=ShowNamesObj.displayallShowNamedata()/>
+                            <select name="showNameId" class="form-control" id="showNameId" >
+                                <option value="">Select</option>
+                                <cfloop array="#showNames#" item="showName">
+                                    <option value="#showName.getShowName()#">#showName.getShowName()#</option>
+                                </cfloop>
+                            </select>
                         </div>
                         <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
-                            <label for="inputEmail">Theatre Phone No</label>
-                            <input class="form-control" id="tPhone" name="tPhone" type="text" />
-                        </div>
-                        <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
-                            <label for="inputEmail">Theatre Photo</label>
-                            <input class="form-control" id="tPhoto" name="tPhoto" type="file" />
-                            <input type="hidden" name="old_file" id="old_file" value="" />
+                            <label for="inputEmail">Show Time</label>
+                            <input type="time" id="sTime" name="sTime" class="form-control"/>
                             <input class="form-control" id="updateId" name="updateId" type="hidden" />
                         </div>
                     </div>
@@ -114,7 +129,7 @@ $(document).on('click', '.editbtn', function() {
     var theatreId = $(this).data('conid');
      $.ajax({
         type: "post",
-        url: 'components/theatresDetails.cfc?method=displaydata',
+        url: 'components/theatresDetails.cfc?method=displayShowTimedata',
         data: {
             editid: theatreId
         },
@@ -123,11 +138,10 @@ $(document).on('click', '.editbtn', function() {
             p = JSON.parse(response);
             console.log(p);
             $("#updateId").val(p.DATA[0][0]);
-            $("#tName").val(p.DATA[0][1]);
-            $("#tAddress").val(p.DATA[0][2]);
-            $("#tEmail").val(p.DATA[0][3]);
-            $("#tPhone").val(p.DATA[0][4]);
-            $("#old_file").val(p.DATA[0][5]);
+            $("#tId").val(p.DATA[0][1]).change();
+            $("#screenId").val(p.DATA[0][2]).change();
+            $("#showNameId").val(p.DATA[0][3]).change();
+            $("#sTime").val(p.DATA[0][4]);
         }
     });
 });

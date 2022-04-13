@@ -72,8 +72,16 @@
                     <div class="modal-body">
                         <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
                             <label for="inputEmail">Theatre Name</label>
-                            <input class="form-control input-sm" id="tName" name="tName" type="text" />
+                            <cfset TheatresObj=CreateObject("component","components.theatresDetails")/>
+                            <cfset theatres=TheatresObj.displayalldata()/>
+                            <select name="tId" class="form-control" id="tId" >
+                                <option value="">Select</option>
+                                <cfloop array="#theatres#" item="theatre">
+                                    <option value="#theatre.getT_id()#">#theatre.getT_name()#</option>
+                                </cfloop>
+                            </select>
                         </div>
+                        
                         <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
                             <label for="inputEmail">Screen Name</label>
                             <input class="form-control" id="sName" name="sName" type="text" />
@@ -115,7 +123,7 @@ $(document).on('click', '.editbtn', function() {
             p = JSON.parse(response);
             console.log(p);
             $("#updateId").val(p.DATA[0][0]);
-            $("#tName").val(p.DATA[0][1]);
+            $("#tId").val(p.DATA[0][1]).change();
             $("#sName").val(p.DATA[0][2]);
             $("#seats").val(p.DATA[0][3]);
             $("#charge").val(p.DATA[0][4]);

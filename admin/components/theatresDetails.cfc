@@ -101,7 +101,7 @@
 
     <cffunction  name="screenData" access="remote">
         <cfset session.messageArray = ArrayNew(1) /> 
-        <cfif form.tName eq "">
+        <cfif form.tId eq "">
             <cfset ArrayAppend(session.messageArray, "Please enter the Theatre Name") />
         </cfif>
         <cfif form.sName eq "">
@@ -117,7 +117,7 @@
             <cfif form.updateId gt 0>
                 <cfquery name="updateQuery">
                     UPDATE screens 
-                    SET theatre_id = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tName#">, 
+                    SET theatre_id = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tId#">, 
                         screen_name = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.sName#">,
                         seats = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.seats#">,
                         charge = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.charge#">
@@ -129,7 +129,7 @@
                 <cfquery result="result">
                     INSERT INTO screens (theatre_id, screen_name, seats, charge)
                     VALUES (
-                        <cfqueryparam value="#form.tName#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#form.tId#" cfsqltype="cf_sql_varchar">,
                         <cfqueryparam value="#form.sName#" cfsqltype="cf_sql_varchar">,
                         <cfqueryparam value="#form.seats#" cfsqltype="cf_sql_varchar">,
                         <cfqueryparam value="#form.charge#" cfsqltype="cf_sql_varchar">
@@ -141,5 +141,28 @@
         </cfif>
         <cfreturn session.messageArray>
     </cffunction>
+
+    <!-----------------------------Shows---------------------------->
+
+    <cffunction name="displayallShowNamedata" access="public" returnType="any" output="false">
+        <cfset variables.getShowNames = EntityLoad('ShowNames',{},'sn_id desc')>
+        <cfreturn variables.getShowNames >    
+    </cffunction>
+
+    <!------------------------------ShowTime-------------------------->
+
+    <cffunction name="displayallShowTimedata" access="public" returnType="any" output="false">
+        <cfset variables.getShowTimes = EntityLoad('ShowTimes',{},'st_id desc')>
+        <cfreturn variables.getShowTimes >    
+    </cffunction>
+
+    <cffunction name="displayShowTimedata" access="remote" returnType="any" returnFormat="JSON" output="false">
+        <cfargument name="editid" required="true">
+        <cfquery name = "getShowTimeById"    >
+            select *  from ShowTimes where St_id=<cfqueryparam value="#arguments.editid#"  cfsqltype="cf_sql_integer">      
+        </cfquery>
+        <cfreturn getShowTimeById> 
+    </cffunction>
+
 
 </cfcomponent>
