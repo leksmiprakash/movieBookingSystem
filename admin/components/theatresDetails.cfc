@@ -164,5 +164,21 @@
         <cfreturn getShowTimeById> 
     </cffunction>
 
+    <cffunction name="getScreens" access="remote" returnType="any" returnFormat="JSON" output="false">
+        <cfargument name="theatreId" required="true">
+        <cfquery name = "getScreensById"    >
+            select *  from screens where theatre_id=<cfqueryparam value="#arguments.theatreId#"  cfsqltype="cf_sql_integer">      
+        </cfquery>
+        <cfreturn getScreensById> 
+    </cffunction>
+
+
+    <!------------------------------Show-------------------------->
+
+    <cffunction name="displayallShowdata" access="public" returnType="any" output="false">
+        <cfset variables.getShows = EntityLoad('Shows',{},'s_id desc')>
+        <cfreturn variables.getShows>    
+    </cffunction>
+
 
 </cfcomponent>
