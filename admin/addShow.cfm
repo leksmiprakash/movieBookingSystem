@@ -34,7 +34,7 @@
                                 <th>Screen Name</th>
                                 <th>Show Times</th>
                                 <th>Show Starting Date</th>
-                                <th>Action</th>
+                                
                             </tr>
                         </tfoot>
                         <tbody>
@@ -45,10 +45,7 @@
                                     <td>#alldatas.getTheatre_id()#</td>
                                     <td>#alldatas.getSt_id()#</td>
                                     <td>#alldatas.getStart_date()#</td>
-                                    <td><a class="btn btn btn-outline-primary btn-sm button-18 editbtn" data-conid="#alldatas.getS_id()#" id="editbtn"  data-toggle="modal" data-target="##showTimeModal">
-                                            Edit
-                                        </a>
-                                    </td>
+                                    
                                 </tr>
                             </cfloop>
                         </tbody>
@@ -58,92 +55,11 @@
         </div>
     </div>
     <!-- /.container-fluid -->
-    <!-- showTimeModal Modal-->
-    <div class="modal fade" id="showTimeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form method="post" action="components/theatresDetails.cfc?method=theatreData" enctype="multipart/form-data">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add Details</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
-                            <label for="inputEmail">Theatre Name</label>
-                            <cfset TheatresObj=CreateObject("component","components.theatresDetails")/>
-                            <cfset theatres=TheatresObj.displayalldata()/>
-                            <select name="tId" class="form-control" id="tId" >
-                                <option value="">Select</option>
-                                <cfloop array="#theatres#" item="theatre">
-                                    <option value="#theatre.getT_id()#">#theatre.getT_name()#</option>
-                                </cfloop>
-                            </select>
-                        </div>
-                        <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
-                            <label for="inputEmail">Screen Name</label>
-                            <cfset ScreensObj=CreateObject("component","components.theatresDetails")/>
-                            <cfset screens=ScreensObj.displayallScreendata()/>
-                            <select name="screenId" class="form-control" id="screenId" >
-                                <option value="">Select</option>
-                                <cfloop array="#screens#" item="screen">
-                                    <option value="#screen.getScreen_id()#">#screen.getScreen_name()#</option>
-                                </cfloop>
-                            </select>
-                        </div>
-                        <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
-                            <label for="inputEmail">Screen Name</label>
-                            <cfset ShowNamesObj=CreateObject("component","components.theatresDetails")/>
-                            <cfset showNames=ShowNamesObj.displayallShowNamedata()/>
-                            <select name="showNameId" class="form-control" id="showNameId" >
-                                <option value="">Select</option>
-                                <cfloop array="#showNames#" item="showName">
-                                    <option value="#showName.getShowName()#">#showName.getShowName()#</option>
-                                </cfloop>
-                            </select>
-                        </div>
-                        <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
-                            <label for="inputEmail">Show Time</label>
-                            <input type="time" id="sTime" name="sTime" class="form-control"/>
-                            <input class="form-control" id="updateId" name="updateId" type="hidden" />
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <input type="submit" class="btn btn-primary" name ="saveTheatre" value="Save Theatre">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End of Main Content -->
+    
 
 </cfoutput>
 <cfinclude  template = "include/footer.cfm"  runOnce = "true"></cfinclude>                
 <script>
-$(document).on('click', '.editbtn', function() {
-    var theatreId = $(this).data('conid');
-     $.ajax({
-        type: "post",
-        url: 'components/theatresDetails.cfc?method=displayShowTimedata',
-        data: {
-            editid: theatreId
-        },
-        
-        success: function(response) {
-            p = JSON.parse(response);
-            console.log(p);
-            $("#updateId").val(p.DATA[0][0]);
-            $("#tId").val(p.DATA[0][1]).change();
-            $("#screenId").val(p.DATA[0][2]).change();
-            $("#showNameId").val(p.DATA[0][3]).change();
-            $("#sTime").val(p.DATA[0][4]);
-        }
-    });
-});
 function changeImage(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
