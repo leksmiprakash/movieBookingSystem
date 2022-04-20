@@ -79,7 +79,7 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 }
 
 </style>
-	<cfoutput>
+    <cfoutput>
 			<!-- header -->
 			<header id="site-header" class="w3l-header fixed-top" >
 				<!--/nav-->
@@ -221,26 +221,50 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 		<div class="container py-lg-3">
 		  <div class="w3l-hny-login">
 			<div class="w3l-hny-login-info">
-			<cfif IsDefined("session.messageArray") >
+            <cfif IsDefined("session.messageArray") >
                 <div id="message" class="alert alert-success" role="alert">
                     #session.messageArray[1]#
                 </div>
             </cfif>
-			  <h2>Login to your Account</h2>
-			  <form action="component/login.cfc?method=getUserDetails" method="post" name="signup" id="signup" >
+			  <h2>Register to your Account</h2>
+			  <form action="component/registaration.cfc?method=registerQuery" method="post" name="signup" id="signup" >
+                <label>Name</label>
+				<div class="input-group">
+				    <input type="text" name="name" placeholder="" required="" autofocus>
+				</div>
+                <label>Age</label>
+				<div class="input-group">
+				    <input type="text" name="age" placeholder="" required="" autofocus>
+				</div>
+                <label>Gender</label>
+				<div class="input-group">
+                    <select  name="gender" autofocus>
+                        <option>------Select Gender------</option>
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                    </select>
+				</div>
+                <label>Mobile Number</label>
+				<div class="input-group">
+				    <input type="text" name="phone" placeholder="" required="" autofocus>
+				</div>
 				<label>Email</label>
 				<div class="input-group">
-				  <input type="email" name="email" placeholder="" required="" autofocus>
+				    <input type="email" name="email" placeholder="" required="" autofocus>
 				</div>
 				<label>Password</label>
 				<div class="input-group">
-				  <input type="Password" name="password" placeholder="" required="">
+				    <input type="Password" name="password" placeholder="" required="">
+				</div>
+                <label>Confirm Password</label>
+				<div class="input-group">
+				    <input type="Password" name="cpassword" placeholder="" required="">
 				</div>
 				<div class="login-check">
 				  <label class="checkbox"><input type="checkbox" name="checkbox" /> Remember me</label>
 				  <a class="forgot" href="forgot-password.html">Forgot password?</a>
 				</div>
-				<button class="btn read-button btn-login" type="submit">Login</button>
+				<button class="btn read-button btn-login" type="submit">Register</button>
 			  </form>
 			  <p class="account1">Dont have an account yet? <a href="##">Get it now</a></p>
 			</div>
@@ -352,7 +376,7 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 				</div>
 			</div>
 			<!-- copyright -->
-		</cfoutput>
+        </cfoutput>
 			<!-- move top -->
 			<button onclick="topFunction()" id="movetop" title="Go to top">
 				<span class="fa fa-arrow-up" aria-hidden="true"></span>

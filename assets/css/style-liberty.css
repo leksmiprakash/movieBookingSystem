@@ -18108,7 +18108,8 @@ ul.page-numbers li a:hover {
 
 .w3l-loginhny .input-group input[type="text"],
 .w3l-loginhny .input-group input[type="email"],
-.w3l-loginhny .input-group input[type="Password"] {
+.w3l-loginhny .input-group input[type="Password"],
+.w3l-loginhny .input-group input[type="number"] {
   outline: none;
   padding: 10px 15px;
   -webkit-appearance: none;
@@ -18122,7 +18123,8 @@ ul.page-numbers li a:hover {
 
 .w3l-loginhny .input-group input[type="text"]:focus,
 .w3l-loginhny .input-group input[type="email"]:focus,
-.w3l-loginhny .input-group input[type="Password"]:focus {
+.w3l-loginhny .input-group input[type="Password"]:focus,
+.w3l-loginhny .input-group input[type="number"]:focus {
   border: 1px solid var(--theme-rose);
 }
 
