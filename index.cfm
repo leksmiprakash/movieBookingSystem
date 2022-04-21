@@ -1,6 +1,7 @@
 
 <cfinclude  template = "includes/header.cfm"  runOnce = "true"></cfinclude>
 	<!-- main-slider -->
+<cfoutput>
 	<section class="w3l-main-slider position-relative" id="home">
 		<div class="companies20-content">
 			<div class="owl-one owl-carousel owl-theme">
@@ -10,18 +11,8 @@
 							<div class="banner-info">
 								<h3>Latest Movie Trailers</h3>
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
-									voluptatem tenetur consequatur.</span></p>
-								<a href="#small-dialog1" class="popup-with-zoom-anim play-view1">
-									<span class="video-play-icon">
-										<span class="fa fa-play"></span>
-									</span>
-									<h6>Watch Trailer</h6>
-								</a>
-								<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
-								<div id="small-dialog1" class="zoom-anim-dialog mfp-hide">
-									<iframe src="https://player.vimeo.com/video/358205676" allow="autoplay; fullscreen"
-										allowfullscreen=""></iframe>
-								</div>
+									voluptatem tenetur consequatur.</span>
+								</p>
 							</div>
 						</div>
 					</li>
@@ -32,18 +23,8 @@
 							<div class="banner-info">
 								<h3>Latest Online Movies</h3>
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
-									voluptatem tenetur consequatur.</span></p>
-								<a href="#small-dialog2" class="popup-with-zoom-anim play-view1">
-									<span class="video-play-icon">
-										<span class="fa fa-play"></span>
-									</span>
-									<h6>Watch Trailer</h6>
-								</a>
-								<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
-								<div id="small-dialog2" class="zoom-anim-dialog mfp-hide">
-									<iframe src="https://player.vimeo.com/video/395376850" allow="autoplay; fullscreen"
-										allowfullscreen=""></iframe>
-								</div>
+									voluptatem tenetur consequatur.</span>
+								</p>
 							</div>
 						</div>
 					</li>
@@ -54,18 +35,8 @@
 							<div class="banner-info">
 								<h3>Latest Movie Trailers</h3>
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
-									voluptatem tenetur consequatur.</span></p>
-								<a href="#small-dialog3" class="popup-with-zoom-anim play-view1">
-									<span class="video-play-icon">
-										<span class="fa fa-play"></span>
-									</span>
-									<h6>Watch Trailer</h6>
-								</a>
-								<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
-								<div id="small-dialog3" class="zoom-anim-dialog mfp-hide">
-									<iframe src="https://player.vimeo.com/video/389969665" allow="autoplay; fullscreen"
-										allowfullscreen=""></iframe>
-								</div>
+									voluptatem tenetur consequatur.</span>
+								</p>
 							</div>
 						</div>
 					</li>
@@ -76,18 +47,8 @@
 							<div class="banner-info">
 								<h3>Latest Online Movies</h3>
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
-									voluptatem tenetur consequatur.</span></p>
-								<a href="#small-dialog4" class="popup-with-zoom-anim play-view1">
-									<span class="video-play-icon">
-										<span class="fa fa-play"></span>
-									</span>
-									<h6>Watch Trailer</h6>
-								</a>
-								<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
-								<div id="small-dialog4" class="zoom-anim-dialog mfp-hide">
-									<iframe src="https://player.vimeo.com/video/323491174" allow="autoplay; fullscreen"
-										allowfullscreen=""></iframe>
-								</div>
+									voluptatem tenetur consequatur.</span>
+								</p>
 							</div>
 						</div>
 					</li>
@@ -96,13 +57,6 @@
 		</div>
 	</section>
 	<!-- //banner-slider-->
-	<!-- main-slider -->
-	<div style="margin: 8px auto; display: block; text-align:center;">
-
-<!---728x90--->
-
- 
-</div>
 	<!--grids-sec1-->
 	<section class="w3l-grids">
 		<div class="grids-main py-5">
@@ -117,83 +71,26 @@
 						</div>
 					</div>
 				</div>
+				<cfset MoviesObj=CreateObject("component","component.moviesDetails")/>
+                <cfset limitedMovies=MoviesObj.displayLimitedData()/>
 				<div class="w3l-populohny-grids">
-					<div class="item vhny-grid">
-						<div class="box16">
-							<a href="genre.html">
-								<figure>
-									<img class="img-fluid" src="assets/images/m7.jpg" alt="">
-								</figure>
-								<div class="box-content">
-									<h3 class="title">Frozen 2</h3>
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 1 Hr 4min
-
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
+					<cfloop array="#limitedMovies#" item="limitedMovie">
+						<div class="item vhny-grid">
+							<div class="box16">
+								<a href="genre.html">
+									<figure>
+										<img class="img-fluid" src="movie/#limitedMovie.getMovieImg()#" alt="">
+									</figure>
+									<div class="box-content">
+										<h3 class="title">#limitedMovie.getMovieTitle()#</h3>
+										<h4> <span class="post"><span class="fa fa-clock-o"> </span>#limitedMovie.getMovieDuration()# Hrs</span>
+											<span class="post fa fa-heart text-right"></span>
+										</h4>
+									</div>
+								</a>
+							</div>
 						</div>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16">
-							<a href="genre.html">
-								<figure>
-									<img class="img-fluid" src="assets/images/m3.jpg" alt="">
-								</figure>
-								<div class="box-content">
-									<h3 class="title">Knives Out</h3>
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 1 Hr 4min
-
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16">
-							<a href="genre.html">
-								<figure>
-									<img class="img-fluid" src="assets/images/m4.jpg" alt="">
-								</figure>
-								<div class="box-content">
-									<h3 class="title">Little Women</h3>
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 1 Hr 4min
-
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16">
-							<a href="genre.html">
-								<figure>
-									<img class="img-fluid" src="assets/images/m5.jpg" alt="">
-								</figure>
-								<div class="box-content">
-									<h3 class="title">Jumanji</h3>
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 1 Hr 4min
-
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-					</div>
+					</cfloop>
 				</div>
 			</div>
 		</div>
@@ -214,151 +111,33 @@
 					</div>
 				</div>
 				<div class="owl-three owl-carousel owl-theme">
-					<div class="item vhny-grid">
-						<div class="box16 mb-0">
-							<a href="genre.html">
-								<figure>
-									<img class="img-fluid" src="assets/images/n1.jpg" alt="">
-								</figure>
-								<div class="box-content">
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+				<cfset MoviesObj=CreateObject("component","component.moviesDetails")/>
+                <cfset newMovies=MoviesObj.displayNewData()/>
+					<cfloop array="#newMovies#" item="newMovie">
+						<div class="item vhny-grid">
+							<div class="box16 mb-0">
+								<a href="genre.html">
+									<figure>
+										<img class="img-fluid" src="movie/#newMovie.getMovieImg()#" alt="">
+									</figure>
+									<div class="box-content">
+										<h4> <span class="post"><span class="fa fa-clock-o"> </span> #limitedMovie.getMovieDuration()# Hrs
 
-										</span>
+											</span>
 
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
+											<span class="post fa fa-heart text-right"></span>
+										</h4>
+									</div>
+									<span class="fa fa-play video-icon" aria-hidden="true"></span>
+								</a>
+							</div>
+							<h3> <a class="title-gd" href="genre.html">#limitedMovie.getMovieTitle()# Mins</a></h3>
+							<p>#limitedMovie.getMovieGenre()# Mins</p>
+							<div class="button-center text-center mt-4">
+								<a href="genre.html" class="btn watch-button">Book now</a>
+							</div>
 						</div>
-						<h3> <a class="title-gd" href="genre.html">No Time to Die</a></h3>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-						<div class="button-center text-center mt-4">
-							<a href="genre.html" class="btn watch-button">Watch now</a>
-						</div>
-
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16 mb-0">
-							<a href="genre.html">
-								<figure>
-									<img class="img-fluid" src="assets/images/n2.jpg" alt="">
-								</figure>
-								<div class="box-content">
-
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-						<h3> <a class="title-gd" href="genre.html">Mulan</a></h3>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-						<div class="button-center text-center mt-4">
-							<a href="genre.html" class="btn watch-button">Watch now</a>
-						</div>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16 mb-0">
-							<a href="genre.html">
-								<figure>
-									<img class="img-fluid" src="assets/images/n3.jpg" alt="">
-								</figure>
-								<div class="box-content">
-
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-						<h3> <a class="title-gd" href="genre.html">Free Guy</a></h3>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-						<div class="button-center text-center mt-4">
-							<a href="genre.html" class="btn watch-button">Watch now</a>
-						</div>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16 mb-0">
-							<a href="genre.html">
-								<figure>
-									<img class="img-fluid" src="assets/images/n4.jpg" alt="">
-								</figure>
-								<div class="box-content">
-
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-						<h3> <a class="title-gd" href="genre.html">My Spy</a></h3>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-						<div class="button-center text-center mt-4">
-							<a href="genre.html" class="btn watch-button">Watch now</a>
-						</div>
-
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16 mb-0">
-							<a href="genre.html">
-								<figure>
-									<img class="img-fluid" src="assets/images/n5.jpg" alt="">
-								</figure>
-								<div class="box-content">
-
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-						<h3> <a class="title-gd" href="genre.html">Scoob</a></h3>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-						<div class="button-center text-center mt-4">
-							<a href="genre.html" class="btn watch-button">Watch now</a>
-						</div>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16 mb-0">
-							<a href="genre.html">
-								<figure>
-									<img class="img-fluid" src="assets/images/n6.jpg" alt="">
-								</figure>
-								<div class="box-content">
-
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-						<h3> <a class="title-gd" href="genre.html">Downhill</a></h3>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-						<div class="button-center text-center mt-4">
-							<a href="genre.html" class="btn watch-button">Watch now</a>
-						</div>
-					</div>
+					</cfloop>
 				</div>
 			</div>
 
@@ -971,6 +750,8 @@
 		</div>
 	</section>
 	<!-- //tabs-->
+	
+	</cfoutput>
 	<div style="margin: 8px auto; display: block; text-align:center;">
 
 <!---728x90--->

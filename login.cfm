@@ -221,6 +221,8 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 		<div class="container py-lg-3">
 		  <div class="w3l-hny-login">
 			<div class="w3l-hny-login-info">
+			<cfset  Session.messageArray = ArrayNew(1) >
+			<cfset   ArrayAppend(Session.messageArray, "Login Now","true") >
 			<cfif IsDefined("session.messageArray") >
                 <div id="message" class="alert alert-success" role="alert">
                     #session.messageArray[1]#

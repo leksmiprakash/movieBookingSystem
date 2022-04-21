@@ -1,7 +1,4 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
--->
+
 <!doctype html>
 <html lang="zxx">
 <!-- Mirrored from demo.w3layouts.com/demos_new/template_demo/02-07-2020/proshowz-liberty-demo_Free/1734035036/web/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Apr 2022 12:03:51 GMT -->
@@ -71,7 +68,7 @@ if(typeof _bsa !== 'undefined' && _bsa) {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 </style>
-
+<cfoutput>
 	<!-- header -->
 	<header id="site-header" class="w3l-header fixed-top">
 		<!--/nav-->
@@ -81,11 +78,11 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 							aria-hidden="true"></span>
 						ProShowz </a></h1>
 				<!-- if logo is image enable this   
-						<a class="navbar-brand" href="#index.html">
+						<a class="navbar-brand" href="##index.html">
 							<img src="image-path" alt="Your logo" title="Your logo" style="height:35px;" />
 						</a> -->
 				<button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
-					data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+					data-target="##navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
 					aria-label="Toggle navigation">
 					<!-- <span class="navbar-toggler-icon"></span> -->
 					<span class="fa icon-expand fa-bars"></span>
@@ -98,47 +95,56 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 							<a class="nav-link" href="index.html">Home</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="about.html">About</a>
+							<a class="nav-link" href="about.cfm">About</a>
 						</li>
 						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+							<a class="nav-link dropdown-toggle" href="##" id="navbarDropdown" role="button"
 								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Genre <span class="fa fa-angle-down"></span>
 							</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="genre.html">Action</a>
-								<a class="dropdown-item" href="genre.html">Drama</a>
-								<a class="dropdown-item" href="genre.html">Tv Series</a>
+								<a class="dropdown-item" href="genre.cfm?genre='Action'">Action</a>
+								<a class="dropdown-item" href="genre.cfm?genre='Drama'">Drama</a>
+								<a class="dropdown-item" href="genre.cfm?genre='Comedy'">Comedy</a>
+								<a class="dropdown-item" href="genre.cfm?genre='Adventure'">Adventure</a>
+								<a class="dropdown-item" href="genre.cfm?genre='Biography'">Biography</a>
+								<a class="dropdown-item" href="genre.cfm?genre='Thriller'">Thriller</a>
+								<a class="dropdown-item" href="genre.cfm?genre='Horror'">Horror</a>
+								<a class="dropdown-item" href="genre.cfm?genre='Sci-Fi'">Sci-Fi</a>
 							</div>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="pricing.html">Plans</a>
 						</li>
 						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+							<a class="nav-link dropdown-toggle" href="##" id="navbarDropdown1" role="button"
 								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Blog <span class="fa fa-angle-down"></span>
+								Account <span class="fa fa-angle-down"></span>
 							</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-								<a class="dropdown-item" href="blog.html">Blog</a>
-								<a class="dropdown-item" href="blog-single.html">Blog Single</a>
-							</div>
+							<cfif IsDefined ('session.userName')>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+									<a class="dropdown-item" href="myBookings.cfm">Bookings</a>
+									<a class="dropdown-item" href="logout.cfm">Logout</a>
+								</div>
+							<cfelse>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+									<a class="dropdown-item" href="login.cfm">Sign In</a>
+									<a class="dropdown-item" href="registration.cfm">Sign Up</a>
+								</div>
+							</cfif>
 						</li>
-
+						
 						<li class="nav-item">
-							<a class="nav-link" href="contact.html">Contact</a>
+							<a class="nav-link" href="contact.cfm">Contact</a>
 						</li>
 					</ul>
 
 					<!--/search-right-->
 					<!--/search-right-->
 					<div class="search-right">
-						<a href="#search" class="btn search-hny mr-lg-3 mt-lg-0 mt-4" title="search">Search <span
+						<a href="##search" class="btn search-hny mr-lg-3 mt-lg-0 mt-4" title="search">Search <span
 								class="fa fa-search ml-3" aria-hidden="true"></span></a>
 						<!-- search popup -->
 						<div id="search" class="pop-overlay">
 							<div class="popup">
-								<form action="#" method="post" class="search-box">
+								<form action="##" method="post" class="search-box">
 									<input type="search" placeholder="Search your Keyword" name="search"
 										required="required" autofocus="">
 									<button type="submit" class="btn"><span class="fa fa-search"
@@ -166,7 +172,7 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 									</ul>
 								</div>
 							</div>
-							<a class="close" href="#close">×</a>
+							<a class="close" href="##close">×</a>
 						</div>
 						<!-- /search popup -->
 						<!--/search-right-->
@@ -194,3 +200,4 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 		<!--//nav-->
 	</header>
 	<!-- //header -->
+	</cfoutput>

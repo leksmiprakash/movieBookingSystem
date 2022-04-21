@@ -221,7 +221,9 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 		<div class="container py-lg-3">
 		  <div class="w3l-hny-login">
 			<div class="w3l-hny-login-info">
-            <cfif IsDefined("session.messageArray") >
+			<cfset  Session.messageArray = ArrayNew(1) >
+			<cfset   ArrayAppend(Session.messageArray, "Register Now","true") >
+           <cfif IsDefined("session.messageArray") >
                 <div id="message" class="alert alert-success" role="alert">
                     #session.messageArray[1]#
                 </div>
@@ -251,6 +253,10 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 				<label>Email</label>
 				<div class="input-group">
 				    <input type="email" name="email" placeholder="" required="" autofocus>
+				</div>
+				<label>Username</label>
+				<div class="input-group">
+				    <input type="text" name="userName" placeholder="" required="" autofocus>
 				</div>
 				<label>Password</label>
 				<div class="input-group">

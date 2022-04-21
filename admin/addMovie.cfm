@@ -89,7 +89,7 @@
                         </div>
                         <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
                             <label for="inputEmail">Movie Duration</label>
-                            <input class="form-control" id="movieDuration" name="movieDuration" type="text" />
+                            <input class="form-control" id="movieDuration" name="movieDuration" type="text" placeholder="hrs.mins" />
                         </div>
                         <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
                             <label for="inputEmail">Movie Release Date</label>
