@@ -164,12 +164,52 @@
         <cfreturn getShowTimeById> 
     </cffunction>
 
-    <cffunction name="getScreens" access="remote" returnType="any" returnFormat="JSON" output="false">
-        <cfargument name="theatreId" required="true">
-        <cfquery name = "getScreensById"    >
-            select *  from screens where theatre_id=<cfqueryparam value="#arguments.theatreId#"  cfsqltype="cf_sql_integer">      
+    <cffunction name="showTimeTheatre" access="remote" returnType="any" returnFormat="JSON" output="false">
+        <cfargument name="editid" required="true">
+        <cfquery name = "getShowTimeById"    >
+            select *  from ShowTimes where theatre_id=<cfqueryparam value="#arguments.editid#"  cfsqltype="cf_sql_integer">      
         </cfquery>
-        <cfreturn getScreensById> 
+        <cfreturn getShowTimeById> 
+    </cffunction>
+
+    <cffunction  name="showTimeData" access="remote">
+        <cfset session.messageArray = ArrayNew(1) /> 
+        <cfif form.tId eq "">
+            <cfset ArrayAppend(session.messageArray, "Please enter the Theatre Name") />
+        </cfif>
+        <cfif form.showNameId eq "">
+            <cfset ArrayAppend(session.messageArray, "Please enter the first name") />
+        </cfif>
+        <cfif form.sTime eq "">
+            <cfset ArrayAppend(session.messageArray, "Please enter the last Name") />
+        </cfif>
+        <cfif ArrayIsEmpty(session.messageArray)>
+            <cfif form.updateId gt 0>
+                
+                <cfquery name="updateQuery">
+                    UPDATE showtimes 
+                    SET theatre_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#form.tId#">, 
+                        showName = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.showNameId#">,
+                        start_time = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.sTime#">
+                    WHERE st_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#form.updateId#"> 
+                </cfquery>
+                <cflocation url="../dashboard.cfm" addtoken="no">
+                <cfset ArrayAppend(session.messageArray, "Updated successfully") />
+            <cfelse>
+                
+                <cfquery result="result">
+                    INSERT INTO showtimes (theatre_id, showName, start_time)
+                    VALUES (
+                        <cfqueryparam value="#form.tId#" cfsqltype="CF_SQL_INTEGER">,
+                        <cfqueryparam value="#form.showNameId#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#form.sTime#" cfsqltype="cf_sql_varchar">
+                    )
+                </cfquery>
+                <cflocation url="../addShowTime.cfm" addtoken="no">
+                <cfset ArrayAppend(session.messageArray, "Inserted successfully") />
+            </cfif>
+        </cfif>
+        <cfreturn session.messageArray>
     </cffunction>
 
 
@@ -180,5 +220,6 @@
         <cfreturn variables.getShows>    
     </cffunction>
 
+    
 
 </cfcomponent>

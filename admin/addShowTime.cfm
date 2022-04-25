@@ -22,7 +22,6 @@
                         <thead>
                             <tr>
                                 <th>Theatre Name</th>
-                                <th>Screen Name</th>
                                 <th>Show</th>
                                 <th>Show Starting Time</th>
                                 <th>Action</th>
@@ -31,7 +30,6 @@
                         <tfoot>
                             <tr>
                                 <th>Theatre Name</th>
-                                <th>Screen Name</th>
                                 <th>Show</th>
                                 <th>Show Starting Time</th>
                                 <th>Action</th>
@@ -42,7 +40,6 @@
                                 <tr>
                                 
                                     <td>#alldatas.getTheatre_id()#</td>
-                                    <td>#alldatas.getScreen_id()#</td>
                                     <td>#alldatas.getshowName()#</td>
                                     <td>#alldatas.getStart_time()#</td>
                                     
@@ -64,7 +61,7 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="post" action="components/theatresDetails.cfc?method=theatreData" enctype="multipart/form-data">
+                <form method="post" action="components/theatresDetails.cfc?method=showTimeData" enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Add Details</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -84,18 +81,7 @@
                             </select>
                         </div>
                         <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
-                            <label for="inputEmail">Screen Name</label>
-                            <cfset ScreensObj=CreateObject("component","components.theatresDetails")/>
-                            <cfset screens=ScreensObj.displayallScreendata()/>
-                            <select name="screenId" class="form-control" id="screenId" >
-                                <option value="">Select</option>
-                                <cfloop array="#screens#" item="screen">
-                                    <option value="#screen.getScreen_id()#">#screen.getScreen_name()#</option>
-                                </cfloop>
-                            </select>
-                        </div>
-                        <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
-                            <label for="inputEmail">Screen Name</label>
+                            <label for="inputEmail">Show Name</label>
                             <cfset ShowNamesObj=CreateObject("component","components.theatresDetails")/>
                             <cfset showNames=ShowNamesObj.displayallShowNamedata()/>
                             <select name="showNameId" class="form-control" id="showNameId" >
@@ -139,7 +125,6 @@ $(document).on('click', '.editbtn', function() {
             console.log(p);
             $("#updateId").val(p.DATA[0][0]);
             $("#tId").val(p.DATA[0][1]).change();
-            $("#screenId").val(p.DATA[0][2]).change();
             $("#showNameId").val(p.DATA[0][3]).change();
             $("#sTime").val(p.DATA[0][4]);
         }

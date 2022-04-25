@@ -343,6 +343,71 @@
 		});
 	});
 </script>
+<script>
+	$(document).ready(function () {
+		$('.owl-four.owl-four').owlCarousel({
+			loop: true,
+			margin: 20,
+			nav: false,
+			responsiveClass: true,
+			autoplay: false,
+			autoplayTimeout: 5000,
+			autoplaySpeed: 1000,
+			autoplayHoverPause: false,
+			responsive: {
+				0: {
+					items: 1,
+					nav: false
+				},
+				480: {
+					items: 2,
+					nav: true
+				},
+				667: {
+					items: 2,
+					nav: true
+				},
+				1000: {
+					items: 2,
+					nav: true
+				}
+			}
+		})
+	})
+</script>
+<script>
+	$(document).ready(function () {
+		$('.owl-two').owlCarousel({
+			loop: true,
+			margin: 40,
+			nav: false,
+			responsiveClass: true,
+			autoplay: true,
+			autoplayTimeout: 5000,
+			autoplaySpeed: 1000,
+			autoplayHoverPause: false,
+			responsive: {
+				0: {
+					items: 1,
+					nav: false
+				},
+				480: {
+					items: 2,
+					nav: true
+				},
+				667: {
+					items: 2,
+					margin: 20,
+					nav: true
+				},
+				1000: {
+					items: 3,
+					nav: true
+				}
+			}
+		})
+	})
+</script>
 <!--//MENU-JS-->
 
 <script src="assets/js/bootstrap.min.js"></script>
