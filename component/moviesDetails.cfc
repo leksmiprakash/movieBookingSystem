@@ -18,4 +18,11 @@
         </cfquery>
         <cfreturn getMovieById> 
     </cffunction>
+    <cffunction name="displayMoviebyId" access="remote" returnType="any" returnFormat="JSON" output="false">
+        <cfargument name="id" required="true">
+        <cfquery name = "getMovieById"    >
+            select *  from movies where movieID=<cfqueryparam value="#arguments.id#"  cfsqltype="cf_sql_integer">  and status = "1"    
+        </cfquery>
+        <cfreturn getMovieById> 
+    </cffunction>
 </cfcomponent>

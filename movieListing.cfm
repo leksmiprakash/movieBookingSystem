@@ -29,22 +29,25 @@
                     <cfloop array="#Movies#" item="Movie">					
                         <div class="item vhny-grid">
                             <div class="box16 mb-0">
-                                <a href="genre-single.html">
+                                <a href="movieSingle.cfm">
                                     <figure>
-                                        <img class="img-fluid" src="movie/#limitedMovie.getMovieImg()#" alt="">
+                                        <img class="img-fluid" src="movie/#Movie.getMovieImg()#" alt="">
                                     </figure>
                                     <div class="box-content">
-                                        <h3 class="title">#limitedMovie.getMovieTitle()#</h3>
-                                        <h4> <span class="post"><span class="fa fa-clock-o"> </span> #limitedMovie.getMovieDuration()# Hrs
+                                        <h3 class="title">#Movie.getMovieTitle()#</h3>
+                                        <h4> <span class="post"><span class="fa fa-clock-o"> </span> #Movie.getMovieDuration()# Hrs
 
                                             </span>
 
                                             <span class="post fa fa-heart text-right"></span>
                                         </h4>
                                     </div>
-                                    <span class="fa fa-play video-icon" aria-hidden="true"></span>
+                                    
                                 </a>
                             </div>
+							<div class="button-center text-center mt-4">
+								<a href="movieSingle.cfm?id=#Movie.getMovieID()#" class="btn watch-button">Book now</a>
+							</div>
                         </div>
                     </cfloop>
                 </div>
