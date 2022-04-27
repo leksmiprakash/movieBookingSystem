@@ -14,10 +14,14 @@
 	<link href="assets/css/googleApis.css" rel="stylesheet">
 	<!-- Template CSS -->
 	<link rel="stylesheet" href="assets/css/style.css">
+	<!-- Booking CSS -->
+	<link href="bookingAssets/css/style.css" rel="stylesheet" type="text/css" media="all" />
+	<script src="bookingAssets/js/jquery-1.11.0.min.js"></script>
+	<script src="bookingAssets/js/jquery.seat-charts.js"></script>
 </head>
-
-<body>
-<script src="../../../../../../../m.servedby-buysellads.com/monetization.js" type="text/javascript"></script>
+<script async src='bookingSeates/js/autotrack.js'></script>
+<meta name="robots" content="noindex">
+<body><link rel="stylesheet" href="bookingAssets/p.w3layouts.com/assests/css/font-awesome.min.css">
 <script>
 (function(){
 	if(typeof _bsa !== 'undefined' && _bsa) {

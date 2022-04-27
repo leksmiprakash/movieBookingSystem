@@ -27,7 +27,7 @@
 									</li>
 								</ul>
 								<div class="share-more d-flex mt-4">
-									<a href="##" class="btn read-button">Book Now</a>
+									<a href="bookingSeats.cfm" class="btn read-button">Book Now</a>
 								</div>
 							</div>
 						</div>
