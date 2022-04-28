@@ -1,4 +1,17 @@
 <cfinclude  template = "includes/header.cfm"  runOnce = "true"></cfinclude>
+<style>
+body{
+	padding:0;
+	margin:0;
+    background:url(bookingAssets/images/banner2.jpg) no-repeat center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    -moz-background-size: cover;
+	font-family: 'Open Sans', sans-serif !important;
+}
+</style>
 <div class="content">
 	<br><br>
 	<div class="main">
@@ -67,7 +80,7 @@
 						},
 						click: function () { //Click event
 							if (this.status() == 'available') { //optional seat
-								$('<li>Row'+(this.settings.row+1)+' Seat'+this.settings.label+'</li>')
+								$('<li>Row-'+(this.settings.row+1)+' Seat-'+this.settings.label+'</li>')
 									.attr('id', 'cart-item-'+this.settings.id)
 									.data('seatId', this.settings.id)
 									.appendTo($cart);

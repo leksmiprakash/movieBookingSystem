@@ -29,17 +29,7 @@ nav.horizontal ul li{	display: inline-block;}/* horizontal menu */
 img{max-width:100%;}
 /*end reset*/
 
-body{
-	padding:0;
-	margin:0;
-    background:url(../images/banner2.jpg) no-repeat center;
-    background-size: cover;
-    -webkit-background-size: cover;
-    -o-background-size: cover;
-    -ms-background-size: cover;
-    -moz-background-size: cover;
-	font-family: 'Open Sans', sans-serif !important;
-}
+
 
 h1,h2,h3,h4,h5,h6{
 	margin:0;	

@@ -116,7 +116,7 @@
 <script>
 $(document).on('change', '#tId', function() {
     var theatreId = $( "#tId" ).val();
-    alert(theatreId);
+   // alert(theatreId);
      $.ajax({
         type: "post",
         url: 'components/theatresDetails.cfc?method=showTimeTheatre',
@@ -125,9 +125,19 @@ $(document).on('change', '#tId', function() {
         },
         
         success: function(response) {
-            p = JSON.parse(response);
-            console.log(p);
-            $("#stData").html("<option value='"+ p.st_id +"'>" + p.showName + "</option>"); 
+            var formoption = "";
+            data = JSON.parse(response);
+            console.log(data);
+            $.each(data, function(v) {
+                var result = data[v];
+                for (var i = 0; i < result.length; i++) {
+                    $("#stData").append("<option>"+result[i]+"</option>");
+                }
+               // formoption += "<option value='" + data[v] + "'>" + data[v]+ "</option>";
+            });
+            // $('#stData').html(formoption);
+
+            //$("#stData").html("<option value='"+ p.st_id +"'>" + p.showName + "</option>"); 
         }
     });
 });

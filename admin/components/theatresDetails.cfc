@@ -167,7 +167,7 @@
     <cffunction name="showTimeTheatre" access="remote" returnType="any" returnFormat="JSON" output="false">
         <cfargument name="editid" required="true">
         <cfquery name = "getShowTimeById"    >
-            select *  from ShowTimes where theatre_id=<cfqueryparam value="#arguments.editid#"  cfsqltype="cf_sql_integer">      
+            select st_id,showName  from ShowTimes where theatre_id=<cfqueryparam value="#arguments.editid#"  cfsqltype="cf_sql_integer">      
         </cfquery>
         <cfreturn getShowTimeById> 
     </cffunction>

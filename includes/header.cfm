@@ -19,9 +19,6 @@
 	<script src="bookingAssets/js/jquery-1.11.0.min.js"></script>
 	<script src="bookingAssets/js/jquery.seat-charts.js"></script>
 </head>
-<script async src='bookingSeates/js/autotrack.js'></script>
-<meta name="robots" content="noindex">
-<body><link rel="stylesheet" href="bookingAssets/p.w3layouts.com/assests/css/font-awesome.min.css">
 <script>
 (function(){
 	if(typeof _bsa !== 'undefined' && _bsa) {
@@ -61,10 +58,9 @@ if(typeof _bsa !== 'undefined' && _bsa) {
      ga('require', 'urlChangeTracker');
      ga('send', 'pageview');
    </script>
-<script async src='../../../../../../js/autotrack.js'></script>
-
+<script async src='bookingSeates/js/autotrack.js'></script>
 <meta name="robots" content="noindex">
-<body><link rel="stylesheet" href="../../../../../../assests/css/font-awesome.min.css">
+<body><link rel="stylesheet" href="bookingAssets/p.w3layouts.com/assests/css/font-awesome.min.css">
 <!-- New toolbar-->
 <style>
 * {

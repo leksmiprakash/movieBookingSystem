@@ -27,7 +27,21 @@
 									</li>
 								</ul>
 								<div class="share-more d-flex mt-4">
-									<a href="bookingSeats.cfm" class="btn read-button">Book Now</a>
+									
+									<cfset variables.theratreShowObject=CreateObject("component","component.moviesDetails")/>
+                            		<cfset variables.eachtheatres=theratreShowObject.displayMovietheatres(#url.id#)/>
+									<table class="table table-bordered">
+										<cfloop QUERY="#eachtheatres#">
+											<tr>
+												<th >#t_name#</th>
+												<cfset variables.ShowTimeObject=CreateObject("component","component.moviesDetails")/>
+                            					<cfset variables.eachTimes=ShowTimeObject.displayShowTimes(#url.id#,#theatre_id#)/>
+												<cfloop QUERY="#eachTimes#">
+													<td><a href="bookingSeats.cfm?#s_id#" class="btn btn-info">#showName# - #start_time#</a></td>
+												</cfloop>
+											</tr>
+										</cfloop>
+									</table>
 								</div>
 							</div>
 						</div>
