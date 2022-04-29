@@ -58,7 +58,7 @@
             join movies on shows.movie_id = movies.movieID
             join theatres on shows.theatre_id = theatres.t_id
             join showtimes on shows.st_id = showtimes.st_id
-            where movies.movieID=<cfqueryparam value="#arguments.id#"  cfsqltype="cf_sql_integer">  and movies.status = "1"    
+            where shows.s_id=<cfqueryparam value="#arguments.id#"  cfsqltype="cf_sql_integer"> 
         </cfquery>
         <cfreturn getMovieById> 
     </cffunction>

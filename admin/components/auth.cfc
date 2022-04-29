@@ -25,9 +25,9 @@
                 ");
                 results = qService.execute().getResult();
                 if (results.recordCount eq 1){
-                    Session.userID = results.user_id;
-                    Session.userName = results.userName;
-                    Session.loggedin = true; 
+                    Session.adminID = results.user_id;
+                    Session.adminUserName = results.userName;
+                    Session.loggedinAdmin = true; 
                     location("../dashboard.cfm","no");
                     ArrayAppend(Session.messageArray, "Logged In Successfully","true"); 
                 } 

@@ -7,6 +7,9 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<cfheader name="cache-control" value="no-cache, no-store, must-revalidate"> 
+	<cfheader name="pragma" value="no-cache">
+	<cfheader name="expires" value="#getHttpTimeString(now())#">
 	<title>ProShowz </title>
 	<!-- Template CSS -->
 	<link rel="stylesheet" href="assets/css/style-liberty.css">
@@ -97,22 +100,7 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 						<li class="nav-item">
 							<a class="nav-link" href="about.cfm">About</a>
 						</li>
-						<!--<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="##" id="navbarDropdown" role="button"
-								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Genre <span class="fa fa-angle-down"></span>
-							</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="genre.cfm?genre='Action'">Action</a>
-								<a class="dropdown-item" href="genre.cfm?genre='Drama'">Drama</a>
-								<a class="dropdown-item" href="genre.cfm?genre='Comedy'">Comedy</a>
-								<a class="dropdown-item" href="genre.cfm?genre='Adventure'">Adventure</a>
-								<a class="dropdown-item" href="genre.cfm?genre='Biography'">Biography</a>
-								<a class="dropdown-item" href="genre.cfm?genre='Thriller'">Thriller</a>
-								<a class="dropdown-item" href="genre.cfm?genre='Horror'">Horror</a>
-								<a class="dropdown-item" href="genre.cfm?genre='Sci-Fi'">Sci-Fi</a>
-							</div>
-						</li>-->
+						
 						<li class="nav-item">
 							<a class="nav-link" href="movieListing.cfm">Movies</a>
 						</li>

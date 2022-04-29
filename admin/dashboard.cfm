@@ -96,6 +96,9 @@
             </div>
         </div>
         <!-- Content Row -->
+        <cfif StructKeyExists(session, "adminID")>
+            #session.adminID#
+        </cfif>
     </div>
     <!-- /.container-fluid -->
      </div>
