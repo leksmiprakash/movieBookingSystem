@@ -51,14 +51,14 @@
     </cffunction>
     
     <cffunction name="displayMovieShowsbyId" access="public" returnType="any" output="false">
-        <cfargument name="id" required="true">
+        <cfargument name="showId" required="true">
         <cfquery name = "getMovieById"    >
-            select movies.*,shows.*,showtimes.showName,showtimes.start_time,theatres.t_name 
+            select movies.*,shows.*,showtimes.showName,showtimes.start_time,theatres.t_name,theatres.price  
             from shows 
             join movies on shows.movie_id = movies.movieID
             join theatres on shows.theatre_id = theatres.t_id
             join showtimes on shows.st_id = showtimes.st_id
-            where shows.s_id=<cfqueryparam value="#arguments.id#"  cfsqltype="cf_sql_integer"> 
+            where shows.s_id=<cfqueryparam value="#arguments.showId#"  cfsqltype="cf_sql_integer"> 
         </cfquery>
         <cfreturn getMovieById> 
     </cffunction>

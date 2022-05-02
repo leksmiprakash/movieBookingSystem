@@ -61,9 +61,9 @@ if(typeof _bsa !== 'undefined' && _bsa) {
      ga('require', 'urlChangeTracker');
      ga('send', 'pageview');
    </script>
-<script async src='bookingSeates/js/autotrack.js'></script>
+<script async src='bookingAssets/js/autotrack.js'></script>
 <meta name="robots" content="noindex">
-<body><link rel="stylesheet" href="bookingAssets/p.w3layouts.com/assests/css/font-awesome.min.css">
+<body>
 <!-- New toolbar-->
 <style>
 * {

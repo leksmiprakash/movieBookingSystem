@@ -49,5 +49,12 @@
         <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <script src="../js/demo/datatables-demo.js"></script>
+        <script>
+            $(document).ready(function(){
+                setTimeout(function() {
+                    $('#message').fadeOut('fast');
+                }, 3000); // <-- time in milliseconds
+            });
+        </script>
     </body>
 </html>

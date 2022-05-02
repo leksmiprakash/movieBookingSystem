@@ -6,20 +6,23 @@
      </cffunction>
 
     <cffunction  name="theatreData" access="remote">
-        <cfset session.messageArray = ArrayNew(1) /> 
+        <cfset session.theatreArray = ArrayNew(1) /> 
         <cfif form.tName eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the Theatre Name") />
+            <cfset ArrayAppend(session.theatreArray, "Please enter the Theatre Name") />
         </cfif>
         <cfif form.tAddress eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the first name") />
+            <cfset ArrayAppend(session.theatreArray, "Please enter the first name") />
         </cfif>
         <cfif form.tEmail eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the last Name") />
+            <cfset ArrayAppend(session.theatreArray, "Please enter the last Name") />
         </cfif>
         <cfif form.tPhone eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the gender") />
+            <cfset ArrayAppend(session.theatreArray, "Please enter the gender") />
         </cfif>
-        <cfif ArrayIsEmpty(session.messageArray)>
+         <cfif form.tRate eq "">
+            <cfset ArrayAppend(session.theatreArray, "Please enter the Rate") />
+        </cfif>
+        <cfif ArrayIsEmpty(session.theatreArray)>
             <cfif form.updateId gt 0>
                 <cfif form.tPhoto != "">
                     <cffile action="upload"
@@ -37,11 +40,12 @@
                         t_address = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tAddress#">,
                         t_email = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tEmail#">,
                         t_phone = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tPhone#">,
+                        price = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tRate#">,
                         t_photo = <cfqueryparam CFSQLType="cf_sql_varchar" value="#variables.img#">
                     WHERE t_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#form.updateId#"> 
                 </cfquery>
-                <cflocation url="../dashboard.cfm" addtoken="no">
-                <cfset ArrayAppend(session.messageArray, "Updated successfully") />
+                <cfset ArrayAppend(session.theatreArray, "Updated successfully") />
+                <cflocation url="../addTheatre.cfm" addtoken="no">
             <cfelse>
                 <cfif form.tPhoto != "">
                     <cffile action="upload"
@@ -60,22 +64,31 @@
                         <cfqueryparam value="#form.tAddress#" cfsqltype="cf_sql_varchar">,
                         <cfqueryparam value="#form.tEmail#" cfsqltype="cf_sql_varchar">,
                         <cfqueryparam value="#form.tPhone#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#form.tRate#" cfsqltype="cf_sql_varchar">,
                         <cfqueryparam value="#img#" cfsqltype="cf_sql_varchar">
                     )
                 </cfquery>
+                <cfset ArrayAppend(session.theatreArray, "Inserted successfully") />
                 <cflocation url="../addTheatre.cfm" addtoken="no">
-                <cfset ArrayAppend(session.messageArray, "Inserted successfully") />
             </cfif>
         </cfif>
-        <cfreturn session.messageArray>
+        <cfreturn session.theatreArray>
     </cffunction>
-    <cffunction name="deleteQuery" output="false" access="public">
+
+   <cffunction name="deleteTheatre" access="remote" returnType="any" returnFormat="JSON" output="false">
+        <cfargument name="editId" required="true">
         <cfquery name="DeleteData"> 
-                DELETE FROM theatres 
-                WHERE t_id = #URL.id# 
+            DELETE FROM theatres 
+            WHERE t_id = <cfqueryparam value="#arguments.editId#"  cfsqltype="cf_sql_integer">
         </cfquery> 
-        <cfreturn>
+        <cfif DeleteData.recordCount EQ 1>      
+            <cfset variables.returnValue = true>
+        <cfelse>
+            <cfset variables.returnValue = false>
+        </cfif>
+        <cfreturn variables.returnValue>
     </cffunction>
+
     <cffunction name="displaydata" access="remote" returnType="any" returnFormat="JSON" output="false">
           <cfargument name="editid" required="true">
           <cfquery name = "getTheatreById"    >

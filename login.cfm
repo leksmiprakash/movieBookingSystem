@@ -221,13 +221,11 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 		<div class="container py-lg-3">
 		  <div class="w3l-hny-login">
 			<div class="w3l-hny-login-info">
-			<cfset  Session.messageArray = ArrayNew(1) >
-			<cfset   ArrayAppend(Session.messageArray, "Login Now","true") >
-			<cfif IsDefined("session.messageArray") >
-                <div id="message" class="alert alert-success" role="alert">
-                    #session.messageArray[1]#
-                </div>
-            </cfif>
+			<cfif StructKeyExists(session, "messageArray")>
+				<div id="message" class="alert alert-success" role="alert">
+					#session.messageArray[1]#
+				</div>
+			</cfif>
 			  <h2>Login to your Account</h2>
 			  <form action="component/login.cfc?method=getUserDetails" method="post" name="signup" id="signup" >
 				<label>Email</label>
@@ -435,3 +433,10 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 </script>
 <!--//MENU-JS-->
 <script src="assets/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function(){
+		setTimeout(function() {
+			$('#message').fadeOut('fast');
+		}, 3000); // <-- time in milliseconds
+	});
+</script>

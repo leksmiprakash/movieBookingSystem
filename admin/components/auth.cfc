@@ -28,12 +28,13 @@
                     Session.adminID = results.user_id;
                     Session.adminUserName = results.userName;
                     Session.loggedinAdmin = true; 
-                    location("../dashboard.cfm","no");
                     ArrayAppend(Session.messageArray, "Logged In Successfully","true"); 
+                    location("../dashboard.cfm","no");
                 } 
                 else {
-                    location("../login.cfm","no");
+                    
                     ArrayAppend(Session.messageArray, "LogIn Error","true"); 
+                    location("../login.cfm","no");
                 } 
             }
             return Session.messageArray ;

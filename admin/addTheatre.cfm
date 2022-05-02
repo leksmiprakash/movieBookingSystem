@@ -8,7 +8,11 @@
             <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" href="##" data-toggle="modal" data-target="##theatreModal">
                 <i class="fas fa-plus fa-sm text-white-50"></i> Add Theatre </a>
         </div>
-        
+        <cfif StructKeyExists(session, "theatreArray")>
+            <div id="message" class="alert alert-success" role="alert">
+                #session.theatreArray[1]#
+            </div>
+        </cfif>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -26,6 +30,7 @@
                                 <th>Theatre Email</th>
                                 <th>Theatre Phone</th>
                                 <th>Theatre Photo</th>
+                                <th>Seat Rate</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -36,17 +41,18 @@
                                 <th>Theatre Email</th>
                                 <th>Theatre Phone</th>
                                 <th>Theatre Photo</th>
+                                <th>Seat Rate</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
                         <tbody>
                             <cfloop array="#alldata#" item="alldatas">
                                 <tr>
-                                
                                     <td>#alldatas.getT_name()#</td>
                                     <td>#alldatas.getT_address()#</td>
                                     <td>#alldatas.getT_email()#</td>
                                     <td>#alldatas.getT_phone()#</td>
+                                    <td>#alldatas.getPrice()#</td>
                                     <td><img src="../theatre/#alldatas.getT_photo()#" width="80px" height="80px"></td>
                                     <td> <a class="btn btn btn-outline-primary btn-sm button-18 editbtn" data-conid="#alldatas.getT_id()#" id="editbtn"  data-toggle="modal" data-target="##theatreModal">
                                             Edit
@@ -90,6 +96,10 @@
                             <input class="form-control" id="tPhone" name="tPhone" type="text" />
                         </div>
                         <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
+                            <label for="inputEmail">Seat Rate</label>
+                            <input class="form-control" id="tRate" name="tRate" type="text" />
+                        </div>
+                        <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
                             <label for="inputEmail">Theatre Photo</label>
                             <input class="form-control" id="tPhoto" name="tPhoto" type="file" />
                             <input type="hidden" name="old_file" id="old_file" value="" />
@@ -128,6 +138,7 @@ $(document).on('click', '.editbtn', function() {
             $("#tEmail").val(p.DATA[0][3]);
             $("#tPhone").val(p.DATA[0][4]);
             $("#old_file").val(p.DATA[0][5]);
+            $("#tRate").val(p.DATA[0][6]);
         }
     });
 });

@@ -8,10 +8,14 @@
             <a href="##" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                     class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
         </div>
-
+            <cfif StructKeyExists(session, "messageArray")>
+                <div id="message" class="alert alert-success" role="alert">
+                    #session.messageArray[1]#
+                </div>
+            </cfif>
         <!-- Content Row -->
         <div class="row">
-
+            
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-3 col-md-6 col-lg-3 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
@@ -96,9 +100,6 @@
             </div>
         </div>
         <!-- Content Row -->
-        <cfif StructKeyExists(session, "adminID")>
-            #session.adminID#
-        </cfif>
     </div>
     <!-- /.container-fluid -->
      </div>

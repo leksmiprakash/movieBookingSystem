@@ -21,7 +21,7 @@
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
-
+<cfoutput>
 <body class="bg-gradient-primary">
 
     <div class="container">
@@ -40,6 +40,11 @@
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <cfif StructKeyExists(session, "messageArray")>
+                                            <div id="message" class="alert alert-success" role="alert">
+                                                #session.messageArray[1]#
+                                            </div>
+                                        </cfif>
                                     </div>
                                     <form method="post" action="components/auth.cfc?method=getUserDetails" class="user">
                                         <div class="form-group">
@@ -69,7 +74,7 @@
         </div>
 
     </div>
-
+</cfoutput>
     <!-- Bootstrap core JavaScript-->
     <script src="../../vendor/jquery/jquery.min.js"></script>
     <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -79,7 +84,13 @@
 
     <!-- Custom scripts for all pages-->
     <script src="../../js/sb-admin-2.min.js"></script>
-
+    <script>
+        $(document).ready(function(){
+            setTimeout(function() {
+                $('#message').fadeOut('fast');
+            }, 3000); // <-- time in milliseconds
+        });
+    </script>
 </body>
 
 </html>

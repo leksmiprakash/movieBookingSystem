@@ -43,7 +43,9 @@ body{
 						<li>: <span id="counter">0</span></li>
 						<input type="hidden" name="bookCount" id="bookCount" >
 						<li>: <b><i>$</i><span id="total">0</span></b></li>
-						<input type="hidden" name="bookTotal" id="bookTotal" >
+						<input type="hidden" name="bookTotal" id="bookTotal" >	
+						<input type="hidden" value="#url.showId#" name="showId" id="showId" >
+						<input type="hidden" value="#singleMovie.price#" name="price" id="price" >
 					</ul>
 					<div class="clear"></div>
 					<ul id="selected-seats" class="scrollbar scrollbar1"></ul>
@@ -57,37 +59,13 @@ body{
 
 </cfoutput>
 			<script type="text/javascript">
-				// $.ajax({
-				// 	type: "post",
-				// 	url: 'component/moviesDetails.cfc?method=displayMovieShowsbyId',
-				// 	data: {
-				// 		editid: movieId
-				// 	},
-				// 	success: function(response) {
-				// 		p = JSON.parse(response);
-				// 		console.log(p);
-				// 		$("#updateId").val(p.DATA[0][0]);
-				// 		$("#movieTitle").val(p.DATA[0][2]);
-				// 		$("#movieGenre").val(p.DATA[0][3]);
-				// 		$("#movieDuration").val(p.DATA[0][4]);
-						
-				// 		let dateStr = new Date(p.DATA[0][5]);
-				// 		var now = new Date(p.DATA[0][5]);
-				// 		var day = ("0" + now.getDate()).slice(-2);
-				// 		var month = ("0" + (now.getMonth() + 1)).slice(-2);
-				// 		var today = now.getFullYear() + "-" + (month) + "-" + (day);
-				// 		$("#movieRelDate").val(today);
-				// 		$("#movieDirector").val(p.DATA[0][6]);
-				// 		$("#movieActors").val(p.DATA[0][7]);
-				// 		$("#old_file").val(p.DATA[0][1]);
-				// 	}
-				// });
-				var price = 10; //price
+				var rate = $('#price').val(); //price
+				var price = parseInt(rate);
 				$(document).ready(function() {
 					var $cart = $('#selected-seats'), //Sitting Area
 					$counter = $('#counter'), //Votes
 					$total = $('#total'); //Total money
-					
+					var showId = $('#showId');
 					var sc = $('#seat-map').seatCharts({
 						map: [  //Seating chart
 							'aaaaaaaaaa',
@@ -144,7 +122,8 @@ body{
 						}
 					});
 					//sold seat
-					sc.get(['1_2', '4_4','4_5','6_6','6_7','8_5','8_6','8_7','8_8', '10_1', '10_2']).status('unavailable');
+					var booking =['1_2', '4_4','4_5','6_6','6_7','8_5','8_6','8_7','8_8', '10_1', '10_2'];
+					sc.get(booking).status('unavailable');
 						
 				});
 				//sum total money
