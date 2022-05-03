@@ -62,4 +62,36 @@
         </cfquery>
         <cfreturn getMovieById> 
     </cffunction>
+    <cffunction name="displayShowSeats" access="public" returnType="any" output="false">
+        <cfargument name="showId" required="true">
+        <cfquery name = "getSeatById"    >
+            select no_seats  from bookings where show_id=<cfqueryparam value="#arguments.showId#" cfsqltype="cf_sql_integer"> 
+        </cfquery>
+        <cfreturn getSeatById> 
+    </cffunction>
+
+    <cffunction  name="bookingData" access="remote">
+        <cfset session.bookedArray = ArrayNew(1) /> 
+        <cfif form.bookSeats eq "">
+            <cfset ArrayAppend(session.bookedArray, "Please select Seats to continue") />
+        </cfif>
+        
+        <cfif ArrayIsEmpty(session.bookedArray)>
+            <cfquery result="result">
+                INSERT INTO bookings (t_id, user_id, show_id, no_seats, amount, seat_count)
+                VALUES (
+                    <cfqueryparam value="#form.theatreId#" cfsqltype="CF_SQL_INTEGER">,
+                    <cfqueryparam value="#session.userID#" cfsqltype="CF_SQL_INTEGER">,
+                    <cfqueryparam value="#form.showId#" cfsqltype="CF_SQL_INTEGER">,
+                    <cfqueryparam value="#form.bookSeats#" cfsqltype="cf_sql_varchar">,
+                    <cfqueryparam value="#form.bookTotal#" cfsqltype="CF_SQL_INTEGER">,
+                    <cfqueryparam value="#form.bookCount#" cfsqltype="cf_sql_varchar">
+                )
+            </cfquery>
+            <cfset ArrayAppend(session.bookedArray, "Booked successfully") />
+            <cflocation url="../movieListing.cfm" addtoken="no">
+        </cfif>
+        <cfreturn session.bookedArray>
+    </cffunction>
+
 </cfcomponent>

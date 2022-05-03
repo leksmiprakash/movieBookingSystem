@@ -20,6 +20,11 @@
 						<div class="headerhny-left">
 							<h3 class="hny-title">Latest Movies</h3>
 						</div>
+						<cfif StructKeyExists(session, "bookedArray")>
+							<div id="message" class="alert alert-success" role="alert">
+								#session.bookedArray[1]#
+							</div>
+						</cfif>
 					</div>
 				</div>
                 <cfset MoviesObj=CreateObject("component","component.moviesDetails")/>

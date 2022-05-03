@@ -32,25 +32,34 @@ body{
 					<li>Total</li>
 					<li>Seats :</li>
 				</ul>
-				<form>
+				<form method="post" action="component/moviesDetails.cfc?method=bookingData">
 					<ul class="book-right">
 						<li>: #singleMovie.movieTitle#</li>
-						<input type="hidden" name="bookMovie" value="#singleMovie.movieID#" >
 						<li>: #DateFormat(Now())#</li>
-						<input type="hidden" name="bookDate" value="#DateFormat(Now())#" >
 						<li>:#TimeFormat(singleMovie.start_time)#</li>
-						<input type="hidden" name="bookTime" value="#singleMovie.start_time#" >
 						<li>: <span id="counter">0</span></li>
-						<input type="hidden" name="bookCount" id="bookCount" >
 						<li>: <b><i>$</i><span id="total">0</span></b></li>
-						<input type="hidden" name="bookTotal" id="bookTotal" >	
-						<input type="hidden" value="#url.showId#" name="showId" id="showId" >
+						
+						<input type="hidden" name="bookMovie" value="#singleMovie.movieID#" >
+						<input type="hidden" name="showId" value="#url.showId#" >
+						<input type="hidden" name="bookCount" id="bookCount" value="0">
+						<input type="hidden" name="bookTotal" id="bookTotal" value="0">	
+						<input type="hidden" name="theatreId" value="#singleMovie.theatre_id#" >
 						<input type="hidden" value="#singleMovie.price#" name="price" id="price" >
 					</ul>
-					<div class="clear"></div>
+
+					<cfset variables.ShowObject=CreateObject("component","component.moviesDetails")/>
+					<cfset variables.eachTimes=ShowObject.displayShowSeats(#url.showId#)/>
+					<cfset variables.seatArray = ArrayNew(1) /> 
+					<cfloop QUERY="#eachTimes#">
+						<cfset ArrayAppend(variables.seatArray, "#no_seats#") />
+					</cfloop>
+					<cfset variables.myConvertedList=seatArray.toList() />
+					<input type="hidden" value="#myConvertedList#" name="seatsA" id="seatsA" >
 					<ul id="selected-seats" class="scrollbar scrollbar1"></ul>
-					<input type="hidden" name="bookSeats" id="bookSeats" >
-					<button class="checkout-button">Book Now</button>	
+					<input type="hidden" name="bookSeats" id="bookSeats" value="0">
+
+					<button class="checkout-button" type="submit">Book Now</button>	
 					<div id="legend"></div>
 				</form>
 			</div>
@@ -64,8 +73,9 @@ body{
 				$(document).ready(function() {
 					var $cart = $('#selected-seats'), //Sitting Area
 					$counter = $('#counter'), //Votes
-					$total = $('#total'); //Total money
-					var showId = $('#showId');
+					$total = $('#total'), //Total money
+					$bookCount = $('#bookCount'),
+					$bookTotal = $('#bookTotal'); 
 					var sc = $('#seat-map').seatCharts({
 						map: [  //Seating chart
 							'aaaaaaaaaa',
@@ -95,23 +105,36 @@ body{
 						},
 						click: function () { //Click event
 							if (this.status() == 'available') { //optional seat
-								$('<li>Row-'+(this.settings.row+1)+' Seat-'+this.settings.label+'</li>')
+								$('<li>'+(this.settings.row+1)+'_'+this.settings.label+'</li>')
 									.attr('id', 'cart-item-'+this.settings.id)
 									.data('seatId', this.settings.id)
 									.appendTo($cart);
-
 								$counter.text(sc.find('selected').length+1);
 								$total.text(recalculateTotal(sc)+price);
-											
+								$bookCount.val(sc.find('selected').length+1);
+								$bookTotal.val(recalculateTotal(sc)+price);
+
+								var bookedSeats = $('#selected-seats li').map(function(){ 
+									return $(this).text(); 
+								}).get().join(','); 
+								$('#bookSeats').val(bookedSeats);
+
 								return 'selected';
 							} else if (this.status() == 'selected') { //Checked
 									//Update Number
 									$counter.text(sc.find('selected').length-1);
+									$bookCount.val(sc.find('selected').length-1);
 									//update totalnum
 									$total.text(recalculateTotal(sc)-price);
-										
+									$bookTotal.val(recalculateTotal(sc)+price);	
 									//Delete reservation
 									$('#cart-item-'+this.settings.id).remove();
+
+									var bookedSeats = $('#selected-seats li').map(function(){ 
+										return $(this).text(); 
+									}).get().join(','); 
+									$('#bookSeats').val(bookedSeats);
+
 									//optional
 									return 'available';
 							} else if (this.status() == 'unavailable') { //sold
@@ -122,8 +145,10 @@ body{
 						}
 					});
 					//sold seat
-					var booking =['1_2', '4_4','4_5','6_6','6_7','8_5','8_6','8_7','8_8', '10_1', '10_2'];
-					sc.get(booking).status('unavailable');
+					var seats = $("#seatsA").val();
+					var soldSeats = seats.split(',');
+					console.log(soldSeats);
+					sc.get(soldSeats).status('unavailable');
 						
 				});
 				//sum total money
