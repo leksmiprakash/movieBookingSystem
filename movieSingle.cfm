@@ -37,16 +37,9 @@
 												<cfset variables.ShowTimeObject=CreateObject("component","component.moviesDetails")/>
                             					<cfset variables.eachTimes=ShowTimeObject.displayShowTimes(#url.id#,#theatre_id#)/>
 												<cfloop QUERY="#eachTimes#">
-													<cfscript>
-														curdatetime = now();
-														currentTime = TimeFormat(curdatetime);
-														startime  = TimeFormat(start_time);
-													</cfscript>
-													<cfif startime lte  currentTime>
-														<td>Todays Shows are closed!!! show was at #startime#</td>
-													<cfelse>
-														<td><a href="bookingSeats.cfm?showId=#s_id#" class="btn btn-info">#showName# - #startime#</a></td>
-													</cfif>
+													<td>
+													<a href="bookingSeats.cfm?showId=#s_id#" class="btn btn-info">#showName# - #TimeFormat(start_time)#</a>
+													</td>
 												</cfloop>
 											</tr>
 										</cfloop>

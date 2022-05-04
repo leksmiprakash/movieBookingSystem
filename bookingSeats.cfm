@@ -26,7 +26,6 @@ body{
 			<div class="booking-details">
 				<ul class="book-left">
 					<li>Movie </li>
-					<li>Date </li>
 					<li>Time </li>
 					<li>Tickets</li>
 					<li>Total</li>
@@ -35,7 +34,6 @@ body{
 				<form method="post" action="component/moviesDetails.cfc?method=bookingData">
 					<ul class="book-right">
 						<li>: #singleMovie.movieTitle#</li>
-						<li>: #DateFormat(Now())#</li>
 						<li>:#TimeFormat(singleMovie.start_time)#</li>
 						<li>: <span id="counter">0</span></li>
 						<li>: <b><i>$</i><span id="total">0</span></b></li>
@@ -59,6 +57,25 @@ body{
 					<ul id="selected-seats" class="scrollbar scrollbar1"></ul>
 					<input type="hidden" name="bookSeats" id="bookSeats" value="0">
 
+					<div class = "input-group input-group-sm">
+						<input class="form-control" type="text" name="cardNumber" id="cardNumber" placeholder="Card Number">
+					</div>
+					<div class = "input-group input-group-sm">
+						<input class="form-control" type="text" name="PhoneNumber" id="PhoneNumber" placeholder="Phone Number">
+					</div>
+					<div class = "input-group input-group-sm">
+						<input class="form-control" type="text" name="CVV" id="CVV" placeholder="CVV Number">
+					</div>
+					<cfscript>
+						curdatetime = now();
+						currentTime = TimeFormat(curdatetime);
+						startime  = TimeFormat(singleMovie.start_time);
+					</cfscript>
+					<cfif startime lte  currentTime>
+						<input type="date" class="form-control closeDate" name="ticketDate" id="closeDate">
+					<cfelse>
+						<input type="date" class="form-control openDate" name="ticketDate" id="openDate">
+					</cfif>
 					<button class="checkout-button" type="submit">Book Now</button>	
 					<div id="legend"></div>
 				</form>
@@ -67,100 +84,122 @@ body{
 	    </div>
 
 </cfoutput>
-			<script type="text/javascript">
-				var rate = $('#price').val(); //price
-				var price = parseInt(rate);
-				$(document).ready(function() {
-					var $cart = $('#selected-seats'), //Sitting Area
-					$counter = $('#counter'), //Votes
-					$total = $('#total'), //Total money
-					$bookCount = $('#bookCount'),
-					$bookTotal = $('#bookTotal'); 
-					var sc = $('#seat-map').seatCharts({
-						map: [  //Seating chart
-							'aaaaaaaaaa',
-							'aaaaaaaaaa',
-							'__________',
-							'aaaaaaaa__',
-							'aaaaaaaaaa',
-							'aaaaaaaaaa',
-							'aaaaaaaaaa',
-							'aaaaaaaaaa',
-							'aaaaaaaaaa',
-							'__aaaaaa__'
-						],
-						naming : {
-							top : false,
-							getLabel : function (character, row, column) {
-								return column;
-							}
-						},
-						legend : { //Definition legend
-							node : $('#legend'),
-							items : [
-								[ 'a', 'available',   'Available' ],
-								[ 'a', 'unavailable', 'Sold'],
-								[ 'a', 'selected', 'Selected']
-							]					
-						},
-						click: function () { //Click event
-							if (this.status() == 'available') { //optional seat
-								$('<li>'+(this.settings.row+1)+'_'+this.settings.label+'</li>')
-									.attr('id', 'cart-item-'+this.settings.id)
-									.data('seatId', this.settings.id)
-									.appendTo($cart);
-								$counter.text(sc.find('selected').length+1);
-								$total.text(recalculateTotal(sc)+price);
-								$bookCount.val(sc.find('selected').length+1);
-								$bookTotal.val(recalculateTotal(sc)+price);
+	<script type="text/javascript">
+		var rate = $('#price').val(); //price
+		var price = parseInt(rate);
+		$(document).ready(function() {
+			var $cart = $('#selected-seats'), //Sitting Area
+			$counter = $('#counter'), //Votes
+			$total = $('#total'), //Total money
+			$bookCount = $('#bookCount'),
+			$bookTotal = $('#bookTotal'); 
+			var sc = $('#seat-map').seatCharts({
+				map: [  //Seating chart
+					'aaaaaaaaaa',
+					'aaaaaaaaaa',
+					'__________',
+					'aaaaaaaa__',
+					'aaaaaaaaaa',
+					'aaaaaaaaaa',
+					'aaaaaaaaaa',
+					'aaaaaaaaaa',
+					'aaaaaaaaaa',
+					'__aaaaaa__'
+				],
+				naming : {
+					top : false,
+					getLabel : function (character, row, column) {
+						return column;
+					}
+				},
+				legend : { //Definition legend
+					node : $('#legend'),
+					items : [
+						[ 'a', 'available',   'Available' ],
+						[ 'a', 'unavailable', 'Sold'],
+						[ 'a', 'selected', 'Selected']
+					]					
+				},
+				click: function () { //Click event
+					if (this.status() == 'available') { //optional seat
+						$('<li>'+(this.settings.row+1)+'_'+this.settings.label+'</li>')
+							.attr('id', 'cart-item-'+this.settings.id)
+							.data('seatId', this.settings.id)
+							.appendTo($cart);
+						$counter.text(sc.find('selected').length+1);
+						$total.text(recalculateTotal(sc)+price);
+						$bookCount.val(sc.find('selected').length+1);
+						$bookTotal.val(recalculateTotal(sc)+price);
 
-								var bookedSeats = $('#selected-seats li').map(function(){ 
-									return $(this).text(); 
-								}).get().join(','); 
-								$('#bookSeats').val(bookedSeats);
+						var bookedSeats = $('#selected-seats li').map(function(){ 
+							return $(this).text(); 
+						}).get().join(','); 
+						$('#bookSeats').val(bookedSeats);
 
-								return 'selected';
-							} else if (this.status() == 'selected') { //Checked
-									//Update Number
-									$counter.text(sc.find('selected').length-1);
-									$bookCount.val(sc.find('selected').length-1);
-									//update totalnum
-									$total.text(recalculateTotal(sc)-price);
-									$bookTotal.val(recalculateTotal(sc)+price);	
-									//Delete reservation
-									$('#cart-item-'+this.settings.id).remove();
+						return 'selected';
+					} else if (this.status() == 'selected') { //Checked
+							//Update Number
+							$counter.text(sc.find('selected').length-1);
+							$bookCount.val(sc.find('selected').length-1);
+							//update totalnum
+							$total.text(recalculateTotal(sc)-price);
+							$bookTotal.val(recalculateTotal(sc)+price);	
+							//Delete reservation
+							$('#cart-item-'+this.settings.id).remove();
 
-									var bookedSeats = $('#selected-seats li').map(function(){ 
-										return $(this).text(); 
-									}).get().join(','); 
-									$('#bookSeats').val(bookedSeats);
+							var bookedSeats = $('#selected-seats li').map(function(){ 
+								return $(this).text(); 
+							}).get().join(','); 
+							$('#bookSeats').val(bookedSeats);
 
-									//optional
-									return 'available';
-							} else if (this.status() == 'unavailable') { //sold
-								return 'unavailable';
-							} else {
-								return this.style();
-							}
-						}
-					});
-					//sold seat
-					var seats = $("#seatsA").val();
-					var soldSeats = seats.split(',');
-					console.log(soldSeats);
-					sc.get(soldSeats).status('unavailable');
-						
-				});
-				//sum total money
-				function recalculateTotal(sc) {
-					var total = 0;
-					sc.find('selected').each(function () {
-						total += price;
-					});
-							
-					return total;
+							//optional
+							return 'available';
+					} else if (this.status() == 'unavailable') { //sold
+						return 'unavailable';
+					} else {
+						return this.style();
+					}
 				}
-			</script>
+			});
+			//sold seat
+			var seats = $("#seatsA").val();
+			var soldSeats = seats.split(',');
+			console.log(soldSeats);
+			sc.get(soldSeats).status('unavailable');
+				
+		});
+		//sum total money
+		function recalculateTotal(sc) {
+			var total = 0;
+			sc.find('selected').each(function () {
+				total += price;
+			});
+					
+			return total;
+		}
+	</script>
+	<script>
+		$(function(){
+			var dtToday = new Date();
+			var month = dtToday.getMonth() + 1;
+			var day = dtToday.getDate() +1;
+			var year = dtToday.getFullYear();
+			var openday = dtToday.getDate();
+			var openyear = dtToday.getFullYear();
+			if(month < 10)
+				month = '0' + month.toString();
+			if(day < 10)
+				day = '0' + day.toString();
+			var maxDate = year + '-' + month + '-' + day;
+			//alert(maxDate);
+			$('.closeDate').attr('min', maxDate);
+			if(openday < 10)
+				openday = '0' + openday.toString();
+			var maxOpenDate = openyear + '-' + month + '-' + openday;
+			//alert(maxOpenDate);
+			$('.openDate').attr('min', maxOpenDate);
+		});
+	</script>
 	</div>
 
 

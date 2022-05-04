@@ -78,20 +78,34 @@
         
         <cfif ArrayIsEmpty(session.bookedArray)>
             <cfquery result="result">
-                INSERT INTO bookings (t_id, user_id, show_id, no_seats, amount, seat_count)
+                INSERT INTO bookings (t_id, user_id, show_id, no_seats, amount, seat_count,ticket_date)
                 VALUES (
                     <cfqueryparam value="#form.theatreId#" cfsqltype="CF_SQL_INTEGER">,
                     <cfqueryparam value="#session.userID#" cfsqltype="CF_SQL_INTEGER">,
                     <cfqueryparam value="#form.showId#" cfsqltype="CF_SQL_INTEGER">,
                     <cfqueryparam value="#form.bookSeats#" cfsqltype="cf_sql_varchar">,
                     <cfqueryparam value="#form.bookTotal#" cfsqltype="CF_SQL_INTEGER">,
-                    <cfqueryparam value="#form.bookCount#" cfsqltype="cf_sql_varchar">
+                    <cfqueryparam value="#form.bookCount#" cfsqltype="cf_sql_varchar">,
+                    <cfqueryparam value="#form.ticketDate#" cfsqltype="cf_sql_varchar">
                 )
             </cfquery>
             <cfset ArrayAppend(session.bookedArray, "Booked successfully") />
             <cflocation url="../movieListing.cfm" addtoken="no">
         </cfif>
         <cfreturn session.bookedArray>
+    </cffunction>
+
+    <cffunction name="displayBookingData" access="public" returnType="any" output="false">
+        <cfquery name = "getBookings"    >
+            select bookings.*,shows.*,showtimes.showName,showtimes.start_time,theatres.t_name,movies.movieTitle  
+            from bookings
+            join shows on bookings.show_id = shows.s_id 
+            join movies on shows.movie_id = movies.movieID
+            join theatres on bookings.t_id = theatres.t_id
+            join showtimes on shows.st_id = showtimes.st_id
+            where bookings.user_id=<cfqueryparam value="#session.userID#"  cfsqltype="cf_sql_integer"> 
+        </cfquery>
+        <cfreturn getBookings> 
     </cffunction>
 
 </cfcomponent>
