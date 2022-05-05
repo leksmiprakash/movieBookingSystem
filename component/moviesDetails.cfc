@@ -64,8 +64,10 @@
     </cffunction>
     <cffunction name="displayShowSeats" access="public" returnType="any" output="false">
         <cfargument name="showId" required="true">
+        <cfargument name="ticketDate" required="true">
         <cfquery name = "getSeatById"    >
             select no_seats  from bookings where show_id=<cfqueryparam value="#arguments.showId#" cfsqltype="cf_sql_integer"> 
+            and ticket_date=<cfqueryparam value="#arguments.ticketDate#" cfsqltype="cf_sql_date"> 
         </cfquery>
         <cfreturn getSeatById> 
     </cffunction>
@@ -103,7 +105,7 @@
             join movies on shows.movie_id = movies.movieID
             join theatres on bookings.t_id = theatres.t_id
             join showtimes on shows.st_id = showtimes.st_id
-            where bookings.user_id=<cfqueryparam value="#session.userID#"  cfsqltype="cf_sql_integer"> 
+            where bookings.user_id=<cfqueryparam value="#session.userID#"  cfsqltype="cf_sql_integer"> order by ticket_date desc
         </cfquery>
         <cfreturn getBookings> 
     </cffunction>

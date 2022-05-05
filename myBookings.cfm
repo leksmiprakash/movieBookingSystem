@@ -54,7 +54,7 @@
 								<h3 class="pricing"> <sup class="pri1"><i class="fa fa-inr"></i></sup>#bookings.amount# 
 								<!--<sup class="pri">99</sup>-->
 								</h3>
-								<button class="btn read-button">View</button>
+								<!--<button class="btn read-button">View</button>-->
 							</div>
 						</div>
 					</div>

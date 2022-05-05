@@ -21,6 +21,7 @@
 	<link href="bookingAssets/css/style.css" rel="stylesheet" type="text/css" media="all" />
 	<script src="bookingAssets/js/jquery-1.11.0.min.js"></script>
 	<script src="bookingAssets/js/jquery.seat-charts.js"></script>
+	<script src="js/validation.js"></script>
 </head>
 <script>
 (function(){

@@ -8,29 +8,29 @@
             var password   = form.password;
             var cpassword  = form.cpassword;
             var phone      = form.phone;
-            Session.messageArray = ArrayNew(1);
+            Session.registerArray = ArrayNew(1);
             if(name eq ""){
-                ArrayAppend(Session.messageArray, "Please enter the FullName","true"); 
+                ArrayAppend(Session.registerArray, "Please enter the FullName","true"); 
             }
             else if(email eq ""){
-                ArrayAppend(Session.messageArray, "Please enter the Email","true"); 
+                ArrayAppend(Session.registerArray, "Please enter the Email","true"); 
             }
             else if(phone eq ""){
-                ArrayAppend(Session.messageArray, "Please enter the phone","true"); 
+                ArrayAppend(Session.registerArray, "Please enter the phone","true"); 
             }
             else if(age eq ""){
-                ArrayAppend(Session.messageArray, "Please enter the Age","true"); 
+                ArrayAppend(Session.registerArray, "Please enter the Age","true"); 
             }
             else if(gender eq ""){
-                ArrayAppend(Session.messageArray, "Please enter the gender","true"); 
+                ArrayAppend(Session.registerArray, "Please enter the gender","true"); 
             }
             else if(password eq ""){
-                ArrayAppend(Session.messageArray, "Please enter the Password","true"); 
+                ArrayAppend(Session.registerArray, "Please enter the Password","true"); 
             }
             else if(cpassword eq ""){
-                ArrayAppend(Session.messageArray, "Please enter the Confirm Password","true"); 
+                ArrayAppend(Session.registerArray, "Please enter the Confirm Password","true"); 
             }
-            else if(ArrayIsEmpty(Session.messageArray)){
+            else if(ArrayIsEmpty(Session.registerArray)){
                 var qService= new query();
                 qService.setName("qRegisterQry");
                 qService.addParam(name="fullName", value="#trim(form.name)#", cfsqltype="cf_sql_varchar");
@@ -45,15 +45,15 @@
                 var result=qService.execute();
                 var resultKey  = result.getPrefix().generatedkey;
                 if(resultKey > 0){
-                    ArrayAppend(Session.messageArray, "Successfully Registered","true"); 
-                    location("/movieBookingSystem/login.cfm",false);
+                    ArrayAppend(Session.registerArray, "Successfully Registered","true"); 
+                    //location("../login.cfm",false);
                 }
                 else{
-                    ArrayAppend(Session.messageArray, "Something went wrong...","true"); 
-                    location("/movieBookingSystem/registration.cfm",false);
+                    ArrayAppend(Session.registerArray, "Something went wrong...","true"); 
+                    //location("../registration.cfm",false);
                 }
             }
-            return Session.messageArray ;
+            return Session.registerArray ;
         }
     }
 </cfscript>

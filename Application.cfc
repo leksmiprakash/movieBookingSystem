@@ -15,7 +15,8 @@ component{
             if(!(FindNoCase("login",requestname) > 0 
             or FindNoCase("registration",requestname) > 0  
             or FindNoCase("movieListing",requestname) > 0
-            or FindNoCase("about",requestname) > 0 ))
+            or FindNoCase("about",requestname) > 0 
+            or FindNoCase("index",requestname) > 0 ))
             {
                location("login.cfm",false);
             }

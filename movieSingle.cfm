@@ -36,11 +36,18 @@
 												<th >#t_name#</th>
 												<cfset variables.ShowTimeObject=CreateObject("component","component.moviesDetails")/>
                             					<cfset variables.eachTimes=ShowTimeObject.displayShowTimes(#url.id#,#theatre_id#)/>
-												<cfloop QUERY="#eachTimes#">
+												<form action="bookingSeats.cfm" method="post">
 													<td>
-													<a href="bookingSeats.cfm?showId=#s_id#" class="btn btn-info">#showName# - #TimeFormat(start_time)#</a>
+														<select class="form-control" id="showId" name="showId">
+															<option value="0">-----select-----</option>
+															<cfloop QUERY="#eachTimes#">
+																<option value="#s_id#"> #showName#-#TimeFormat(start_time)# </option>
+															</cfloop>
+														</select>
 													</td>
-												</cfloop>
+													<td><input type="date" class="form-control " name="ticketDate" id="ticketDate"></td>
+													<td><button type="submit" class="btn btn-info">Book</button></td>
+												</form>
 											</tr>
 										</cfloop>
 									</table>
@@ -74,3 +81,42 @@
 	</section>
 </cfoutput>
 <cfinclude  template = "includes/footer.cfm"  runOnce = "true"></cfinclude>
+<script>
+$(document).on('change','#showId' ,function(){
+	var val = $('#showId option:selected').val();
+	var text = $('#showId option:selected').text();
+	var data = text.split('-');
+	var date = new Date();
+	var hours = date.getHours();
+	var minutes = date.getMinutes();
+	var ampm = hours >= 12 ? 'PM' : 'AM';
+	hours = hours % 12;
+	hours = hours ? hours : 12; // the hour '0' should be '12'
+	minutes = minutes < 10 ? '0'+minutes : minutes;
+	var strTime = hours + ':' + minutes + ' ' + ampm;
+	if(data[1] <= strTime){
+		$('#ticketDate').attr('class', 'form-control closeDate');
+	}
+	else{
+		$('#ticketDate').attr('class', 'form-control openDate');
+	}
+  	var dtToday = new Date();
+	var month = dtToday.getMonth() + 1;
+	var day = dtToday.getDate() +1;
+	var year = dtToday.getFullYear();
+	var openday = dtToday.getDate();
+	var openyear = dtToday.getFullYear();
+	if(month < 10)
+		month = '0' + month.toString();
+	if(day < 10)
+		day = '0' + day.toString();
+	var maxDate = year + '-' + month + '-' + day;
+	//alert(maxDate);
+	$('.closeDate').attr('min', maxDate);
+	if(openday < 10)
+		openday = '0' + openday.toString();
+	var maxOpenDate = openyear + '-' + month + '-' + openday;
+	//alert(maxOpenDate);
+	$('.openDate').attr('min', maxOpenDate);
+})
+</script>

@@ -58,7 +58,7 @@
                     <cfset img = "no-image.png">
                 </cfif>
                 <cfquery result="result">
-                    INSERT INTO theatres (t_name, t_address, t_email, t_phone, t_photo)
+                    INSERT INTO theatres (t_name, t_address, t_email, t_phone, price, t_photo)
                     VALUES (
                         <cfqueryparam value="#form.tName#" cfsqltype="cf_sql_varchar">,
                         <cfqueryparam value="#form.tAddress#" cfsqltype="cf_sql_varchar">,
@@ -165,7 +165,9 @@
     <!------------------------------ShowTime-------------------------->
 
     <cffunction name="displayallShowTimedata" access="public" returnType="any" output="false">
-        <cfset variables.getShowTimes = EntityLoad('ShowTimes',{},'st_id desc')>
+        <cfquery name = "getShowTimes"    >
+            select showTimes.*, theatres.t_name from showTimes join theatres on  showTimes.theatre_id = theatres.t_id
+        </cfquery>
         <cfreturn variables.getShowTimes >    
     </cffunction>
 
@@ -186,17 +188,17 @@
     </cffunction>
 
     <cffunction  name="showTimeData" access="remote">
-        <cfset session.messageArray = ArrayNew(1) /> 
+        <cfset session.showTimerray = ArrayNew(1) /> 
         <cfif form.tId eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the Theatre Name") />
+            <cfset ArrayAppend(session.showTimerray, "Please enter the Theatre Name") />
         </cfif>
         <cfif form.showNameId eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the first name") />
+            <cfset ArrayAppend(session.showTimerray, "Please enter the first name") />
         </cfif>
         <cfif form.sTime eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the last Name") />
+            <cfset ArrayAppend(session.showTimerray, "Please enter the last Name") />
         </cfif>
-        <cfif ArrayIsEmpty(session.messageArray)>
+        <cfif ArrayIsEmpty(session.showTimerray)>
             <cfif form.updateId gt 0>
                 
                 <cfquery name="updateQuery">
@@ -206,8 +208,8 @@
                         start_time = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.sTime#">
                     WHERE st_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#form.updateId#"> 
                 </cfquery>
-                <cflocation url="../dashboard.cfm" addtoken="no">
-                <cfset ArrayAppend(session.messageArray, "Updated successfully") />
+                <cfset ArrayAppend(session.showTimerray, "Updated successfully") />
+                <cflocation url="../addShowTime.cfm" addtoken="no">
             <cfelse>
                 
                 <cfquery result="result">
@@ -218,11 +220,11 @@
                         <cfqueryparam value="#form.sTime#" cfsqltype="cf_sql_varchar">
                     )
                 </cfquery>
+                <cfset ArrayAppend(session.showTimerray, "Inserted successfully") />
                 <cflocation url="../addShowTime.cfm" addtoken="no">
-                <cfset ArrayAppend(session.messageArray, "Inserted successfully") />
             </cfif>
         </cfif>
-        <cfreturn session.messageArray>
+        <cfreturn session.showTimerray>
     </cffunction>
 
 

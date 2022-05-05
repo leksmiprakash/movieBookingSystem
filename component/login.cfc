@@ -5,14 +5,14 @@
             var passwords   = form.password;
             var userRole   = "2";
             //writeOutput(userName);
-            Session.messageArray = ArrayNew(1);
+            Session.loginArray = ArrayNew(1);
             if(emails eq ""){
-                ArrayAppend(Session.messageArray, "Please enter the UserName","true"); 
+                ArrayAppend(Session.loginArray, "Please enter the UserName","true"); 
             }
             else if(passwords eq ""){
-                ArrayAppend(Session.messageArray, "Please enter the Password","true"); 
+                ArrayAppend(Session.loginArray, "Please enter the Password","true"); 
             }
-            else if(ArrayIsEmpty(Session.messageArray)){
+            else if(ArrayIsEmpty(Session.loginArray)){
                 qService = new query(); 
                 qService.setName("qGet"); 
                 qService.addParam(name="email", value="#trim(form.email)#", cfsqltype="cf_sql_varchar");
@@ -29,14 +29,14 @@
                     Session.userName = results.userName;
                     Session.loggedin = true; 
                     location("../index.cfm","no");
-                    ArrayAppend(Session.messageArray, "Logged In Successfully","true"); 
+                    ArrayAppend(Session.loginArray, "Logged In Successfully","true"); 
                 } 
                 else {
+                    ArrayAppend(Session.loginArray, "Incorrect Credentials","true"); 
                     location("../login.cfm","no");
-                    ArrayAppend(Session.messageArray, "LogIn Error","true"); 
                 } 
             }
-            return Session.messageArray ;
+            return Session.loginArray ;
         }
     }
 </cfscript>

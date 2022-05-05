@@ -93,4 +93,33 @@
           </cfquery>
           <cfreturn getMovieById> 
      </cffunction>
+
+    <cffunction name="displayMovieShowing" access="public" returnType="any" output="false">
+        <cfquery name = "getMovieshowing"    >
+            select count(movieID) as movieCount from movies where status=1    
+        </cfquery>
+        <cfreturn getMovieshowing> 
+    </cffunction>
+
+    <cffunction name="displayUsersTotal" access="public" returnType="any" output="false">
+        <cfquery name = "getUsersTotal"    >
+            select count(user_id) as userCount from userstable where role=2  
+        </cfquery>
+        <cfreturn getUsersTotal> 
+    </cffunction>
+
+    <cffunction name="displayBooksTotal" access="public" returnType="any" output="false">
+        <cfquery name = "getBooksTotal"    >
+            select count(book_id) as bookCount from bookings where status=1   
+        </cfquery>
+        <cfreturn getBooksTotal> 
+    </cffunction>
+
+    <cffunction name="displayTheatresTotal" access="public" returnType="any" output="false">
+        <cfquery name = "getTheatresTotal"    >
+            select count(t_id) as theatreCount from theatres
+        </cfquery>
+        <cfreturn getTheatresTotal> 
+    </cffunction>
+
 </cfcomponent>

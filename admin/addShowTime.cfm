@@ -4,20 +4,24 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Theatre</h1>
+            <h1 class="h3 mb-0 text-gray-800">Show Time</h1>
             <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" href="##" data-toggle="modal" data-target="##showTimeModal">
-                <i class="fas fa-plus fa-sm text-white-50"></i> Add Theatre </a>
+                <i class="fas fa-plus fa-sm text-white-50"></i> Add Show Time </a>
         </div>
-        
+            <cfif StructKeyExists(session, "showTimerray")>
+                <div id="message" class="alert alert-success" role="alert">
+                    #session.showTimerray[1]#
+                </div>
+            </cfif>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Theatre List </h6>
+                <h6 class="m-0 font-weight-bold text-primary">Show Time List </h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <cfset ShowTimesObj=CreateObject("component","components.theatresDetails")/>
-                    <cfset alldata=ShowTimesObj.displayallShowTimedata()/>
+                    <cfset alldatas=ShowTimesObj.displayallShowTimedata()/>
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
@@ -36,14 +40,14 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                            <cfloop array="#alldata#" item="alldatas">
+                            <cfloop QUERY="#alldatas#">
                                 <tr>
                                 
-                                    <td>#alldatas.getTheatre_id()#</td>
-                                    <td>#alldatas.getshowName()#</td>
-                                    <td>#alldatas.getStart_time()#</td>
+                                    <td>#t_name#</td>
+                                    <td>#showName#</td>
+                                    <td>#TimeFormat(start_time)#</td>
                                     
-                                    <td> <a class="btn btn btn-outline-primary btn-sm button-18 editbtn" data-conid="#alldatas.getSt_id()#" id="editbtn"  data-toggle="modal" data-target="##showTimeModal">
+                                    <td> <a class="btn btn btn-outline-primary btn-sm button-18 editbtn" data-conid="#st_id#" id="editbtn"  data-toggle="modal" data-target="##showTimeModal">
                                             Edit
                                         </a>
                                     </td>
@@ -125,8 +129,8 @@ $(document).on('click', '.editbtn', function() {
             console.log(p);
             $("#updateId").val(p.DATA[0][0]);
             $("#tId").val(p.DATA[0][1]).change();
-            $("#showNameId").val(p.DATA[0][3]).change();
-            $("#sTime").val(p.DATA[0][4]);
+            $("#showNameId").val(p.DATA[0][2]).change();
+            $("#sTime").val(p.DATA[0][3]);
         }
     });
 });

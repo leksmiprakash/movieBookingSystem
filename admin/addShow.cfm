@@ -94,7 +94,6 @@
                             <label for="inputEmail">Show Time</label>
                             <select name="stData" class="form-control" id="stData" >
                                 <option value="">Select</option>
-                                    <option value="1">1</option>
                                 
                             </select>
                         </div>
@@ -127,14 +126,17 @@ $(document).on('change', '#tId', function() {
         success: function(response) {
             var formoption = "";
             data = JSON.parse(response);
-            console.log(data);
-            $.each(data, function(v) {
-                var result = data[v];
+            console.log(data.DATA);
+                var result = data.DATA;
                 for (var i = 0; i < result.length; i++) {
-                    $("#stData").append("<option>"+result[i]+"</option>");
+                    var content = result[i].slice(',');
+                    var id = content[0];
+                    //alert()
+                    var val = content[1];
+                    $("#stData").append("<option value='"+id+"'>"+val+"</option>");
                 }
                // formoption += "<option value='" + data[v] + "'>" + data[v]+ "</option>";
-            });
+           
             // $('#stData').html(formoption);
 
             //$("#stData").html("<option value='"+ p.st_id +"'>" + p.showName + "</option>"); 
