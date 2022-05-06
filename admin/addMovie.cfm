@@ -8,7 +8,11 @@
             <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" href="##" data-toggle="modal" data-target="##movieModal">
                 <i class="fas fa-plus fa-sm text-white-50"></i> Add Movie </a>
         </div>
-        
+        <cfif StructKeyExists(session, "movieArray")>
+            <div id="message" class="alert alert-success" role="alert">
+                #session.movieArray[1]#
+            </div>
+        </cfif>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -27,6 +31,7 @@
                                 <th>Movie Release Date</th>
                                 <th>Movie Director</th>
                                 <th>Movie Actors</th>
+                                <th>Movie Trailer</th>
                                 <th>Poster</th>
                                 <th>Action</th>
                             </tr>
@@ -39,6 +44,7 @@
                                 <th>Movie Release Date</th>
                                 <th>Movie Director</th>
                                 <th>Movie Actors</th>
+                                <th>Movie Trailer</th>
                                 <th>Poster</th>
                                 <th>Action</th>
                             </tr>
@@ -53,10 +59,17 @@
                                     <td>#alldatas.getMovieRelDate()#</td>
                                     <td>#alldatas.getMovieDirector()#</td>
                                     <td>#alldatas.getMovieActors()#</td>
+                                    <td> 
+                                        <iframe width="180" height="110" src="#alldatas.getMovieTrailer()#" allow="autoplay; fullscreen" 
+                                        frameborder="0" allowfullscreen>
+                                        </iframe>
+                                    </td>
                                     <td><img src="../movie/#alldatas.getMovieImg()#" width="80px" height="80px"></td>
                                     <td> <a class="btn btn btn-outline-primary btn-sm button-18 editbtn" data-conid="#alldatas.getMovieID()#" id="editbtn"  data-toggle="modal" data-target="##movieModal">
                                             Edit
-                                        </a></td>
+                                        </a>
+                                        <a href="##" class="btn btn btn-outline-primary btn-sm button-18 trash" id="#alldatas.getMovieID()#" >Delete</a>
+                                    </td>
                                 </tr>
                             </cfloop>
                         </tbody>
@@ -109,6 +122,14 @@
                             <input type="hidden" name="old_file" id="old_file" value="" />
                             <input class="form-control" id="updateId" name="updateId" type="hidden" />
                         </div>
+                        <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
+                            <label for="inputEmail">Movie Trailer</label>
+                            <input class="form-control" id="movieTrailer" name="movieTrailer" type="text" />
+                        </div>
+                        <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
+                            <label for="inputEmail">Movie Description</label>
+                            <input class="form-control" id="movieDesc" name="movieDesc" type="text" />
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -150,6 +171,8 @@ $(document).on('click', '.editbtn', function() {
             $("#movieDirector").val(p.DATA[0][6]);
             $("#movieActors").val(p.DATA[0][7]);
             $("#old_file").val(p.DATA[0][1]);
+            $("#movieDesc").val(p.DATA[0][8]);
+            $("#movieTrailer").val(p.DATA[0][9]);
         }
     });
 });
@@ -162,4 +185,24 @@ function changeImage(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+$(".trash").click(function(){
+    var deleteId =  $(this).attr('id');
+    if(confirm('Are you sure to remove this record ?')) {
+        $.ajax({
+            type:'POST',
+            url:'components/moviesDetails.cfc?method=deleteMovie',
+            data:{deleteId:deleteId},
+            success: function(response){
+                data = JSON.parse(response);
+                //alert(data);
+                if(data==true){
+                    alert("Deleted Successfully");
+                    window.location.reload();     
+                }else{
+                    alert("Something Went Wrong");
+                }
+            }
+        })
+    }
+});
 </script>

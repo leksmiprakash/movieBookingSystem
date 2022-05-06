@@ -95,10 +95,10 @@ $(document).on('change','#showId' ,function(){
 	minutes = minutes < 10 ? '0'+minutes : minutes;
 	var strTime = hours + ':' + minutes + ' ' + ampm;
 	if(data[1] <= strTime){
-		$('#ticketDate').attr('class', 'form-control closeDate');
+		$('#ticketDate').attr('class', 'form-control openDate');
 	}
 	else{
-		$('#ticketDate').attr('class', 'form-control openDate');
+		$('#ticketDate').attr('class', 'form-control closeDate');
 	}
   	var dtToday = new Date();
 	var month = dtToday.getMonth() + 1;

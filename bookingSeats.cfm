@@ -22,7 +22,7 @@ body{
 				<div class="front">SCREEN</div>					
 			</div>
 			<cfset variables.movieObject=CreateObject("component","component.moviesDetails")/>
-           	<cfset variables.singleMovie=movieObject.displayMovieShowsbyId(#form.showId#)/>
+           	<cfset variables.singleMovie=movieObject.displayMovieShowsbyId(form.showId)/>
 			<div class="booking-details">
 				<ul class="book-left">
 					<li>Movie </li>
@@ -49,7 +49,7 @@ body{
 					</ul>
 
 					<cfset variables.ShowObject=CreateObject("component","component.moviesDetails")/>
-					<cfset variables.eachTimes=ShowObject.displayShowSeats(#form.showId#,#form.ticketDate#)/>
+					<cfset variables.eachTimes=ShowObject.displayShowSeats(form.showId,form.ticketDate)/>
 					<cfset variables.seatArray = ArrayNew(1) /> 
 					<cfloop QUERY="#eachTimes#">
 						<cfset ArrayAppend(variables.seatArray, "#no_seats#") />

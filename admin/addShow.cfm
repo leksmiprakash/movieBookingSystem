@@ -22,30 +22,30 @@
                         <thead>
                             <tr>
                                 <th>Movie Name</th>
-                                <th>Screen Name</th>
+                                <th>Theatre Name</th>
+                                <th>Show Name</th>
                                 <th>Show Times</th>
                                 <th>Show Starting Date</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th>Movie Name</th>
                                 <th>Theatre Name</th>
+                                <th>Show Name</th>
                                 <th>Show Times</th>
                                 <th>Show Starting Date</th>
-                                <th>Action</th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            <cfloop array="#alldata#" item="alldatas">
+                            <cfloop QUERY="#alldata#">
                                 <tr>
                                 
-                                    <td>#alldatas.getMovie_id()#</td>
-                                    <td>#alldatas.getTheatre_id()#</td>
-                                    <td>#alldatas.getSt_id()#</td>
-                                    <td>#alldatas.getStart_date()#</td>
-                                    <th></th>
+                                    <td>#alldata.movieTitle#</td>
+                                    <td>#alldata.t_name#</td>
+                                    <td>#alldata.showName#</td>
+                                    <td>#TimeFormat(alldata.start_time)#</td>
+                                    <td>#DateFormat(alldata.start_date)#</td>
                                 </tr>
                             </cfloop>
                         </tbody>

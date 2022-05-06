@@ -75,17 +75,13 @@
         <cfreturn session.theatreArray>
     </cffunction>
 
-   <cffunction name="deleteTheatre" access="remote" returnType="any" returnFormat="JSON" output="false">
-        <cfargument name="editId" required="true">
+    <cffunction name="deleteTheatre" access="remote" returnType="any" returnFormat="JSON" output="false">
+        <cfargument name="deleteId" required="true">
         <cfquery name="DeleteData"> 
             DELETE FROM theatres 
-            WHERE t_id = <cfqueryparam value="#arguments.editId#"  cfsqltype="cf_sql_integer">
-        </cfquery> 
-        <cfif DeleteData.recordCount EQ 1>      
-            <cfset variables.returnValue = true>
-        <cfelse>
-            <cfset variables.returnValue = false>
-        </cfif>
+            WHERE t_id = <cfqueryparam value="#arguments.deleteId#"  cfsqltype="cf_sql_integer">
+        </cfquery>    
+        <cfset variables.returnValue = true>
         <cfreturn variables.returnValue>
     </cffunction>
 
@@ -136,7 +132,6 @@
                         charge = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.charge#">
                     WHERE screen_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#form.updateId#"> 
                 </cfquery>
-                <cflocation url="../dashboard.cfm" addtoken="no">
                 <cfset ArrayAppend(session.messageArray, "Updated successfully") />
             <cfelse>
                 <cfquery result="result">
@@ -148,10 +143,10 @@
                         <cfqueryparam value="#form.charge#" cfsqltype="cf_sql_varchar">
                     )
                 </cfquery>
-                <cflocation url="../addScreen.cfm" addtoken="no">
                 <cfset ArrayAppend(session.messageArray, "Inserted successfully") />
             </cfif>
         </cfif>
+        <cflocation url="../addtheatre.cfm" addtoken="no">
         <cfreturn session.messageArray>
     </cffunction>
 
@@ -231,10 +226,51 @@
     <!------------------------------Show-------------------------->
 
     <cffunction name="displayallShowdata" access="public" returnType="any" output="false">
-        <cfset variables.getShows = EntityLoad('Shows',{},'s_id desc')>
-        <cfreturn variables.getShows>    
+        <cfquery name = "getShows">
+            select shows.*,showtimes.showName,showtimes.start_time,theatres.t_name,movies.movieTitle  
+            from shows
+            join movies on shows.movie_id = movies.movieID
+            join theatres on shows.theatre_id = theatres.t_id
+            join showtimes on shows.st_id = showtimes.st_id
+        </cfquery>
+        <cfreturn getShows> 
     </cffunction>
 
-    
+    <!------------------------------Password-------------------------->
+
+    <cffunction name="updatePassword" access="remote" returnType="any" output="false">
+    <cfset session.passwordArray = ArrayNew(1) /> 
+        <cfif form.oldPassword eq "">
+            <cfset ArrayAppend(session.passwordArray, "Please enter Old Password") />
+        </cfif>
+        <cfif form.newPassword eq "">
+            <cfset ArrayAppend(session.passwordArray, "Please enter New Password") />
+        </cfif>
+        <cfif form.confirmPassword eq "">
+            <cfset ArrayAppend(session.passwordArray, "Please enter Confirm Password") />
+        </cfif>
+         <cfif form.confirmPassword neq form.newPassword>
+            <cfset ArrayAppend(session.passwordArray, "Confirm Password and password must be same") />
+        </cfif>
+        <cfif ArrayIsEmpty(session.passwordArray)>
+            <cfquery name = "checkPassword">
+                select user_id, password from userstable where user_id=<cfqueryparam value="#session.adminID#" cfsqltype="cf_sql_integer"> 
+                and password =  <cfqueryparam value="#hash(form.oldPassword)#" cfsqltype="cf_sql_varchar"> 
+            </cfquery>
+            <cfif checkPassword.recordCount EQ 1>    
+                <cfquery name="updatePassword">
+                    UPDATE userstable 
+                    SET password = <cfqueryparam CFSQLType="cf_sql_varchar" value="#hash(form.newPassword)#">
+                    WHERE user_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#session.adminID#"> 
+                </cfquery>
+                <cfset ArrayAppend(session.passwordArray, "Password Updated Successfully") />
+            <cfelse>
+                <cfset ArrayAppend(session.passwordArray, "Please enter the correct password") />
+            </cfif>
+            <cflocation url="../updatePassword.cfm" addtoken="no">
+        </cfif>
+        <cfreturn session.passwordArray> 
+    </cffunction>
+
 
 </cfcomponent>

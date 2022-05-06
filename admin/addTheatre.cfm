@@ -56,7 +56,9 @@
                                     <td><img src="../theatre/#alldatas.getT_photo()#" width="80px" height="80px"></td>
                                     <td> <a class="btn btn btn-outline-primary btn-sm button-18 editbtn" data-conid="#alldatas.getT_id()#" id="editbtn"  data-toggle="modal" data-target="##theatreModal">
                                             Edit
-                                        </a></td>
+                                        </a>
+                                        <a href="##" class="btn btn btn-outline-primary btn-sm button-18 trash" id="#alldatas.getT_id()#" >Delete</a>
+                                    </td>
                                 </tr>
                             </cfloop>
                         </tbody>
@@ -151,4 +153,24 @@ function changeImage(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+$(".trash").click(function(){
+    var deleteId =  $(this).attr('id');
+    if(confirm('Are you sure to remove this record ?')) {
+        $.ajax({
+            type:'POST',
+            url:'components/theatresDetails.cfc?method=deleteTheatre',
+            data:{deleteId:deleteId},
+            success: function(response){
+                data = JSON.parse(response);
+                //alert(data);
+                if(data==true){
+                    alert("Deleted Successfully");
+                    window.location.reload();  
+                }else{
+                    alert("Something Went Wrong");
+                }
+            }
+        })
+    }
+});
 </script>

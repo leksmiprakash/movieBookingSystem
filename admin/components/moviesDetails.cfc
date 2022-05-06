@@ -6,26 +6,32 @@
      </cffunction>
 
     <cffunction  name="movieData" access="remote">
-        <cfset session.messageArray = ArrayNew(1) /> 
+        <cfset session.movieArray = ArrayNew(1) /> 
         <cfif form.movieTitle eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the Movie Name") />
+            <cfset ArrayAppend(session.movieArray, "Please enter the Movie Name") />
         </cfif>
         <cfif form.movieGenre eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the Movie Genre") />
+            <cfset ArrayAppend(session.movieArray, "Please enter the Movie Genre") />
         </cfif>
         <cfif form.movieDuration eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the Movie Duration") />
+            <cfset ArrayAppend(session.movieArray, "Please enter the Movie Duration") />
         </cfif>
         <cfif form.movieRelDate eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the Movie Release Date") />
+            <cfset ArrayAppend(session.movieArray, "Please enter the Movie Release Date") />
         </cfif>
         <cfif form.movieDirector eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the Movie Director") />
+            <cfset ArrayAppend(session.movieArray, "Please enter the Movie Director") />
         </cfif>
         <cfif form.movieActors eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the Movie Actors") />
+            <cfset ArrayAppend(session.movieArray, "Please enter the Movie Actors") />
         </cfif>
-        <cfif ArrayIsEmpty(session.messageArray)>
+        <cfif form.movieTrailer eq "">
+            <cfset ArrayAppend(session.movieArray, "Please enter the Movie Trailer") />
+        </cfif>
+        <cfif form.movieDesc eq "">
+            <cfset ArrayAppend(session.movieArray, "Please enter the Movie Description") />
+        </cfif>
+        <cfif ArrayIsEmpty(session.movieArray)>
             <cfif form.updateId gt 0>
                 <cfif form.movieImg != "">
                     <cffile action="upload"
@@ -45,11 +51,12 @@
                         movieRelDate = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.movieRelDate#">,
                         movieDirector = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.movieDirector#">,
                         movieActors = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.movieActors#">,
-                        movieImg = <cfqueryparam CFSQLType="cf_sql_varchar" value="#variables.img#">
+                        movieImg = <cfqueryparam CFSQLType="cf_sql_varchar" value="#variables.img#">,
+                        movieTrailer = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.movieTrailer#">,
+                        movieDescription = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.movieDesc#">
                     WHERE movieID = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#form.updateId#"> 
                 </cfquery>
-                <cflocation url="../dashboard.cfm" addtoken="no">
-                <cfset ArrayAppend(session.messageArray, "Updated successfully") />
+                <cfset ArrayAppend(session.movieArray, "Updated successfully") />
             <cfelse>
                 <cfif form.movieImg != "">
                     <cffile action="upload"
@@ -62,7 +69,7 @@
                     <cfset img = "no-image.png">
                 </cfif>
                 <cfquery result="result">
-                    INSERT INTO movies (movieTitle, movieGenre, movieDuration, movieRelDate,movieDirector,movieActors,movieImg)
+                    INSERT INTO movies (movieTitle, movieGenre, movieDuration, movieRelDate,movieDirector,movieActors,movieImg,movieTrailer,movieDescription)
                     VALUES (
                         <cfqueryparam value="#form.movieTitle#" cfsqltype="cf_sql_varchar">,
                         <cfqueryparam value="#form.movieGenre#" cfsqltype="cf_sql_varchar">,
@@ -70,22 +77,28 @@
                         <cfqueryparam value="#form.movieRelDate#" cfsqltype="cf_sql_varchar">,
                         <cfqueryparam value="#form.movieDirector#" cfsqltype="cf_sql_varchar">,
                         <cfqueryparam value="#form.movieActors#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#img#" cfsqltype="cf_sql_varchar">
+                        <cfqueryparam value="#img#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#form.movieTrailer#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#form.movieDesc#" cfsqltype="cf_sql_varchar">
                     )
                 </cfquery>
-                <cflocation url="../addMovie.cfm" addtoken="no">
-                <cfset ArrayAppend(session.messageArray, "Inserted successfully") />
+                <cfset ArrayAppend(session.movieArray, "Inserted successfully") />
             </cfif>
         </cfif>
-        <cfreturn session.messageArray>
+        <cflocation url="../addMovie.cfm" addtoken="no">
+        <cfreturn session.movieArray>
     </cffunction>
-    <cffunction name="deleteQuery" output="false" access="public">
+
+    <cffunction name="deleteMovie" access="remote" returnType="any" returnFormat="JSON" output="false">
+        <cfargument name="deleteId" required="true">
         <cfquery name="DeleteData"> 
-                DELETE FROM movies 
-                WHERE movieID = #URL.id# 
-        </cfquery> 
-        <cfreturn>
+            DELETE FROM movies 
+            WHERE movieID = <cfqueryparam value="#arguments.deleteId#"  cfsqltype="cf_sql_integer">
+        </cfquery>    
+        <cfset variables.returnValue = true>
+        <cfreturn variables.returnValue>
     </cffunction>
+
     <cffunction name="displaydata" access="remote" returnType="any" returnFormat="JSON" output="false">
           <cfargument name="editid" required="true">
           <cfquery name = "getMovieById"    >
@@ -120,6 +133,18 @@
             select count(t_id) as theatreCount from theatres
         </cfquery>
         <cfreturn getTheatresTotal> 
+    </cffunction>
+
+    <cffunction name="displayBookingData" access="public" returnType="any" output="false">
+        <cfquery name = "getBookings"    >
+            select bookings.*,shows.*,showtimes.showName,showtimes.start_time,theatres.t_name,movies.movieTitle  
+            from bookings
+            join shows on bookings.show_id = shows.s_id 
+            join movies on shows.movie_id = movies.movieID
+            join theatres on bookings.t_id = theatres.t_id
+            join showtimes on shows.st_id = showtimes.st_id order by ticket_date asc
+        </cfquery>
+        <cfreturn getBookings> 
     </cffunction>
 
 </cfcomponent>
