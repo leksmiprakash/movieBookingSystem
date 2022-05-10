@@ -17,15 +17,23 @@ component{
             or FindNoCase("movieListing",requestname) > 0
             or FindNoCase("about",requestname) > 0 
             or FindNoCase("index",requestname) > 0 
-            or FindNoCase("contact",requestname) > 0 ))
+            or FindNoCase("contact",requestname) > 0
+            or FindNoCase("forgotPassword",requestname) > 0 ))
             {
                location("login.cfm",false);
             }
         }
     }
-
-    function onMissingTemplate(targetPage){
-        writeOutput('<center><h1>This Page your are looking for is not avilable.</h1>
-		<p>Please Enter the correct URL</p></center>');
+    function onError(Exception,EventName){
+        writeOutput('<center><h1>An error occurred</h1>
+		<p>Please Contact the developer</p>
+		<p>Error details: #Exception.message#</p></center>');
     }
+
+    
+
+    // function onMissingTemplate(targetPage){
+    //     writeOutput('<center><h1>This Page your are looking for is not avilable.</h1>
+	// 	<p>Please Enter the correct URL</p></center>');
+    // }
 }

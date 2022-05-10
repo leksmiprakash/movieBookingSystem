@@ -20,19 +20,13 @@
 		<div class="container py-lg-3">
 		  <div class="w3l-hny-login">
 			<div class="w3l-hny-login-info">
-			<cfset  Session.messageArray = ArrayNew(1) >
-			<cfset   ArrayAppend(Session.messageArray, "Register Now","true") >
-           <cfif IsDefined("session.messageArray") >
-                <div id="message" class="alert alert-success" role="alert">
-                    #session.messageArray[1]#
-                </div>
-            </cfif>
+			
 			  <h2>Recover your Account</h2>
 			  <form action="component/registaration.cfc?method=forgotPassword" method="post" name="signup" id="signup" >
                 
 				<label>Email</label>
 				<div class="input-group">
-				    <input type="email" name="email" placeholder="" required="" autofocus>
+				    <input type="email" name="email" placeholder="Email" required="" autofocus>
 				</div>
 				
 				<button class="btn read-button btn-login" type="submit">Send Password</button>
@@ -45,7 +39,6 @@
 	  <!-- //login -->
 	  <div style="margin: 8px auto; display: block; text-align:center;">
 
-<!---728x90--->
  
 </div>
  </cfoutput>

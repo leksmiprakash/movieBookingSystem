@@ -36,7 +36,7 @@
 				</div>
 				<div class="login-check">
 				  <label class="checkbox"><input type="checkbox" name="checkbox" /> Remember me</label>
-				  <a class="forgot" href="forgotPassword.html">Forgot password?</a>
+				  <a class="forgot" href="forgotPassword.cfm">Forgot password?</a>
 				</div>
 				<button class="btn read-button btn-login" type="submit">Login</button>
 			  </form>

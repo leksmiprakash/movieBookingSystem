@@ -13,10 +13,17 @@ body{
 }
 </style>
 <cfoutput>
+<cfset variables.userObject=CreateObject("component","component.moviesDetails")/>
+<cfset variables.userData=userObject.getUserData(session.userID)/>
 <div class="content">
 	<br><br>
 	<div class="main">
 		<h2>Movie Booking</h2>
+		<cfif StructKeyExists(session, "bookedArray")>
+            <div id="message" class="alert alert-success" role="alert">
+                #session.bookedArray[1]#
+            </div>
+        </cfif>
 		<div class="demo">
 			<div id="seat-map">
 				<div class="front">SCREEN</div>					
@@ -32,7 +39,7 @@ body{
 					<li>Total</li>
 					<li>Seats :</li>
 				</ul>
-				<form method="post" action="component/moviesDetails.cfc?method=bookingData">
+				<form method="post" action="component/moviesDetails.cfc?method=bookingData" >
 					<ul class="book-right">
 						<li>: #singleMovie.movieTitle#</li>
 						<li>: #DateFormat(Now())#</li>
@@ -60,14 +67,15 @@ body{
 					<input type="hidden" name="bookSeats" id="bookSeats" value="0">
 
 					<div class = "input-group input-group-sm">
-						<input class="form-control" type="text" name="cardNumber" id="cardNumber" placeholder="Card Number">
+						<input class="form-control" type="number" name="cardNumber" id="cardNumber" placeholder="Card Number">
 					</div>
 					<div class = "input-group input-group-sm">
-						<input class="form-control" type="text" name="PhoneNumber" id="PhoneNumber" placeholder="Phone Number">
+						<input class="form-control" type="number" name="PhoneNumber" id="PhoneNumber" placeholder="Phone Number">
 					</div>
 					<div class = "input-group input-group-sm">
-						<input class="form-control" type="text" name="CVV" id="CVV" placeholder="CVV Number">
+						<input class="form-control" type="number" name="CVV" id="CVV" placeholder="CVV Number">
 					</div>
+					<input class="form-control" type="hidden" name="userEmail" id="userEmail" value="#userData.email#">
 					<input class="form-control" type="hidden" name="ticketDate" id="ticketDate" value="#form.ticketDate#">
 					<button class="checkout-button" type="submit">Book Now</button>	
 					<div id="legend"></div>

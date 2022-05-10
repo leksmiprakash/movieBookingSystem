@@ -50,7 +50,8 @@
 				</div>
 				<label>Email</label>
 				<div class="input-group">
-				    <input type="email" name="email" id="email" placeholder="">
+				    <input type="email" name="email" id="email" placeholder=""  onchange="checkAvailability()">
+					<span id="user-availability-status"></span> 
 				</div>
 				<label>Username</label>
 				<div class="input-group">

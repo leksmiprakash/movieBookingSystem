@@ -91,6 +91,10 @@
                     <cfqueryparam value="#form.ticketDate#" cfsqltype="cf_sql_varchar">
                 )
             </cfquery>
+            <cfmail to = "#Form.userEmail#" from = "lekshmi.prakash@techversantinfo.com" subject = "Account Creation" >  
+                Congrats Your Ticket have been created !! on #form.ticketDate# #form.bookCount# Tickets. Total #form.bookTotal# Rs
+               
+            </cfmail> 
             <cfset ArrayAppend(session.bookedArray, "Booked successfully") />
             <cflocation url="../movieListing.cfm" addtoken="no">
         </cfif>
@@ -108,6 +112,13 @@
             where bookings.user_id=<cfqueryparam value="#session.userID#"  cfsqltype="cf_sql_integer"> order by ticket_date desc
         </cfquery>
         <cfreturn getBookings> 
+    </cffunction>
+    <cffunction name="getUserData" access="public" returnType="any" output="false">
+        <cfargument name="userID" required="true">
+        <cfquery name = "getuserById"    >
+            select *  from userstable where user_id=<cfqueryparam value="#arguments.userID#" cfsqltype="cf_sql_integer">
+        </cfquery>
+        <cfreturn getuserById> 
     </cffunction>
 
 </cfcomponent>

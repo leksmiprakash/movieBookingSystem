@@ -118,3 +118,32 @@ function printDiv(divName) {
 setTimeout(function() {
     $('#message').fadeOut('fast');
 }, 3000); // <-- time in milliseconds
+
+function ValidationBooking(){ 
+    alert();
+    let bookSeats = $('#bookSeats').val();
+    let cardNumber= $('#cardNumber').val();
+    let PhoneNumber= $('#PhoneNumber').val();
+    let CVV= $('#CVV').val();
+     
+    if(cardNumber.length != 16) {  
+        alert(' Enter a 16 digit card number');
+        $('#cardNumber').val("");
+        $('#cardNumber').css('border-color','#F00');
+        return false;  
+    }
+    if(PhoneNumber.length != 10) {  
+        alert(' Enter the 10 digit phone number');
+        $('#PhoneNumber').val("");
+        $('#PhoneNumber').css('border-color','#F00');
+        return false;  
+    }
+    if(CVV.length != 3) {  
+        alert(' Enter the 3 digit CVV number');
+        $('#CVV').val("");
+        $('#CVV').css('border-color','#F00');
+        return false;  
+    }
+    
+                                           
+}
