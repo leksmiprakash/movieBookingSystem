@@ -272,5 +272,40 @@
         <cfreturn session.passwordArray> 
     </cffunction>
 
+    <cffunction  name="showsAddData" access="remote">
+        <cfset session.showsArray = ArrayNew(1) /> 
+        <cfif form.movieId eq "">
+            <cfset ArrayAppend(session.showsArray, "Please select the movie") />
+        </cfif>
+        <cfif form.tId eq "">
+            <cfset ArrayAppend(session.showsArray, "Please select theatre") />
+        </cfif>
+        <cfif form.stData eq "">
+            <cfset ArrayAppend(session.showsArray, "Please show time") />
+        </cfif>
+        <cfif form.showDate eq "">
+            <cfset ArrayAppend(session.showsArray, "Please insert show time") />
+        </cfif>
+        <cfif form.status eq "">
+            <cfset ArrayAppend(session.showsArray, "Please select show status") />
+        </cfif>
+        
+        <cfif ArrayIsEmpty(session.showsArray)>
+            
+            <cfquery result="result">
+                INSERT INTO shows (movie_id, theatre_id, start_date, st_id, status)
+                VALUES (
+                    <cfqueryparam value="#form.movieId#" cfsqltype="cf_sql_varchar">,
+                    <cfqueryparam value="#form.tId#" cfsqltype="cf_sql_varchar">,
+                    <cfqueryparam value="#form.showDate#" cfsqltype="cf_sql_varchar">,
+                    <cfqueryparam value="#form.stData#" cfsqltype="cf_sql_varchar">,
+                    <cfqueryparam value="#form.status#" cfsqltype="cf_sql_varchar">
+                )
+            </cfquery>
+            <cfset ArrayAppend(session.showsArray, "Inserted successfully") />
+            <cflocation url="../addshow.cfm" addtoken="no">
+        </cfif>
+        <cfreturn session.showsArray>
+    </cffunction>
 
 </cfcomponent>

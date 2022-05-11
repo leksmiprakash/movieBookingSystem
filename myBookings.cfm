@@ -54,7 +54,7 @@
 								<h3 class="pricing"> <sup class="pri1"><i class="fa fa-inr"></i></sup>#bookings.amount# 
 								<!--<sup class="pri">99</sup>-->
 								</h3>
-								<!--<button class="btn read-button">View</button>-->
+								<a href="PrintPdf.cfm" class="btn read-button">Print Ticket</a>
 							</div>
 						</div>
 					</div>

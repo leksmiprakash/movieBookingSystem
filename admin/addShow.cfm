@@ -8,7 +8,11 @@
             <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" href="##" data-toggle="modal" data-target="##showModal">
                 <i class="fas fa-plus fa-sm text-white-50"></i> Add Theatre </a>
         </div>
-        
+        <cfif StructKeyExists(session, "showsArray")>
+            <div id="message" class="alert alert-success" role="alert">
+                #session.showsArray[1]#
+            </div>
+        </cfif>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -58,7 +62,7 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="post" action="components/theatresDetails.cfc?method=showTimeData" enctype="multipart/form-data">
+                <form method="post" action="components/theatresDetails.cfc?method=showsAddData" enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Add Details</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -97,6 +101,19 @@
                                 
                             </select>
                         </div>
+                        <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
+                            <label for="inputEmail">Show Time</label>
+                            <input type="date" name="showDate" id="showDate" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
+                        <label for="inputEmail">Show Time</label>
+                        <select name="status" class="form-control" id="status" >
+                            <option value="">Select</option>
+                            <option value="1">Show Active</option>
+                            <option value="2">Show Stops</option>
+                            
+                        </select>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
