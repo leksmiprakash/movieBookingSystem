@@ -18,24 +18,21 @@
 	<section class="w3l-loginhny py-5">
 		<!-- login -->
 		<div class="container py-lg-3">
-		  <div class="w3l-hny-login">
-			<div class="w3l-hny-login-info">
-			
-			  <h2>Recover your Account</h2>
-			  <form action="component/registaration.cfc?method=forgotPassword" method="post" name="signup" id="signup" >
-                
-				<label>Email</label>
-				<div class="input-group">
-				    <input type="email" name="email" placeholder="Email" required="" autofocus>
+			<div class="w3l-hny-login">
+				<div class="w3l-hny-login-info">
+					<h2>Recover your Account</h2>
+					<form method="post" action="component/moviesDetails.cfc?method=forgotPassword" >
+						<label>Email</label>
+						<div class="input-group">
+							<input type="email" name="email" placeholder="Email"  autofocus>
+						</div>
+						<input class="btn read-button btn-login" type="submit" value="Send Password">
+					</form>
+					<p class="account1">Already have an account? <a href="login.cfm">Login now</a></p>
 				</div>
-				
-				<button class="btn read-button btn-login" type="submit">Send Password</button>
-			  </form>
-			  <p class="account1">Already have an account? <a href="login.cfm">Login now</a></p>
 			</div>
-		  </div>
 		</div>
-	  </section>
+	</section>
 	  <!-- //login -->
 	  <div style="margin: 8px auto; display: block; text-align:center;">
 

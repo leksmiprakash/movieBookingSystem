@@ -91,12 +91,12 @@
                     <cfqueryparam value="#form.ticketDate#" cfsqltype="cf_sql_varchar">
                 )
             </cfquery>
-            <cfmail to = "#Form.userEmail#" from = "lekshmi.prakash@techversantinfo.com" subject = "Account Creation" >  
+            <cfmail to = "#Form.userEmail#" from = "lekshmi.prakash@techversantinfo.com" subject = "Booking successfull" >  
                 Congrats Your Ticket have been created !! on #form.ticketDate# #form.bookCount# Tickets. Total #form.bookTotal# Rs
                
             </cfmail> 
             <cfset ArrayAppend(session.bookedArray, "Booked successfully") />
-            <cflocation url="../movieListing.cfm" addtoken="no">
+            <cflocation url="../myBookings.cfm" addtoken="no">
         </cfif>
         <cfreturn session.bookedArray>
     </cffunction>
@@ -119,6 +119,79 @@
             select *  from userstable where user_id=<cfqueryparam value="#arguments.userID#" cfsqltype="cf_sql_integer">
         </cfquery>
         <cfreturn getuserById> 
+    </cffunction>
+
+    <cffunction name="displayBookingID" access="public" returnType="any" output="false">
+        <cfargument name="bookingId" required="true">
+        <cfquery name = "getBooking" >
+            select bookings.*,shows.*,showtimes.showName,showtimes.start_time,theatres.t_name,movies.movieTitle  
+            from bookings
+            join shows on bookings.show_id = shows.s_id 
+            join movies on shows.movie_id = movies.movieID
+            join theatres on bookings.t_id = theatres.t_id
+            join showtimes on shows.st_id = showtimes.st_id
+            where bookings.user_id=<cfqueryparam value="#session.userID#"  cfsqltype="cf_sql_integer"> 
+            and bookings.book_id=<cfqueryparam value="#arguments.bookingId#"  cfsqltype="cf_sql_integer">
+        </cfquery>
+        <cfreturn getBooking> 
+    </cffunction>
+
+    <cffunction  name="forgotPassword" access="remote">
+        <cfset session.emailArray = ArrayNew(1) /> 
+        <cfif form.email eq "">
+            <cfset ArrayAppend(session.emailArray, "Please enter your email to continue") />
+        </cfif>
+        
+        <cfif ArrayIsEmpty(session.emailArray)>
+            <cfquery name = "checkEmail">
+                select user_id, email, password from userstable where email=<cfqueryparam value="#form.email#" cfsqltype="cf_sql_varchar"> 
+            </cfquery>
+            <cfif checkEmail.recordCount EQ 1>    
+                <cfmail to = "#Form.email#" from = "lekshmi.prakash@techversantinfo.com" subject = "Recover Password" >  
+                    Recover Your Password !! Your Current password is #checkEmail.password# . Change your Password
+                </cfmail> 
+                <cfset ArrayAppend(session.emailArray, "Password send Successfully") />
+            <cfelse>
+                <cfset ArrayAppend(session.emailArray, "Please enter the correct email") />
+            </cfif>
+            <cflocation url="../index.cfm" addtoken="no">
+        </cfif>
+        <cfreturn session.emailArray>
+    </cffunction>
+    
+    <cffunction name="updatePassword" access="remote" returnType="any" output="false">
+    <cfset session.passwordArray = ArrayNew(1) /> 
+        <cfif form.oldPassword eq "">
+            <cfset ArrayAppend(session.passwordArray, "Please enter Old Password") />
+        </cfif>
+        <cfif form.newPassword eq "">
+            <cfset ArrayAppend(session.passwordArray, "Please enter New Password") />
+        </cfif>
+        <cfif form.confirmPassword eq "">
+            <cfset ArrayAppend(session.passwordArray, "Please enter Confirm Password") />
+        </cfif>
+         <cfif form.confirmPassword neq form.newPassword>
+            <cfset ArrayAppend(session.passwordArray, "Confirm Password and password must be same") />
+        </cfif>
+        <cfif ArrayIsEmpty(session.passwordArray)>
+            <cfquery name = "checkPassword">
+                select user_id, password from userstable where user_id=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_integer"> 
+                and password =  <cfqueryparam value="#hash(form.oldPassword)#" cfsqltype="cf_sql_varchar"> 
+            </cfquery>
+            <cfif checkPassword.recordCount EQ 1>    
+                <cfquery name="updatePassword">
+                    UPDATE userstable 
+                    SET password = <cfqueryparam CFSQLType="cf_sql_varchar" value="#hash(form.newPassword)#">
+                    WHERE user_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#session.userID#"> 
+                </cfquery>
+                <cfset ArrayAppend(session.passwordArray, "Password Updated Successfully") />
+            <cfelse>
+                <cfset ArrayAppend(session.passwordArray, "Please enter the correct password") />
+            </cfif>
+            
+        </cfif>
+        <cflocation url="../updatePassword.cfm" addtoken="no">
+        <cfreturn session.passwordArray> 
     </cffunction>
 
 </cfcomponent>

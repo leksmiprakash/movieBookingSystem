@@ -15,7 +15,7 @@
 	<div class="w3l-breadcrumbs">
 		<nav id="breadcrumbs" class="breadcrumbs">
 			<div class="container page-wrapper">
-				<a href="index.html">Home</a> » <span class="breadcrumb_last" aria-current="page">Plans</span>
+				<a href="index.html">Home</a> » <span class="breadcrumb_last" aria-current="page">Bookings</span>
 			</div>
 		</nav>
 	</div>
@@ -24,14 +24,15 @@
 	<section class="w3l-pricinghny">
 		<div class="pricing-inner-info py-5">
 			<div class="container py-lg-4">
-			<div style="margin: 8px auto; display: block; text-align:center;">
-
-<!---728x90--->
-
- 
-</div>
+				<div style="margin: 8px auto; display: block; text-align:center;">
+				</div>
 				<!--/pricing-info-grids-->
 				<div class="pricing-info-grids">
+				<cfif StructKeyExists(session, "bookedArray")>
+					<div id="message" class="alert alert-success" role="alert">
+						#session.bookedArray[1]#
+					</div>
+				</cfif>
 				<cfset BookObj=CreateObject("component","component.moviesDetails")/>
             	<cfset bookings=BookObj.displayBookingData()/>
 				<!--/pricing-info-grids-->
@@ -54,7 +55,7 @@
 								<h3 class="pricing"> <sup class="pri1"><i class="fa fa-inr"></i></sup>#bookings.amount# 
 								<!--<sup class="pri">99</sup>-->
 								</h3>
-								<a href="PrintPdf.cfm" class="btn read-button">Print Ticket</a>
+								<a href="PrintPdf.cfm?bookingId=#bookings.book_id#" class="btn read-button">Print Ticket</a>
 							</div>
 						</div>
 					</div>

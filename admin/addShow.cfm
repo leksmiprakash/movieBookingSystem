@@ -4,9 +4,9 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Theatre</h1>
+            <h1 class="h3 mb-0 text-gray-800">Show</h1>
             <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" href="##" data-toggle="modal" data-target="##showModal">
-                <i class="fas fa-plus fa-sm text-white-50"></i> Add Theatre </a>
+                <i class="fas fa-plus fa-sm text-white-50"></i> Add Show </a>
         </div>
         <cfif StructKeyExists(session, "showsArray")>
             <div id="message" class="alert alert-success" role="alert">
@@ -16,7 +16,7 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Theatre List </h6>
+                <h6 class="m-0 font-weight-bold text-primary">Show List </h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -30,6 +30,7 @@
                                 <th>Show Name</th>
                                 <th>Show Times</th>
                                 <th>Show Starting Date</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -39,6 +40,7 @@
                                 <th>Show Name</th>
                                 <th>Show Times</th>
                                 <th>Show Starting Date</th>
+                                <th>Action</th>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -50,6 +52,18 @@
                                     <td>#alldata.showName#</td>
                                     <td>#TimeFormat(alldata.start_time)#</td>
                                     <td>#DateFormat(alldata.start_date)#</td>
+                                    <td> 
+                                        <cfif alldata.status==1 >
+                                            <a href="##" class="btn btn btn-outline-primary btn-sm button-18 show" data-id="2" id="#alldata.s_id#">
+                                                Stop Showing
+                                            </a>
+                                        <cfelse>
+                                            <a href="##" class="btn btn btn-outline-danger btn-sm button-18 show" data-id="1" id="#alldata.s_id#">
+                                                Start Showing
+                                            </a>
+                                        </cfif>
+                                        </a>
+                                    </td>
                                 </tr>
                             </cfloop>
                         </tbody>
@@ -69,8 +83,6 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        
                     <div class="modal-body">
                         <div class="form-group mb-3 col-lg-9"  style="margin: 0 auto;">
                             <label for="inputEmail">Movie Name</label>
@@ -117,7 +129,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <input type="submit" class="btn btn-primary" name ="saveTheatre" value="Save Theatre">
+                        <input type="submit" class="btn btn-primary" name ="saveTheatre" value="Save Show">
                     </div>
                 </form>
             </div>
@@ -160,13 +172,27 @@ $(document).on('change', '#tId', function() {
         }
     });
 });
-function changeImage(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            $('#imageDisplay').attr('src', e.target.result).width(250).height(250);
-        };
-        reader.readAsDataURL(input.files[0]);
+$(".show").click(function(){
+    var showId =  $(this).attr('id');
+    var status =  $(this).attr('data-id');
+    if(confirm('Are you sure to update this show status ?')) {
+        $.ajax({
+            type:'POST',
+            url:'components/theatresDetails.cfc?method=stopShow',
+            data:{
+                showId:showId,status:status
+                },
+            success: function(response){
+                data = JSON.parse(response);
+                //alert(data);
+                if(data==true){
+                    alert("Show status updated Successfully");
+                    window.location.reload();  
+                }else{
+                    alert("Something Went Wrong");
+                }
+            }
+        })
     }
-}
+});
 </script>

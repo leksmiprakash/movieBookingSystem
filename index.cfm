@@ -122,9 +122,7 @@
 									</figure>
 									<div class="box-content">
 										<h4> <span class="post"><span class="fa fa-clock-o"> </span> #newMovie.getMovieDuration()# Hrs
-
 											</span>
-
 											<span class="post fa fa-heart text-right"></span>
 										</h4>
 									</div>
@@ -143,13 +141,7 @@
 
 		</div>
 	</section>
-	<!--grids-sec2-->
-	
-	
 	</cfoutput>
 	<div style="margin: 8px auto; display: block; text-align:center;">
-
-<!---728x90--->
- 
-</div>
+	</div>
 <cfinclude  template = "includes/footer.cfm"  runOnce = "true"></cfinclude>

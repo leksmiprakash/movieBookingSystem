@@ -12,14 +12,10 @@ component{
    
     function onRequestStart(requestname){ 
         if(!structKeyExists(session, "userID") or !structKeyExists(session, "loggedin") ){
-            if(!(FindNoCase("login",requestname) > 0 
-            or FindNoCase("registration",requestname) > 0  
-            or FindNoCase("movieListing",requestname) > 0
-            or FindNoCase("about",requestname) > 0 
-            or FindNoCase("index",requestname) > 0 
-            or FindNoCase("contact",requestname) > 0
-            or FindNoCase("forgotPassword",requestname) > 0 ))
-            {
+            if(!(FindNoCase("login",requestname) > 0 or FindNoCase("registration",requestname) > 0  
+            or FindNoCase("movieListing",requestname) > 0 or FindNoCase("about",requestname) > 0 
+            or FindNoCase("index",requestname) > 0 or FindNoCase("contact",requestname) > 0
+            or FindNoCase("forgotPassword",requestname) > 0 )) {
                location("login.cfm",false);
             }
         }
@@ -32,8 +28,8 @@ component{
 
     
 
-    // function onMissingTemplate(targetPage){
-    //     writeOutput('<center><h1>This Page your are looking for is not avilable.</h1>
-	// 	<p>Please Enter the correct URL</p></center>');
-    // }
+    function onMissingTemplate(targetPage){
+        writeOutput('<center><h1>This Page your are looking for is not avilable.</h1>
+		<p>Please Enter the correct URL</p></center>');
+    }
 }

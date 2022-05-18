@@ -7,31 +7,25 @@
             </head>
             <body>
                 <cfset BookObj=CreateObject("component","component.moviesDetails")/>
-            	<cfset bookings=BookObj.displayBookingData()/>
+            	<cfset bookings=BookObj.displayBookingID(#url.bookingId#)/>
                 <table class="table table-bordered" >
                     <thead>
                     <tr>
-                        <th scope="col"></th>
                         <th scope="col">Movie Name</th>
-                        <th scope="col">Gender</th>
-                        <th scope="col">DOB</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Email Id</th>
-                        <th scope="col">Phone Number</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Tickets</th>
+                        <th scope="col">Total Amount</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <cfloop query="userData">
+                    <cfloop query="bookings">
                         <tr>
-                        <th scope="row"><img src="./images/#userData.image#" width="80px" height="80px"></th>
-                        <td>#userData.firstName# #userData.lastName#</td>
-                        <td>
-                            #userData.gender==1?"Male":"Female"#
-                        </td>
-                        <td>#userData.phone#</td>
-                        <td>#userData.address#, #userData.street# </td>
-                        <td>#userData.email#</td>
-                        <td>#userData.dob#</td>
+                        <td>#bookings.movieTitle#</td>
+                        <td> #DateFormat(bookings.ticket_date)# </td>
+                        <td>#TimeFormat(bookings.start_time)# </td>
+                        <td>#bookings.seat_count# </td>
+                        <td>#bookings.amount# </td>
                         </tr>
                     </cfloop> 
                     </tbody>

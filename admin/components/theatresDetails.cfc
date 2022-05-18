@@ -308,4 +308,15 @@
         <cfreturn session.showsArray>
     </cffunction>
 
+    <cffunction name="stopShow" access="remote" returnType="any" returnFormat="JSON" output="false">
+        <cfargument name="showId">
+        <cfargument name="status">
+        <cfquery name="showData"> 
+            UPDATE shows set status = <cfqueryparam value="#arguments.status#"  cfsqltype="cf_sql_integer">
+            WHERE s_id = <cfqueryparam value="#arguments.showId#"  cfsqltype="cf_sql_integer">
+        </cfquery>    
+        <cfset variables.returnValue = true>
+        <cfreturn variables.returnValue>
+    </cffunction>
+
 </cfcomponent>

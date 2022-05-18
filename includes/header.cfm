@@ -113,6 +113,7 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 							<cfif IsDefined ('session.userName')>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdown1">
 									<a class="dropdown-item" href="myBookings.cfm">Bookings</a>
+									<a class="dropdown-item" href="updatePassword.cfm">Change Password</a>
 									<a class="dropdown-item" href="logout.cfm">Logout</a>
 								</div>
 							<cfelse>
