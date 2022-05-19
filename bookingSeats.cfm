@@ -179,6 +179,75 @@ body{
 					return total;
 				}
 			</script>
+
+			<script>
+            var amt=200*100;
+                var options = {
+                    "key": (#application.rkey#), // Enter the Key ID generated from the Dashboard
+                    "amount": amt,
+                    "currency": "INR",
+                    "name": "BookMyTicket",
+                    "description": "Test Transaction",
+                    "image": "assets/images/favicon.png",
+                    //"callback_url": "components/booking.cfc?method=makePayment",
+                    "prefill": {
+                        "name": "#booking.username#",
+                        "email": "#booking.email#",
+                        "contact": "8111945425"
+                    },
+                    "notes": {
+                        // "address": "Razorpay Corporate Office"
+                    },
+                    "theme": {
+                        // "color": "##3399cc"
+                    },
+                    "handler": function (response)
+                    {
+                        // console.log(response.razorpay_payment_id);
+                        // console.log($("##bookids").val());
+                        //  console.log($("##userids").val());
+                        //   console.log($("##pmttotamt").val());
+                        // var bid=$("##bookids").val();
+                        // var uid=$("##userids").val();
+                        // var tamt=$("##pmttotamt").val();
+                        $("##rzrpmtid").val(response.razorpay_payment_id);
+                        var form = $("##payment-card-form").closest("form");
+                        var formData = new FormData(form[0]);
+                        $.ajax({
+                            data:formData,
+                            type: "post",
+                            url: "components/booking.cfc?method=makePayment",
+                            dataType: "json",  
+                            cache : false,
+                            processData: false,
+                            contentType: false,
+                            success: function(dataResult)
+                            { 
+                                window.location= dataResult; 
+                            },
+                                error: function (jqXHR, exception) {    
+                                console.log("err"+exception);
+                            }
+                        }); 
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.on('payment.failed', function (response) {
+                    alert("Payment failed,Please check your credentials");
+                    // console.log("res"+response);
+                    //     alert(response.error.code);
+                    //     alert(response.error.description);
+                    //     alert(response.error.source);
+                    //     alert(response.error.step);
+                    //     alert(response.error.reason);
+                    //     alert(response.error.metadata.order_id);
+                    //     alert(response.error.metadata.payment_id);
+                });
+                document.getElementById('rzp-button1').onclick = function (e) {
+                    rzp1.open();
+                    e.preventDefault();
+                }
+            </script>
 			
 	</div>
 
