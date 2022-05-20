@@ -180,8 +180,8 @@ body{
 				}
 			</script>
 
-			<script>
-            var amt=200*100;
+			<!--<script>
+            	var amt=200*100;
                 var options = {
                     "key": (#application.rkey#), // Enter the Key ID generated from the Dashboard
                     "amount": amt,
@@ -247,7 +247,7 @@ body{
                     rzp1.open();
                     e.preventDefault();
                 }
-            </script>
+            </script>-->
 			
 	</div>
 
