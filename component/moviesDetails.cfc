@@ -96,7 +96,7 @@
                
             </cfmail> 
             <cfset ArrayAppend(session.bookedArray, "Booked successfully") />
-            <cflocation url="../myBookings.cfm" addtoken="no">
+            <cflocation url = "../paymentPage.cfm?bookId=#result.generated_key#" addtoken="no">
         </cfif>
         <cfreturn session.bookedArray>
     </cffunction>
@@ -124,7 +124,7 @@
     <cffunction name="displayBookingID" access="public" returnType="any" output="false">
         <cfargument name="bookingId" required="true">
         <cfquery name = "getBooking" >
-            select bookings.*,shows.*,showtimes.showName,showtimes.start_time,theatres.t_name,movies.movieTitle  
+            select bookings.*,shows.*,showtimes.showName,showtimes.start_time,theatres.t_name,movies.* 
             from bookings
             join shows on bookings.show_id = shows.s_id 
             join movies on shows.movie_id = movies.movieID

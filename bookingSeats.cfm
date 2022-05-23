@@ -66,15 +66,7 @@ body{
 					<ul id="selected-seats" class="scrollbar scrollbar1"></ul>
 					<input type="hidden" name="bookSeats" id="bookSeats" value="0">
 
-					<div class = "input-group input-group-sm">
-						<input class="form-control" type="number" name="cardNumber" id="cardNumber" placeholder="Card Number">
-					</div>
-					<div class = "input-group input-group-sm">
-						<input class="form-control" type="number" name="PhoneNumber" id="PhoneNumber" placeholder="Phone Number">
-					</div>
-					<div class = "input-group input-group-sm">
-						<input class="form-control" type="number" name="CVV" id="CVV" placeholder="CVV Number">
-					</div>
+					
 					<input class="form-control" type="hidden" name="userEmail" id="userEmail" value="#userData.email#">
 					<input class="form-control" type="hidden" name="ticketDate" id="ticketDate" value="#form.ticketDate#">
 					<button class="checkout-button" type="submit">Book Now</button>	
