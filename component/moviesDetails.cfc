@@ -102,14 +102,17 @@
     </cffunction>
 
     <cffunction name="displayBookingData" access="public" returnType="any" output="false">
-        <cfquery name = "getBookings"    >
-            select bookings.*,shows.*,showtimes.showName,showtimes.start_time,theatres.t_name,movies.movieTitle  
+        <cfquery name = "getBookings">
+            select bookings.*,shows.*,showtimes.showName,showtimes.start_time,theatres.t_name,movies.movieTitle,
+                   userstable.userName,userstable.email,userstable.phone
             from bookings
             join shows on bookings.show_id = shows.s_id 
             join movies on shows.movie_id = movies.movieID
             join theatres on bookings.t_id = theatres.t_id
             join showtimes on shows.st_id = showtimes.st_id
-            where bookings.user_id=<cfqueryparam value="#session.userID#"  cfsqltype="cf_sql_integer"> order by ticket_date desc
+            join userstable on bookings.user_id = userstable.user_id
+            where bookings.user_id=<cfqueryparam value="#session.userID#"  cfsqltype="cf_sql_integer"> 
+            and  bookings.status='1' order by ticket_date desc
         </cfquery>
         <cfreturn getBookings> 
     </cffunction>

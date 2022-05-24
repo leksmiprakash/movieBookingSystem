@@ -19,11 +19,6 @@ body{
 	<br><br>
 	<div class="main">
 		<h2>Movie Booking</h2>
-		<cfif StructKeyExists(session, "bookedArray")>
-            <div id="message" class="alert alert-success" role="alert">
-                #session.bookedArray[1]#
-            </div>
-        </cfif>
 		<div class="demo">
 			<div id="seat-map">
 				<div class="front">SCREEN</div>					
@@ -136,7 +131,7 @@ body{
 									$bookCount.val(sc.find('selected').length-1);
 									//update totalnum
 									$total.text(recalculateTotal(sc)-price);
-									$bookTotal.val(recalculateTotal(sc)+price);	
+									$bookTotal.val(recalculateTotal(sc)-price);	
 									//Delete reservation
 									$('#cart-item-'+this.settings.id).remove();
 

@@ -9,6 +9,11 @@ component{
     This.applicationtimeout=createtimespan(5,0,0,0);
     This.ormenabled = "true";
     This.ormsettings = {datasource="movieBooking", logsql="true"};
+
+    function onApplicationStart(){
+       application.rkey="rzp_test_Yoskj273KESacG";
+       return true;
+    }
    
     function onRequestStart(requestname){ 
         if(!structKeyExists(session, "userID") or !structKeyExists(session, "loggedin") ){
