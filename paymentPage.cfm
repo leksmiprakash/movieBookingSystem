@@ -65,15 +65,14 @@
 							<div class="icon_info">
 								<p class="counter" style="font-size:40px!important;">#DateFormat(bookings.ticket_date)#</p>
 								<h4>Date</h4>
-								<input type="text" name="rzrpmtid" value="" id="rzrpmtid" >
-								
 							</div>
 						</div>
 					</div>
 				</div>
-				<input type="hidden" id="bookAmount" value="#bookings.amount#">
-				<input type="hidden" id="bookId" value="#url.bookId#">
-				
+				<input type="hidden" name="bookAmount" id="bookAmount" value="#bookings.amount#">
+				<input type="hidden" name="bookId" id="bookId" value="#url.bookId#">
+				<input type="hidden" name="userId" id="userId" value="#session.userID#">
+				<input type="hidden" name="rzrpmtid" value="" id="rzrpmtid" >
 			</div>
 		</form>
 	</div>
@@ -98,6 +97,23 @@
         $("#rzrpmtid").val(response.razorpay_payment_id);
 		var form = $("#payment-card-form").closest("form");
 		var formData = new FormData(form[0]);
+		//console.log(formData);
+		$.ajax({
+			data:formData,
+			type: "post",
+			url: "component/moviesDetails.cfc?method=completePayment",
+			dataType: "json",  
+			cache : false,
+			processData: false,
+			contentType: false,
+			success: function(dataResult)
+			{ 
+				window.location= dataResult; 
+			},
+				error: function (jqXHR, exception) {    
+				console.log("err"+exception);
+			}
+		}); 
     },
     "prefill": {
         "name": "ProShowz Pvt Lmtd",

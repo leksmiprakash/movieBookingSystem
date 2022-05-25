@@ -18156,13 +18156,13 @@ ul.page-numbers li a:hover {
   margin: 0 auto;
   box-sizing: border-box;
   padding: 2em;
-  background: var(--theme-lite);
+  background: #fff;
   border-radius: 6px;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.09);
 }
 
 .w3l-loginhny .w3l-hny-login form label {
-  color: var(--theme-title);
+  /*color: var(--theme-title); */
   margin-bottom: 3px;
   font-size: 14px;
   font-weight: 600;

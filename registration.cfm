@@ -30,15 +30,15 @@
 			  <form action="component/registaration.cfc?method=registerQuery" method="post" name="signup" id="signup" onsubmit="return ValidationSignup()">
                 <label>Name</label>
 				<div class="input-group">
-				    <input type="text" name="name" id="name" placeholder="" autofocus>
+				    <input type="text" name="name" id="name" placeholder="" autofocus style="color:green;">
 				</div>
                 <label>Age</label>
 				<div class="input-group">
-				    <input type="text" name="age" id="age" placeholder="">
+				    <input type="text" name="age" id="age" placeholder="" style="color:green;">
 				</div>
                 <label>Gender</label>
 				<div class="input-group">
-                    <select class="form-control" name="gender" id="gender" autofocus>
+                    <select class="form-control" name="gender" id="gender" autofocus style="color:green;">
                         <option value="">------Select Gender------</option>
                         <option value="1">Male</option>
                         <option value="2">Female</option>
@@ -46,24 +46,24 @@
 				</div>
                 <label>Mobile Number</label>
 				<div class="input-group">
-				    <input type="text" name="phone" id="phone" placeholder="">
+				    <input type="text" name="phone" id="phone" placeholder="" style="color:green;">
 				</div>
 				<label>Email</label>
 				<div class="input-group">
-				    <input type="email" name="email" id="email" placeholder=""  onchange="checkAvailability()">
+				    <input type="email" name="email" id="email" placeholder="" style="color:green;"  onchange="checkAvailability()">
 					<span id="user-availability-status"></span> 
 				</div>
 				<label>Username</label>
 				<div class="input-group">
-				    <input type="text" name="userName" id="userName" placeholder="">
+				    <input type="text" name="userName" id="userName" placeholder="" style="color:green;">
 				</div>
 				<label>Password</label>
 				<div class="input-group">
-				    <input type="Password" name="password" id="password" placeholder="">
+				    <input type="Password" name="password" id="password" placeholder="" style="color:green;">
 				</div>
                 <label>Confirm Password</label>
 				<div class="input-group">
-				    <input type="Password" name="cpassword" id="cpassword" placeholder="">
+				    <input type="Password" name="cpassword" id="cpassword" placeholder="" style="color:green;">
 				</div>
 				
 				<input class="btn read-button btn-login" type="submit" value="Register">

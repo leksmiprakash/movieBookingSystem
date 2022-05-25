@@ -95,7 +95,7 @@
                 Congrats Your Ticket have been created !! on #form.ticketDate# #form.bookCount# Tickets. Total #form.bookTotal# Rs
                
             </cfmail> 
-            <cfset ArrayAppend(session.bookedArray, "Booked successfully") />
+            <cfset ArrayAppend(session.bookedArray, "Cpmplete your payment to continue") />
             <cflocation url = "../paymentPage.cfm?bookId=#result.generated_key#" addtoken="no">
         </cfif>
         <cfreturn session.bookedArray>
@@ -195,6 +195,10 @@
         </cfif>
         <cflocation url="../updatePassword.cfm" addtoken="no">
         <cfreturn session.passwordArray> 
+    </cffunction>
+
+    <cffunction name = "completePayment" returnType = "any" returnformat="JSON"  access = "remote" output="true">
+        
     </cffunction>
 
 </cfcomponent>

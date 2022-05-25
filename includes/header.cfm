@@ -66,6 +66,9 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 <body>
 <!-- New toolbar-->
 <style>
+body{
+	background:#fff!important;
+}
 * {
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
