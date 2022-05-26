@@ -24,7 +24,7 @@
 				</div>
                 <cfset MoviesObj=CreateObject("component","component.moviesDetails")/>
                 <cfset Movies=MoviesObj.displayNewData()/>
-                
+                <cfset variables.EncrptKey = application.EncrptKey>
                 <div class="w3l-populohny-grids">
                     <cfloop array="#Movies#" item="Movie">					
                         <div class="item vhny-grid">
@@ -46,7 +46,7 @@
                                 </a>
                             </div>
 							<div class="button-center text-center mt-4">
-								<a href="movieSingle.cfm?id=#Movie.getMovieID()#" class="btn watch-button">Book now</a>
+								<a href="movieSingle.cfm?id=#URLEncodedFormat(Encrypt(Movie.getMovieID(), EncrptKey))#" class="btn watch-button">Book now</a>
 							</div>
                         </div>
                     </cfloop>

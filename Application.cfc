@@ -11,10 +11,10 @@ component{
     This.ormsettings = {datasource="movieBooking", logsql="true"};
 
     function onApplicationStart(){
+       application.EncrptKey = "abc!@";
        application.rkey="rzp_test_Yoskj273KESacG";
        return true;
     }
-   
     function onRequestStart(requestname){ 
         if(!structKeyExists(session, "userID") or !structKeyExists(session, "loggedin") ){
             if(!(FindNoCase("login",requestname) > 0 or FindNoCase("registration",requestname) > 0  
@@ -30,9 +30,6 @@ component{
 		<p>Please Contact the developer</p>
 		<p>Error details: #Exception.message#</p></center>');
     }
-
-    
-
     function onMissingTemplate(targetPage){
         writeOutput('<center><h1>This Page your are looking for is not avilable.</h1>
 		<p>Please Enter the correct URL</p></center>');

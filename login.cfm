@@ -28,11 +28,11 @@
 			  <form action="component/login.cfc?method=getUserDetails" method="post" name="signup" id="signup" onsubmit="return Validation()">
 				<label>Email</label>
 				<div class="input-group">
-				  <input type="email" name="email" id="email" placeholder="" autofocus style="color:green;">
+				  <input type="email" name="email" id="email" placeholder="" autofocus>
 				</div>
 				<label>Password</label>
 				<div class="input-group">
-				  <input type="Password" name="password" id="password" placeholder="" style="color:green;">
+				  <input type="Password" name="password" id="password" placeholder="">
 				</div>
 				<div class="login-check">
 				  <label class="checkbox"><input type="checkbox" name="checkbox" /> Remember me</label>

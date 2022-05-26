@@ -66,9 +66,7 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 <body>
 <!-- New toolbar-->
 <style>
-body{
-	background:#fff!important;
-}
+
 * {
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
@@ -176,7 +174,7 @@ body{
 
 				</div>
 				<!-- toggle switch for light and dark theme -->
-				<div class="mobile-position">
+				<!--<div class="mobile-position">
 					<nav class="navigation">
 						<div class="theme-switch-wrapper">
 							<label class="theme-switch" for="checkbox">
@@ -188,7 +186,7 @@ body{
 							</label>
 						</div>
 					</nav>
-				</div>
+				</div>-->
 				<!-- //toggle switch for light and dark theme -->
 			</div>
 		</nav>

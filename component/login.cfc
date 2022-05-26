@@ -28,8 +28,8 @@
                     Session.userID = results.user_id;
                     Session.userName = results.userName;
                     Session.loggedin = true; 
-                    location("../index.cfm","no");
                     ArrayAppend(Session.loginArray, "Logged In Successfully","true"); 
+                    location("../index.cfm","no");
                 } 
                 else {
                     ArrayAppend(Session.loginArray, "Incorrect Credentials","true"); 

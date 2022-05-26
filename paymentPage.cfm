@@ -14,6 +14,11 @@
 		<form class="payment-card-form" id="payment-card-form" action="" method="post">
 			<div class="container py-lg-4">
 				<div style="margin: 8px auto; display: block; text-align:center;">
+				<cfif StructKeyExists(session, "bookedArray")>
+					<div id="message" class="alert alert-success" role="alert">
+						#session.bookedArray[1]#
+					</div>
+				</cfif>
 				</div>
 				<cfset BookObj=CreateObject("component","component.moviesDetails")/>
 				<cfset bookings=BookObj.displayBookingID(#url.bookId#)/>
@@ -24,8 +29,8 @@
 					</div>
 					
 					<div class="col-lg-6 ab-left pl-lg-4 mt-lg-0 mt-5">
-						<h3 class="hny-title">#bookings.movieTitle#</h3>
-						<p class="mt-3">#bookings.movieDescription#</p>
+						<h3 class="hny-title" style="color:black;">#bookings.movieTitle#</h3>
+						<p class="mt-3" style="color:black;">#bookings.movieDescription#</p>
 						<div class="ready-more mt-4">
 							<button class="btn read-button" id="rzp-button1">Pay Now <span class="fa fa-angle-double-right ml-2" aria-hidden="true"></span></button>	
 						</div>
@@ -36,7 +41,7 @@
 					<div class="stats_left">
 						<div class="counter_grid">
 							<div class="icon_info">
-								<p class="counter">#bookings.seat_count#</p>
+								<p class="counter" style="color:black;">#bookings.seat_count#</p>
 								<h4>Tickets</h4>
 
 							</div>
@@ -45,7 +50,7 @@
 					<div class="stats_left">
 						<div class="counter_grid">
 							<div class="icon_info">
-								<p class="counter">#bookings.showName#</p>
+								<p class="counter" style="color:black;">#bookings.showName#</p>
 								<h4>Show</h4>
 
 							</div>
@@ -54,7 +59,7 @@
 					<div class="stats_left">
 						<div class="counter_grid">
 							<div class="icon_info">
-								<p class="counter">#bookings.amount#</p>
+								<p class="counter" style="color:black;">#bookings.amount#</p>
 								<h4>Total Amount</h4>
 
 							</div>
@@ -63,7 +68,7 @@
 					<div class="stats_left">
 						<div class="counter_grid">
 							<div class="icon_info">
-								<p class="counter" style="font-size:40px!important;">#DateFormat(bookings.ticket_date)#</p>
+								<p class="counter" style="font-size:40px!important;color:black;">#DateFormat(bookings.ticket_date)#</p>
 								<h4>Date</h4>
 							</div>
 						</div>
@@ -135,8 +140,6 @@ rzp1.on('payment.failed', function (response){
         alert(response.error.source);
         alert(response.error.step);
         alert(response.error.reason);
-        alert(response.error.metadata.order_id);
-        alert(response.error.metadata.payment_id);
 });
 document.getElementById('rzp-button1').onclick = function(e){
 	//alert("fvdfv");

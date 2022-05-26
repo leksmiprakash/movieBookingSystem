@@ -95,7 +95,7 @@
                 Congrats Your Ticket have been created !! on #form.ticketDate# #form.bookCount# Tickets. Total #form.bookTotal# Rs
                
             </cfmail> 
-            <cfset ArrayAppend(session.bookedArray, "Cpmplete your payment to continue") />
+            <cfset ArrayAppend(session.bookedArray, "Complete your payment to continue") />
             <cflocation url = "../paymentPage.cfm?bookId=#result.generated_key#" addtoken="no">
         </cfif>
         <cfreturn session.bookedArray>
@@ -199,6 +199,34 @@
 
     <cffunction name = "completePayment" returnType = "any" returnformat="JSON"  access = "remote" output="true">
         
+        <cfargument name="bookAmount" required="true">
+        <cfargument name="bookId" required="true">
+        <cfargument name="userId" required="true">
+        <cfargument name="rzrpmtid" required="true">
+        <cfquery name="insertQuery"  result="paymentResult">
+            INSERT INTO `payments`(`user_id`, `booking_id`, `amount`,`txn_id`) 
+            VALUES (
+            <cfqueryparam value ="#arguments.userId#" cfsqltype = "cf_sql_integer"/>,
+            <cfqueryparam value ="#arguments.bookId#" cfsqltype = "cf_sql_integer"/>,
+            <cfqueryparam value ="#arguments.bookAmount#" cfsqltype = "cf_sql_integer"/>,
+            <cfqueryparam value ="#arguments.rzrpmtid#" cfsqltype = "cf_sql_varchar"/>);
+        </cfquery>
+        <cfset variables.getNumberOfRecords = listLen(paymentResult.generated_key)>
+        <cfif variables.getNumberOfRecords GT 0>
+             <cfquery name="updateBooking" result="bookingResult">
+                UPDATE `bookings` SET status='1'
+                where book_id=<cfqueryparam value ="#form.bookId#" cfsqltype = "cf_sql_integer"/>;
+            </cfquery>
+            <cfset variables.getNumberOfRecords = listLen(bookingResult.RecordCount)> 
+            <cfif variables.getNumberOfRecords GT 0>
+               
+                <cfset variables.goto="myBookings.cfm"/>
+            <cfelse>
+                
+                <cfset variables.goto="paymentPage.cfm?bookId="&arguments.bookId/>
+            </cfif>
+        </cfif>
+        <cfreturn variables.goto>
     </cffunction>
 
 </cfcomponent>

@@ -28,11 +28,7 @@
 				</div>
 				<!--/pricing-info-grids-->
 				<div class="pricing-info-grids">
-				<cfif StructKeyExists(session, "bookedArray")>
-					<div id="message" class="alert alert-success" role="alert">
-						#session.bookedArray[1]#
-					</div>
-				</cfif>
+				
 				<cfset BookObj=CreateObject("component","component.moviesDetails")/>
             	<cfset bookings=BookObj.displayBookingData()/>
 				<!--/pricing-info-grids-->
