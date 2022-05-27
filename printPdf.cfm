@@ -6,8 +6,10 @@
                 <title>Hello World</title>
             </head>
             <body>
+                <cfset variables.DecrptKey = "abc!@" />
                 <cfset BookObj=CreateObject("component","component.moviesDetails")/>
-            	<cfset bookings=BookObj.displayBookingID(#url.bookingId#)/>
+                <cfset variables.bookId = Decrypt(URL.bookingId, DecrptKey) />
+            	<cfset bookings=BookObj.displayBookingID(#bookId#)/>
                 <table class="table table-bordered" >
                     <thead>
                     <tr>

@@ -93,10 +93,10 @@
             </cfquery>
             <cfmail to = "#Form.userEmail#" from = "lekshmi.prakash@techversantinfo.com" subject = "Booking successfull" >  
                 Congrats Your Ticket have been created !! on #form.ticketDate# #form.bookCount# Tickets. Total #form.bookTotal# Rs
-               
             </cfmail> 
+            <cfset variables.EncrptKey = "abc!@" />
             <cfset ArrayAppend(session.bookedArray, "Complete your payment to continue") />
-            <cflocation url = "../paymentPage.cfm?bookId=#result.generated_key#" addtoken="no">
+            <cflocation url = "../paymentPage.cfm?bookId=#URLEncodedFormat(Encrypt(result.generated_key, EncrptKey))#" addtoken="no">
         </cfif>
         <cfreturn session.bookedArray>
     </cffunction>

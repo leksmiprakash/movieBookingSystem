@@ -24,7 +24,7 @@
 				</div>
                 <cfset MoviesObj=CreateObject("component","component.moviesDetails")/>
                 <cfset Movies=MoviesObj.displayNewData()/>
-                <cfset variables.EncrptKey = application.EncrptKey>
+                <cfset variables.EncrptKey = "abc!@" />
                 <div class="w3l-populohny-grids">
                     <cfloop array="#Movies#" item="Movie">					
                         <div class="item vhny-grid">

@@ -73,11 +73,12 @@
 				</div>
 				<cfset MoviesObj=CreateObject("component","component.moviesDetails")/>
                 <cfset limitedMovies=MoviesObj.displayLimitedData()/>
+				<cfset variables.EncrptKey = "abc!@" />
 				<div class="w3l-populohny-grids">
 					<cfloop array="#limitedMovies#" item="limitedMovie">
 						<div class="item vhny-grid">
 							<div class="box16">
-								<a href="movieSingle.cfm?id=#limitedMovie.getMovieID()#">
+								<a href="movieSingle.cfm?id=#URLEncodedFormat(Encrypt(limitedMovie.getMovieID(), EncrptKey))#">
 									<figure>
 										<img class="img-fluid" src="movie/#limitedMovie.getMovieImg()#" alt="">
 									</figure>
@@ -130,9 +131,9 @@
 								</a>
 							</div>
 							<h3> <a class="title-gd" href="movieListing.cfm">#newMovie.getMovieTitle()# Mins</a></h3>
-							<p>#newMovie.getMovieGenre()# Mins</p>
+							<p>#newMovie.getMovieGenre()# , #newMovie.getMovieDuration()# Mins</p>
 							<div class="button-center text-center mt-4">
-								<a href="movieSingle.cfm?id=#newMovie.getMovieID()#" class="btn watch-button">Book now</a>
+								<a href="movieSingle.cfm?id=#URLEncodedFormat(Encrypt(newMovie.getMovieID(), EncrptKey))#" class="btn watch-button">Book now</a>
 							</div>
 						</div>
 					</cfloop>

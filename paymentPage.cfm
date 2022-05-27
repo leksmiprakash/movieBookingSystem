@@ -20,8 +20,10 @@
 					</div>
 				</cfif>
 				</div>
+				<cfset variables.DecrptKey = "abc!@" />
 				<cfset BookObj=CreateObject("component","component.moviesDetails")/>
-				<cfset bookings=BookObj.displayBookingID(#url.bookId#)/>
+				<cfset variables.bookingId = Decrypt(URL.bookId, DecrptKey) />
+				<cfset bookings=BookObj.displayBookingID(#bookingId#)/>
 				
 				<div class="row ab-grids-sec align-items-center">
 					<div class="col-lg-6 ab-right">
@@ -75,7 +77,7 @@
 					</div>
 				</div>
 				<input type="hidden" name="bookAmount" id="bookAmount" value="#bookings.amount#">
-				<input type="hidden" name="bookId" id="bookId" value="#url.bookId#">
+				<input type="hidden" name="bookId" id="bookId" value="#bookingId#">
 				<input type="hidden" name="userId" id="userId" value="#session.userID#">
 				<input type="hidden" name="rzrpmtid" value="" id="rzrpmtid" >
 			</div>

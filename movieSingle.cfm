@@ -10,7 +10,9 @@
 					<div class="genre-single-page my-lg-5 my-4">
 						<div class="row ab-grids-sec align-items-center">
                             <cfset variables.movieObject=CreateObject("component","component.moviesDetails")/>
-                            <cfset variables.singleMovie=movieObject.displayMoviebyId(#url.id#)/>
+							<cfset variables.DecrptKey = "abc!@" />
+							<cfset variables.movieId = Decrypt(URL.id, DecrptKey) />
+                            <cfset variables.singleMovie=movieObject.displayMoviebyId(#movieId#)/>
 							<div class="col-lg-4 gen-right">
 								<a href="##"><img class="img-fluid" src="movie/#singleMovie.movieImg#"></a>
 							</div>
@@ -29,13 +31,13 @@
 								<div class="share-more d-flex mt-4">
 									
 									<cfset variables.theratreShowObject=CreateObject("component","component.moviesDetails")/>
-                            		<cfset variables.eachtheatres=theratreShowObject.displayMovietheatres(#url.id#)/>
+                            		<cfset variables.eachtheatres=theratreShowObject.displayMovietheatres(#movieId#)/>
 									<table class="table table-bordered">
 										<cfloop QUERY="#eachtheatres#">
 											<tr>
 												<th >#t_name#</th>
 												<cfset variables.ShowTimeObject=CreateObject("component","component.moviesDetails")/>
-                            					<cfset variables.eachTimes=ShowTimeObject.displayShowTimes(#url.id#,#theatre_id#)/>
+                            					<cfset variables.eachTimes=ShowTimeObject.displayShowTimes(#movieId#,#theatre_id#)/>
 												<form action="bookingSeats.cfm" method="post">
 													<td>
 														<select class="form-control" id="showId" name="showId">
