@@ -6,25 +6,35 @@
      </cffunction>
 
     <cffunction  name="theatreData" access="remote">
+
+        <cfargument name="tName" required="true">
+        <cfargument name="tAddress" required="true">
+        <cfargument name="tEmail" required="true">
+        <cfargument name="tPhone" required="true">
+        <cfargument name="tRate" required="true">
+        <cfargument name="tPhoto" required="true">
+        <cfargument name="old_file" required="true">
+        <cfargument name="updateId" required="true">
+
         <cfset session.theatreArray = ArrayNew(1) /> 
-        <cfif form.tName eq "">
+        <cfif arguments.tName eq "">
             <cfset ArrayAppend(session.theatreArray, "Please enter the Theatre Name") />
         </cfif>
-        <cfif form.tAddress eq "">
+        <cfif arguments.tAddress eq "">
             <cfset ArrayAppend(session.theatreArray, "Please enter the first name") />
         </cfif>
-        <cfif form.tEmail eq "">
+        <cfif arguments.tEmail eq "">
             <cfset ArrayAppend(session.theatreArray, "Please enter the last Name") />
         </cfif>
-        <cfif form.tPhone eq "">
+        <cfif arguments.tPhone eq "">
             <cfset ArrayAppend(session.theatreArray, "Please enter the gender") />
         </cfif>
-         <cfif form.tRate eq "">
+         <cfif arguments.tRate eq "">
             <cfset ArrayAppend(session.theatreArray, "Please enter the Rate") />
         </cfif>
         <cfif ArrayIsEmpty(session.theatreArray)>
-            <cfif form.updateId gt 0>
-                <cfif form.tPhoto != "">
+            <cfif arguments.updateId gt 0>
+                <cfif arguments.tPhoto != "">
                     <cffile action="upload"
                         fileField="tPhoto"
                         destination="F:\ColdFusion2021\cfusion\wwwroot\movieBookingSystem\theatre"
@@ -32,22 +42,22 @@
                         result="img">
                     <cfset variables.img = img.serverFile>
                 <cfelse>
-                    <cfset variables.img = form.old_file>
+                    <cfset variables.img = arguments.old_file>
                 </cfif>
                 <cfquery name="updateQuery">
                     UPDATE theatres 
-                    SET t_name = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tName#">, 
-                        t_address = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tAddress#">,
-                        t_email = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tEmail#">,
-                        t_phone = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tPhone#">,
-                        price = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tRate#">,
+                    SET t_name = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.tName#">, 
+                        t_address = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.tAddress#">,
+                        t_email = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.tEmail#">,
+                        t_phone = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.tPhone#">,
+                        price = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.tRate#">,
                         t_photo = <cfqueryparam CFSQLType="cf_sql_varchar" value="#variables.img#">
-                    WHERE t_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#form.updateId#"> 
+                    WHERE t_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#arguments.updateId#"> 
                 </cfquery>
                 <cfset ArrayAppend(session.theatreArray, "Updated successfully") />
                 <cflocation url="../addTheatre.cfm" addtoken="no">
             <cfelse>
-                <cfif form.tPhoto != "">
+                <cfif arguments.tPhoto != "">
                     <cffile action="upload"
                         fileField="tPhoto"
                         destination="F:\ColdFusion2021\cfusion\wwwroot\movieBookingSystem\theatre"
@@ -60,11 +70,11 @@
                 <cfquery result="result">
                     INSERT INTO theatres (t_name, t_address, t_email, t_phone, price, t_photo)
                     VALUES (
-                        <cfqueryparam value="#form.tName#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#form.tAddress#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#form.tEmail#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#form.tPhone#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#form.tRate#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.tName#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.tAddress#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.tEmail#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.tPhone#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.tRate#" cfsqltype="cf_sql_varchar">,
                         <cfqueryparam value="#img#" cfsqltype="cf_sql_varchar">
                     )
                 </cfquery>
@@ -92,64 +102,7 @@
           </cfquery>
           <cfreturn getTheatreById> 
      </cffunction>
-
-<!-------------------Screen--------------------------->
-
-    <cffunction name="displayallScreendata" access="public" returnType="any" output="false">
-        <cfset variables.getScreens = EntityLoad('Screens',{},'screen_id desc')>
-        <cfreturn variables.getScreens >    
-    </cffunction>
-
-    <cffunction name="displayScreendata" access="remote" returnType="any" returnFormat="JSON" output="false">
-        <cfargument name="editid" required="true">
-        <cfquery name = "getScreenById"    >
-            select *  from screens where screen_id=<cfqueryparam value="#arguments.editid#"  cfsqltype="cf_sql_integer">      
-        </cfquery>
-        <cfreturn getScreenById> 
-    </cffunction>
-
-    <cffunction  name="screenData" access="remote">
-        <cfset session.messageArray = ArrayNew(1) /> 
-        <cfif form.tId eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the Theatre Name") />
-        </cfif>
-        <cfif form.sName eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the Screen name") />
-        </cfif>
-        <cfif form.seats eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the total Seats") />
-        </cfif>
-        <cfif form.charge eq "">
-            <cfset ArrayAppend(session.messageArray, "Please enter the Cost") />
-        </cfif>
-        <cfif ArrayIsEmpty(session.messageArray)>
-            <cfif form.updateId gt 0>
-                <cfquery name="updateQuery">
-                    UPDATE screens 
-                    SET theatre_id = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.tId#">, 
-                        screen_name = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.sName#">,
-                        seats = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.seats#">,
-                        charge = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.charge#">
-                    WHERE screen_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#form.updateId#"> 
-                </cfquery>
-                <cfset ArrayAppend(session.messageArray, "Updated successfully") />
-            <cfelse>
-                <cfquery result="result">
-                    INSERT INTO screens (theatre_id, screen_name, seats, charge)
-                    VALUES (
-                        <cfqueryparam value="#form.tId#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#form.sName#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#form.seats#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#form.charge#" cfsqltype="cf_sql_varchar">
-                    )
-                </cfquery>
-                <cfset ArrayAppend(session.messageArray, "Inserted successfully") />
-            </cfif>
-        </cfif>
-        <cflocation url="../addtheatre.cfm" addtoken="no">
-        <cfreturn session.messageArray>
-    </cffunction>
-
+    
     <!-----------------------------Shows---------------------------->
 
     <cffunction name="displayallShowNamedata" access="public" returnType="any" output="false">

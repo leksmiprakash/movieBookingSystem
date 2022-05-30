@@ -6,34 +6,47 @@
      </cffunction>
 
     <cffunction  name="movieData" access="remote">
+
+        <cfargument name="movieTitle" required="true">
+        <cfargument name="movieGenre" required="true">
+        <cfargument name="movieDuration" required="true">
+        <cfargument name="movieRelDate" required="true">
+        <cfargument name="movieDirector" required="true">
+        <cfargument name="movieActors" required="true">
+        <cfargument name="movieImg" required="true">
+        <cfargument name="old_file" required="true">
+        <cfargument name="updateId" required="true">
+        <cfargument name="movieTrailer" required="true">
+        <cfargument name="movieDesc" required="true">
+        
         <cfset session.movieArray = ArrayNew(1) /> 
-        <cfif form.movieTitle eq "">
+        <cfif arguments.movieTitle eq "">
             <cfset ArrayAppend(session.movieArray, "Please enter the Movie Name") />
         </cfif>
-        <cfif form.movieGenre eq "">
+        <cfif arguments.movieGenre eq "">
             <cfset ArrayAppend(session.movieArray, "Please enter the Movie Genre") />
         </cfif>
-        <cfif form.movieDuration eq "">
+        <cfif arguments.movieDuration eq "">
             <cfset ArrayAppend(session.movieArray, "Please enter the Movie Duration") />
         </cfif>
-        <cfif form.movieRelDate eq "">
+        <cfif arguments.movieRelDate eq "">
             <cfset ArrayAppend(session.movieArray, "Please enter the Movie Release Date") />
         </cfif>
-        <cfif form.movieDirector eq "">
+        <cfif arguments.movieDirector eq "">
             <cfset ArrayAppend(session.movieArray, "Please enter the Movie Director") />
         </cfif>
-        <cfif form.movieActors eq "">
+        <cfif arguments.movieActors eq "">
             <cfset ArrayAppend(session.movieArray, "Please enter the Movie Actors") />
         </cfif>
-        <cfif form.movieTrailer eq "">
+        <cfif arguments.movieTrailer eq "">
             <cfset ArrayAppend(session.movieArray, "Please enter the Movie Trailer") />
         </cfif>
-        <cfif form.movieDesc eq "">
+        <cfif arguments.movieDesc eq "">
             <cfset ArrayAppend(session.movieArray, "Please enter the Movie Description") />
         </cfif>
         <cfif ArrayIsEmpty(session.movieArray)>
-            <cfif form.updateId gt 0>
-                <cfif form.movieImg != "">
+            <cfif arguments.updateId gt 0>
+                <cfif arguments.movieImg != "">
                     <cffile action="upload"
                         fileField="movieImg"
                         destination="F:\ColdFusion2021\cfusion\wwwroot\movieBookingSystem\movie"
@@ -41,24 +54,24 @@
                         result="img">
                     <cfset variables.img = img.serverFile>
                 <cfelse>
-                    <cfset variables.img = form.old_file>
+                    <cfset variables.img = arguments.old_file>
                 </cfif>
                 <cfquery name="updateQuery">
                     UPDATE movies 
-                    SET movieTitle = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.movieTitle#">, 
-                        movieGenre = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.movieGenre#">,
-                        movieDuration = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.movieDuration#">,
-                        movieRelDate = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.movieRelDate#">,
-                        movieDirector = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.movieDirector#">,
-                        movieActors = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.movieActors#">,
+                    SET movieTitle = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.movieTitle#">, 
+                        movieGenre = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.movieGenre#">,
+                        movieDuration = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.movieDuration#">,
+                        movieRelDate = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.movieRelDate#">,
+                        movieDirector = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.movieDirector#">,
+                        movieActors = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.movieActors#">,
                         movieImg = <cfqueryparam CFSQLType="cf_sql_varchar" value="#variables.img#">,
-                        movieTrailer = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.movieTrailer#">,
-                        movieDescription = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.movieDesc#">
-                    WHERE movieID = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#form.updateId#"> 
+                        movieTrailer = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.movieTrailer#">,
+                        movieDescription = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.movieDesc#">
+                    WHERE movieID = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#arguments.updateId#"> 
                 </cfquery>
                 <cfset ArrayAppend(session.movieArray, "Updated successfully") />
             <cfelse>
-                <cfif form.movieImg != "">
+                <cfif arguments.movieImg != "">
                     <cffile action="upload"
                         fileField="movieImg"
                         destination="F:\ColdFusion2021\cfusion\wwwroot\movieBookingSystem\movie"
@@ -71,15 +84,15 @@
                 <cfquery result="result">
                     INSERT INTO movies (movieTitle, movieGenre, movieDuration, movieRelDate,movieDirector,movieActors,movieImg,movieTrailer,movieDescription)
                     VALUES (
-                        <cfqueryparam value="#form.movieTitle#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#form.movieGenre#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#form.movieDuration#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#form.movieRelDate#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#form.movieDirector#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#form.movieActors#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.movieTitle#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.movieGenre#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.movieDuration#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.movieRelDate#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.movieDirector#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.movieActors#" cfsqltype="cf_sql_varchar">,
                         <cfqueryparam value="#img#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#form.movieTrailer#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#form.movieDesc#" cfsqltype="cf_sql_varchar">
+                        <cfqueryparam value="#arguments.movieTrailer#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.movieDesc#" cfsqltype="cf_sql_varchar">
                     )
                 </cfquery>
                 <cfset ArrayAppend(session.movieArray, "Inserted successfully") />
