@@ -136,25 +136,31 @@
     </cffunction>
 
     <cffunction  name="showTimeData" access="remote">
+    
+        <cfargument name="tId" required="true">
+        <cfargument name="showNameId" required="true">
+        <cfargument name="sTime" required="true">
+        <cfargument name="updateId" required="true">
+
         <cfset session.showTimerray = ArrayNew(1) /> 
-        <cfif form.tId eq "">
+        <cfif arguments.tId eq "">
             <cfset ArrayAppend(session.showTimerray, "Please enter the Theatre Name") />
         </cfif>
-        <cfif form.showNameId eq "">
+        <cfif arguments.showNameId eq "">
             <cfset ArrayAppend(session.showTimerray, "Please enter the first name") />
         </cfif>
-        <cfif form.sTime eq "">
+        <cfif arguments.sTime eq "">
             <cfset ArrayAppend(session.showTimerray, "Please enter the last Name") />
         </cfif>
         <cfif ArrayIsEmpty(session.showTimerray)>
-            <cfif form.updateId gt 0>
+            <cfif arguments.updateId gt 0>
                 
                 <cfquery name="updateQuery">
                     UPDATE showtimes 
-                    SET theatre_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#form.tId#">, 
-                        showName = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.showNameId#">,
-                        start_time = <cfqueryparam CFSQLType="cf_sql_varchar" value="#form.sTime#">
-                    WHERE st_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#form.updateId#"> 
+                    SET theatre_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#arguments.tId#">, 
+                        showName = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.showNameId#">,
+                        start_time = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.sTime#">
+                    WHERE st_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#arguments.updateId#"> 
                 </cfquery>
                 <cfset ArrayAppend(session.showTimerray, "Updated successfully") />
                 <cflocation url="../addShowTime.cfm" addtoken="no">
@@ -163,9 +169,9 @@
                 <cfquery result="result">
                     INSERT INTO showtimes (theatre_id, showName, start_time)
                     VALUES (
-                        <cfqueryparam value="#form.tId#" cfsqltype="CF_SQL_INTEGER">,
-                        <cfqueryparam value="#form.showNameId#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#form.sTime#" cfsqltype="cf_sql_varchar">
+                        <cfqueryparam value="#arguments.tId#" cfsqltype="CF_SQL_INTEGER">,
+                        <cfqueryparam value="#arguments.showNameId#" cfsqltype="cf_sql_varchar">,
+                        <cfqueryparam value="#arguments.sTime#" cfsqltype="cf_sql_varchar">
                     )
                 </cfquery>
                 <cfset ArrayAppend(session.showTimerray, "Inserted successfully") />
@@ -192,54 +198,67 @@
     <!------------------------------Password-------------------------->
 
     <cffunction name="updatePassword" access="remote" returnType="any" output="false">
-    <cfset session.passwordArray = ArrayNew(1) /> 
-        <cfif form.oldPassword eq "">
+
+        <cfargument name="oldPassword" required="true">
+        <cfargument name="newPassword" required="true">
+        <cfargument name="confirmPassword" required="true">
+        <cfargument name="adminId" required="true">
+
+        <cfset session.passwordArray = ArrayNew(1) /> 
+        <cfif arguments.oldPassword eq "">
             <cfset ArrayAppend(session.passwordArray, "Please enter Old Password") />
         </cfif>
-        <cfif form.newPassword eq "">
+        <cfif arguments.newPassword eq "">
             <cfset ArrayAppend(session.passwordArray, "Please enter New Password") />
         </cfif>
-        <cfif form.confirmPassword eq "">
+        <cfif arguments.confirmPassword eq "">
             <cfset ArrayAppend(session.passwordArray, "Please enter Confirm Password") />
         </cfif>
-         <cfif form.confirmPassword neq form.newPassword>
+         <cfif arguments.confirmPassword neq arguments.newPassword>
             <cfset ArrayAppend(session.passwordArray, "Confirm Password and password must be same") />
         </cfif>
         <cfif ArrayIsEmpty(session.passwordArray)>
             <cfquery name = "checkPassword">
-                select user_id, password from userstable where user_id=<cfqueryparam value="#session.adminID#" cfsqltype="cf_sql_integer"> 
-                and password =  <cfqueryparam value="#hash(form.oldPassword)#" cfsqltype="cf_sql_varchar"> 
+                select user_id, password from userstable where user_id=<cfqueryparam value="#arguments.adminId#" cfsqltype="cf_sql_integer"> 
+                and password =  <cfqueryparam value="#hash(arguments.oldPassword)#" cfsqltype="cf_sql_varchar"> 
             </cfquery>
             <cfif checkPassword.recordCount EQ 1>    
                 <cfquery name="updatePassword">
                     UPDATE userstable 
-                    SET password = <cfqueryparam CFSQLType="cf_sql_varchar" value="#hash(form.newPassword)#">
-                    WHERE user_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#session.adminID#"> 
+                    SET password = <cfqueryparam CFSQLType="cf_sql_varchar" value="#hash(arguments.newPassword)#">
+                    WHERE user_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#arguments.adminId#"> 
                 </cfquery>
                 <cfset ArrayAppend(session.passwordArray, "Password Updated Successfully") />
             <cfelse>
                 <cfset ArrayAppend(session.passwordArray, "Please enter the correct password") />
             </cfif>
-            <cflocation url="../updatePassword.cfm" addtoken="no">
         </cfif>
+        <cflocation url="../updatePassword.cfm" addtoken="no">
         <cfreturn session.passwordArray> 
     </cffunction>
 
     <cffunction  name="showsAddData" access="remote">
+     
+        <cfargument name="movieId" required="true">
+        <cfargument name="tId" required="true">
+        <cfargument name="stData" required="true">
+        <cfargument name="showDate" required="true">
+        <cfargument name="status" required="true">
+
         <cfset session.showsArray = ArrayNew(1) /> 
-        <cfif form.movieId eq "">
+        <cfif arguments.movieId eq "">
             <cfset ArrayAppend(session.showsArray, "Please select the movie") />
         </cfif>
-        <cfif form.tId eq "">
+        <cfif arguments.tId eq "">
             <cfset ArrayAppend(session.showsArray, "Please select theatre") />
         </cfif>
-        <cfif form.stData eq "">
+        <cfif arguments.stData eq "">
             <cfset ArrayAppend(session.showsArray, "Please show time") />
         </cfif>
-        <cfif form.showDate eq "">
+        <cfif arguments.showDate eq "">
             <cfset ArrayAppend(session.showsArray, "Please insert show time") />
         </cfif>
-        <cfif form.status eq "">
+        <cfif arguments.status eq "">
             <cfset ArrayAppend(session.showsArray, "Please select show status") />
         </cfif>
         
@@ -248,11 +267,11 @@
             <cfquery result="result">
                 INSERT INTO shows (movie_id, theatre_id, start_date, st_id, status)
                 VALUES (
-                    <cfqueryparam value="#form.movieId#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#form.tId#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#form.showDate#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#form.stData#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#form.status#" cfsqltype="cf_sql_varchar">
+                    <cfqueryparam value="#arguments.movieId#" cfsqltype="cf_sql_varchar">,
+                    <cfqueryparam value="#arguments.tId#" cfsqltype="cf_sql_varchar">,
+                    <cfqueryparam value="#arguments.showDate#" cfsqltype="cf_sql_varchar">,
+                    <cfqueryparam value="#arguments.stData#" cfsqltype="cf_sql_varchar">,
+                    <cfqueryparam value="#arguments.status#" cfsqltype="cf_sql_varchar">
                 )
             </cfquery>
             <cfset ArrayAppend(session.showsArray, "Inserted successfully") />

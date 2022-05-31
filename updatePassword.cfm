@@ -37,7 +37,8 @@
 						<div class="input-group">
                             <input class="form-control" name="confirmPassword" id="confirmPassword" type="password" placeholder="Confrim Password" />    
                         </div>
-                        <input class="btn read-button btn-login" type="submit" value="Send Password">
+						<input type="hidden" name="userId" id="userId" value="#session.userID#" /> 
+                        <input class="btn read-button btn-login" type="submit" value="Update Password">
                     </form>
                 </div>
 			</div>

@@ -54,7 +54,7 @@
                                     <td>#DateFormat(alldata.start_date)#</td>
                                     <td> 
                                         <cfif alldata.status==1 >
-                                            <a href="##" class="btn btn btn-outline-primary btn-sm button-18 show" data-id="2" id="#alldata.s_id#">
+                                            <a href="##" class="btn btn btn-outline-success btn-sm button-18 show" data-id="2" id="#alldata.s_id#">
                                                 Stop Showing
                                             </a>
                                         <cfelse>

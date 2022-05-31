@@ -21,15 +21,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <cfloop query="bookings">
+                    
                         <tr>
-                        <td>#bookings.movieTitle#</td>
-                        <td> #DateFormat(bookings.ticket_date)# </td>
-                        <td>#TimeFormat(bookings.start_time)# </td>
-                        <td>#bookings.seat_count# </td>
-                        <td>#bookings.amount# </td>
+                        <td>#movieTitle#</td>
+                        <td> #DateFormat(ticket_date)# </td>
+                        <td>#TimeFormat(start_time)# </td>
+                        <td>#seat_count# </td>
+                        <td>#amount# </td>
                         </tr>
-                    </cfloop> 
+                   
                     </tbody>
                 </table>
             </body>

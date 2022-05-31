@@ -29,7 +29,7 @@
                                     <input class="form-control" name="confirmPassword" id="confirmPassword" type="password" placeholder="Confrim Password" />    
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                    
+                                    <input type="hidden" name="adminId" id="adminId" value="#session.adminID#" />    
                                     <button class="btn btn-primary" type="submit">Update</button>
                                 </div>
                             </form>

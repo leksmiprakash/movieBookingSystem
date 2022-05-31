@@ -60,10 +60,9 @@ body{
 					<input type="hidden" value="#myConvertedList#" name="seatsA" id="seatsA" >
 					<ul id="selected-seats" class="scrollbar scrollbar1"></ul>
 					<input type="hidden" name="bookSeats" id="bookSeats" value="0">
-
-					
-					<input class="form-control" type="hidden" name="userEmail" id="userEmail" value="#userData.email#">
-					<input class="form-control" type="hidden" name="ticketDate" id="ticketDate" value="#form.ticketDate#">
+					<input type="hidden" name="userEmail" id="userEmail" value="#userData.email#">
+					<input type="hidden" name="ticketDate" id="ticketDate" value="#form.ticketDate#">
+					<input type="hidden" name="userId" id="userId" value="#session.userID#">
 					<button class="checkout-button" type="submit">Book Now</button>	
 					<div id="legend"></div>
 				</form>
