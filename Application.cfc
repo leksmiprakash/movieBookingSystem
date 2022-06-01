@@ -25,12 +25,12 @@ component{
             }
         }
     }
-    function onError(Exception,EventName){
-        location("error.cfm",false);
-        // writeOutput('<center><h1>An error occurred</h1>
-		// <p>Please Contact the developer</p>
-		// <p>Error details: #Exception.message#</p></center>');
-    }
+    // function onError(Exception,EventName){
+    //     location("error.cfm",false);
+    //     // writeOutput('<center><h1>An error occurred</h1>
+	// 	// <p>Please Contact the developer</p>
+	// 	// <p>Error details: #Exception.message#</p></center>');
+    // }
     function onMissingTemplate(targetPage){
         location("notFound.cfm",false);
         // writeOutput('<center><h1>This Page your are looking for is not avilable.</h1>

@@ -11,27 +11,37 @@
                 <cfset variables.bookId = Decrypt(URL.bookingId, DecrptKey) />
             	<cfset bookings=BookObj.displayBookingID(#bookId#)/>
                 <table class="table table-bordered" >
-                    <thead>
-                    <tr>
-                        <th scope="col">Movie Name</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Time</th>
-                        <th scope="col">Tickets</th>
-                        <th scope="col">Total Amount</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    
                         <tr>
-                        <td>#movieTitle#</td>
-                        <td> #DateFormat(ticket_date)# </td>
-                        <td>#TimeFormat(start_time)# </td>
-                        <td>#seat_count# </td>
-                        <td>#amount# </td>
+                            <th>Movie Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </th>
+                            <td>#bookings.movieTitle# (#bookings.movieGenre# )</td>
                         </tr>
-                   
-                    </tbody>
+                        <tr>
+                            <th>Booked Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </th>
+                            <td>#DateFormat(bookings.date)# </td>
+                        </tr>
+                        <tr>
+                            <th>Show Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </th>
+                            <td>#DateFormat(bookings.ticket_date)# </td>
+                        </tr>
+                        <tr>
+                            <th>Show Time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </th>
+                            <td>#TimeFormat(bookings.start_time)# </td>
+                        </tr>    
+                        <tr>
+                            <th>Tickets &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </th>
+                            <td>#bookings.seat_count# </td>
+                        </tr>
+                        <tr>
+                            <th>Total Amount &nbsp;&nbsp;: </th>
+                            <td>#bookings.amount# </td>
+                        </tr>
+                        <tr>
+                            <th>Barcode &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </th>
+                            <td></td>
+                        </tr>
+                        
                 </table>
+                
             </body>
         </html>
     </cfdocument>
