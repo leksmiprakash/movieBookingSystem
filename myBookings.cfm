@@ -47,7 +47,7 @@
 								 #DateFormat(bookings.ticket_date)# <span class="dot"></span> 
 								 #TimeFormat(bookings.start_time)# <span class="dot"></span> #bookings.seat_count# Tickets</p>
 							</div>
-							<cfset variables.EncrptKey = "abc!@" />
+							<cfset local.EncrptKey = "abc!@" />
 							<div class="column price-number text-md-right">
 								<h3 class="pricing"> <sup class="pri1"><i class="fa fa-inr"></i></sup>#bookings.amount# 
 								<!--<sup class="pri">99</sup>-->

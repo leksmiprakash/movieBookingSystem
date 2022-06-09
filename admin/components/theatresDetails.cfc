@@ -1,8 +1,8 @@
 <cfcomponent displayname="userdata" hint="Data from user side">
 
     <cffunction name="displayalldata" access="public" returnType="any" output="false">
-          <cfset variables.getTheatres = EntityLoad('Theatres',{},'t_id desc')>
-          <cfreturn variables.getTheatres >    
+          <cfset local.getTheatres = EntityLoad('Theatres',{},'t_id desc')>
+          <cfreturn local.getTheatres >    
      </cffunction>
 
     <cffunction  name="theatreData" access="remote">
@@ -40,9 +40,9 @@
                         destination="F:\ColdFusion2021\cfusion\wwwroot\movieBookingSystem\theatre"
                         nameconflict="makeunique"
                         result="img">
-                    <cfset variables.img = img.serverFile>
+                    <cfset local.img = img.serverFile>
                 <cfelse>
-                    <cfset variables.img = arguments.old_file>
+                    <cfset local.img = arguments.old_file>
                 </cfif>
                 <cfquery name="updateQuery">
                     UPDATE theatres 
@@ -51,7 +51,7 @@
                         t_email = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.tEmail#">,
                         t_phone = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.tPhone#">,
                         price = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.tRate#">,
-                        t_photo = <cfqueryparam CFSQLType="cf_sql_varchar" value="#variables.img#">
+                        t_photo = <cfqueryparam CFSQLType="cf_sql_varchar" value="#local.img#">
                     WHERE t_id = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#arguments.updateId#"> 
                 </cfquery>
                 <cfset ArrayAppend(session.theatreArray, "Updated successfully") />
@@ -91,8 +91,8 @@
             DELETE FROM theatres 
             WHERE t_id = <cfqueryparam value="#arguments.deleteId#"  cfsqltype="cf_sql_integer">
         </cfquery>    
-        <cfset variables.returnValue = true>
-        <cfreturn variables.returnValue>
+        <cfset local.returnValue = true>
+        <cfreturn local.returnValue>
     </cffunction>
 
     <cffunction name="displaydata" access="remote" returnType="any" returnFormat="JSON" output="false">
@@ -106,8 +106,8 @@
     <!-----------------------------Shows---------------------------->
 
     <cffunction name="displayallShowNamedata" access="public" returnType="any" output="false">
-        <cfset variables.getShowNames = EntityLoad('ShowNames',{},'sn_id desc')>
-        <cfreturn variables.getShowNames >    
+        <cfset local.getShowNames = EntityLoad('ShowNames',{},'sn_id desc')>
+        <cfreturn local.getShowNames >    
     </cffunction>
 
     <!------------------------------ShowTime-------------------------->
@@ -287,8 +287,8 @@
             UPDATE shows set status = <cfqueryparam value="#arguments.status#"  cfsqltype="cf_sql_integer">
             WHERE s_id = <cfqueryparam value="#arguments.showId#"  cfsqltype="cf_sql_integer">
         </cfquery>    
-        <cfset variables.returnValue = true>
-        <cfreturn variables.returnValue>
+        <cfset local.returnValue = true>
+        <cfreturn local.returnValue>
     </cffunction>
 
 </cfcomponent>

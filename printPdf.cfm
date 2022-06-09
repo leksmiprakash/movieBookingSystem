@@ -3,45 +3,37 @@
         <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
         <html>
             <head>
-                <title>Hello World</title>
+                <title>Ticket </title>
             </head>
             <body>
                 <cfset variables.DecrptKey = "abc!@" />
                 <cfset BookObj=CreateObject("component","component.moviesDetails")/>
                 <cfset variables.bookId = Decrypt(URL.bookingId, DecrptKey) />
             	<cfset bookings=BookObj.displayBookingID(#bookId#)/>
-                <table class="table table-bordered" >
-                        <tr>
-                            <th>Movie Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </th>
-                            <td>#bookings.movieTitle# (#bookings.movieGenre# )</td>
-                        </tr>
-                        <tr>
-                            <th>Booked Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </th>
-                            <td>#DateFormat(bookings.date)# </td>
-                        </tr>
-                        <tr>
-                            <th>Show Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </th>
-                            <td>#DateFormat(bookings.ticket_date)# </td>
-                        </tr>
-                        <tr>
-                            <th>Show Time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </th>
-                            <td>#TimeFormat(bookings.start_time)# </td>
-                        </tr>    
-                        <tr>
-                            <th>Tickets &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </th>
-                            <td>#bookings.seat_count# </td>
-                        </tr>
-                        <tr>
-                            <th>Total Amount &nbsp;&nbsp;: </th>
-                            <td>#bookings.amount# </td>
-                        </tr>
-                        <tr>
-                            <th>Barcode &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </th>
-                            <td></td>
-                        </tr>
+                <h1 align="center">Ticket</h1>
+                <hr>
+                <h1 align="center"><img src="barcode/barcode.jpg" width="180px" height="180px"></h1>
+                    <pre>
                         
-                </table>
+                    <b> Movie Name      <i>#bookings.movieTitle# (#bookings.movieGenre# )</i></b>
                 
+                
+                    <b> Booked Date     <i>#DateFormat(bookings.date)# </i></b>
+                
+                
+                    <b> Show Date       <i>#DateFormat(bookings.ticket_date)# </i></b>
+                
+                
+                    <b> Show Time       <i>#TimeFormat(bookings.start_time)# </i></b>
+                    
+                
+                    <b> Tickets         <i>#bookings.seat_count# nos </i></b>
+                
+                
+                    <b> Total Amount    <i>#bookings.amount# Rs.</i></b>
+                        
+                    </pre>
+                <hr>
             </body>
         </html>
     </cfdocument>

@@ -1,8 +1,8 @@
 <cfcomponent displayname="userdata" hint="Data from user side">
 
     <cffunction name="displayalldata" access="public" returnType="any" output="false">
-          <cfset variables.getMovies = EntityLoad('Movies',{},'movieID desc')>
-          <cfreturn variables.getMovies >    
+          <cfset local.getMovies = EntityLoad('Movies',{},'movieID desc')>
+          <cfreturn local.getMovies >    
      </cffunction>
 
     <cffunction  name="movieData" access="remote">
@@ -52,9 +52,9 @@
                         destination="F:\ColdFusion2021\cfusion\wwwroot\movieBookingSystem\movie"
                         nameconflict="makeunique"
                         result="img">
-                    <cfset variables.img = img.serverFile>
+                    <cfset local.img = img.serverFile>
                 <cfelse>
-                    <cfset variables.img = arguments.old_file>
+                    <cfset local.img = arguments.old_file>
                 </cfif>
                 <cfquery name="updateQuery">
                     UPDATE movies 
@@ -64,7 +64,7 @@
                         movieRelDate = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.movieRelDate#">,
                         movieDirector = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.movieDirector#">,
                         movieActors = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.movieActors#">,
-                        movieImg = <cfqueryparam CFSQLType="cf_sql_varchar" value="#variables.img#">,
+                        movieImg = <cfqueryparam CFSQLType="cf_sql_varchar" value="#local.img#">,
                         movieTrailer = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.movieTrailer#">,
                         movieDescription = <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.movieDesc#">
                     WHERE movieID = <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#arguments.updateId#"> 
@@ -108,8 +108,8 @@
             DELETE FROM movies 
             WHERE movieID = <cfqueryparam value="#arguments.deleteId#"  cfsqltype="cf_sql_integer">
         </cfquery>    
-        <cfset variables.returnValue = true>
-        <cfreturn variables.returnValue>
+        <cfset local.returnValue = true>
+        <cfreturn local.returnValue>
     </cffunction>
 
     <cffunction name="displaydata" access="remote" returnType="any" returnFormat="JSON" output="false">

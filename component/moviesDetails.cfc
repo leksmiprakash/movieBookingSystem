@@ -1,14 +1,14 @@
 <cfcomponent displayname="userdata" hint="Data from user side">
 
     <cffunction name="displayLimitedData" access="public" returnType="any" output="false">
-        <cfset variables.getMovies = EntityLoad('Movies',{status="1"},'movieID desc', {maxResults=4})>
-        <cfreturn variables.getMovies >    
+        <cfset local.getMovies = EntityLoad('Movies',{status="1"},'movieID desc', {maxResults=4})>
+        <cfreturn local.getMovies >    
     </cffunction>
 
     <cffunction name="displayNewData" access="public" returnType="any" output="false">
         <cfset upcomingDate = NOW() >
-        <cfset variables.getMovies = EntityLoad('Movies',{status="1"},'movieID desc')>
-        <cfreturn variables.getMovies >    
+        <cfset local.getMovies = EntityLoad('Movies',{status="1"},'movieID desc')>
+        <cfreturn local.getMovies >    
     </cffunction>
 
     <cffunction name="displaydata" access="remote" returnType="any" returnFormat="JSON" output="false">
@@ -106,7 +106,7 @@
             <cfmail to = "#arguments.userEmail#" from = "lekshmi.prakash@techversantinfo.com" subject = "Booking successfull" >  
                 Congrats Your Ticket have been created !! on #arguments.ticketDate# #arguments.bookCount# Tickets. Total #arguments.bookTotal# Rs
             </cfmail> 
-            <cfset variables.EncrptKey = "abc!@" />
+            <cfset local.EncrptKey = "abc!@" />
             <cfset ArrayAppend(session.bookedArray, "Complete your payment to continue") />
             <cflocation url = "../paymentPage.cfm?bookId=#URLEncodedFormat(Encrypt(result.generated_key, EncrptKey))#" addtoken="no">
         </cfif>
@@ -207,22 +207,22 @@
             <cfqueryparam value ="#arguments.bookAmount#" cfsqltype = "cf_sql_integer"/>,
             <cfqueryparam value ="#arguments.rzrpmtid#" cfsqltype = "cf_sql_varchar"/>);
         </cfquery>
-        <cfset variables.getNumberOfRecords = listLen(paymentResult.generated_key)>
-        <cfif variables.getNumberOfRecords GT 0>
+        <cfset local.getNumberOfRecords = listLen(paymentResult.generated_key)>
+        <cfif local.getNumberOfRecords GT 0>
              <cfquery name="updateBooking" result="bookingResult">
                 UPDATE `bookings` SET status='1'
                 where book_id=<cfqueryparam value ="#arguments.bookId#" cfsqltype = "cf_sql_integer"/>;
             </cfquery>
-            <cfset variables.getNumberOfRecords = listLen(bookingResult.RecordCount)> 
-            <cfif variables.getNumberOfRecords GT 0>
+            <cfset local.getNumberOfRecords = listLen(bookingResult.RecordCount)> 
+            <cfif local.getNumberOfRecords GT 0>
                
-                <cfset variables.goto="myBookings.cfm"/>
+                <cfset local.goto="myBookings.cfm"/>
             <cfelse>
                 
-                <cfset variables.goto="paymentPage.cfm?bookId="&arguments.bookId/>
+                <cfset local.goto="paymentPage.cfm?bookId="&arguments.bookId/>
             </cfif>
         </cfif>
-        <cfreturn variables.goto>
+        <cfreturn local.goto>
     </cffunction>
 
     <cffunction  name="forgotPassword" access="remote">
